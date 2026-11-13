@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Katalog Tasarımcısı{% endblock %}
+{% block content %}
+<div class="dz-app" data-app="{{ default_application }}" hidden></div>
+<h1>Katalog Tasarımcısı</h1>
+<p class="muted">Yapmak istediğiniz adımı yazın; sistem hedef adaylarını gösterir. Alanı işaretleyin, anlam/hedef/etki/
+parametreyi ayrı ayrı onaylayın, deneyin, sonucu onaylayın ve yeni oturum testiyle incelemeye hazırlayın.
+Model kullanılmaz. Diğer araçlar: <a href="/designer/targets">Hedef Deneme</a> · <a href="/designer/runs">İşlem Deneme</a>.</p>
+
+{% include "_session_panel.html" %}
+<section class="card">
+  <h2>Ekran</h2>
+  <span class="dz-session muted"></span>
+  <form class="dz-nav">
+    {% if lab_origin %}<label>Deney ekranı <select name="lab_page">
+      <option value="/pages/duplicates">Başvuran/Kefil</option><option value="/pages/note-form">Not ekleme</option>
+      <option value="/pages/dropdowns">Liste ve sekmeler</option><option value="/pages/table-paged">Sayfalı tablo</option>
+      <option value="/pages/frames">Frame'ler</option><option value="/wizard/C-2001">Başvuru sihirbazı (çok ekran)</option>
+      <option value="/wizard/C-2001/collateral">Başvuru sihirbazı — teminat ekranı</option></select></label>
+    <button type="submit">Ekranı aç</button>{% endif %}
+  </form>
+</section>
+
+<section class="card">
+  <h2>Taslaklar</h2>
+  <form class="dz-create">
+    <label>İşlem kimliği <input name="operation_id" placeholder="ör. kefil_musteri_no" required></label>
+    <label>Başlık <input name="title" required></label>
+    <label>Açıklama <input name="description"></label>
+    <button type="submit">Yeni taslak</button>
+  </form>
+  <ul class="dz-drafts"></ul>
+  <h3>Geçiş gereken eski yayınlar</h3>
+  <p class="muted">Ekran tanımı olmayan eski yayımlanmış işlemler çalıştırılmaz. Geçiş taslağı oluşturun, ekran tanımı
+  ekleyin, yeni oturum testi yapın ve yeniden onaylayıp yayımlayın. Eski yayın silinmez ve değiştirilmez.</p>
+  <ul class="dz-migrations"></ul>
+</section>
+
+<section class="card dz-editor" hidden>
+  <h2 class="dz-title"></h2>
+  <p class="muted dz-meta"></p>
+  <p class="dz-migrated muted" hidden></p>
+  <h3>Ekran tanımı</h3>
+  <p class="muted">İşlemin çalıştığı ekranı anlamsal işaretlerle tanımlayın: ekranda tekil görünen ve işlemin kendi hedefi
+  olmayan en az bir kontrol seçin. Bölgeler işaretlerin bölümlerinden alınır. Benzer ama yanlış ekranı ayırmak için
+  "bu ekranda olmamalı" işaretleri ekleyebilirsiniz. Adres, DOM kimliği veya frame sırası saklanmaz.</p>
+  <div class="dz-screen"></div>
+  <form class="dz-screen-form">
+    <label>Ekran kimliği <input name="screen_id" placeholder="ör. basvuru_taraflar" required></label>
+    <label>Ekran adı <input name="title" placeholder="ör. Başvuru — taraf bilgileri" required></label>
+    <label>Ek bölgeler (virgülle) <input name="regions" placeholder="ör. Başvuran, Kefil"></label>
+    <button type="button" data-action="screen-controls">Ekrandaki kontrolleri listele</button>
+    <ul class="dz-screen-controls"></ul>
+    <fieldset class="dz-absent"><legend>Bu ekranda olmamalı (isteğe bağlı)</legend>
+      <label>Tür <select name="absent_kind"><option value="textbox">metin alanı</option><option value="button">düğme</option>
+        <option value="select">açılır liste</option><option value="combobox">özel açılır liste</option><option value="tab">sekme</option>
+        <option value="table">tablo</option></select></label>
+      <label>Etiket <input name="absent_label" placeholder="ör. Talep Notu"></label>
+      <label>Bölge <input name="absent_region" placeholder="ör. Kefil"></label>
+    </fieldset>
+    <button type="submit">Ekran tanımını doğrula ve kaydet</button>
+  </form>
+  <p class="muted">Aynı ekran kimliğiyle kaydetmek tanımı günceller (ilgili adımların onayı ve test geçersizleşir);
+  yeni kimlik ek ekran ekler. İlk ekran başlangıç ekranıdır.</p>
+  <h3>Ekran geçişleri ve kayıt bağlamı</h3>
+  <p class="muted">Geçiş yalnız katalogda tanımlı kaynak → hedef ekran ve onaylı tetikleyiciyle çalışır. Tetikleyici
+  adayları yalnız listelenir; tanımlarken hiçbir şeye tıklanmaz. Tek ekranlı işlemde bu bölüm boş kalabilir.</p>
+  <div class="dz-routes"></div>
+  <form class="dz-transition-form">
+    <label>Geçiş kimliği <input name="transition_id" placeholder="ör. teminata_gec" required></label>
+    <label>Kaynak ekran <select name="from_screen"></select></label>
+    <label>Hedef ekran <select name="to_screen"></select></label>
+    <label>Tetikleyici <select name="trigger_kind"><option value="control">Yalnız ekran değiştiren düğme/sekme</option>
+      <option value="approved_action">Adımın onaylı aksiyonu (iş etkisi + ekran değişimi)</option></select></label>
+    <label>En fazla bekleme (ms) <input name="timeout_ms" type="number" value="10000" min="500" max="60000"></label>
+    <button type="button" data-action="trigger-controls">Tetikleyici adaylarını listele</button>
+    <ul class="dz-trigger-controls"></ul>
+    <fieldset><legend>Tamamlanma: hedef ekranda kayıt bağlamı (isteğe bağlı)</legend>
+      <label>Tür <select name="c_kind"><option value="textbox">metin alanı</option><option value="select">açılır liste</option></select></label>
+      <label>Etiket <input name="c_label" placeholder="ör. Vaka No"></label>
+      <label>Bölge <input name="c_region" placeholder="ör. Vaka"></label>
+      <label>Beklenen değer <input name="c_template" placeholder="ör. {vaka_no}"></label>
+    </fieldset>
+    <button type="submit">Geçişi kaydet</button>
+  </form>
+  <form class="dz-context-form">
+    <fieldset><legend>Başlangıç ekranında kayıt bağlamı (isteğe bağlı)</legend>
+      <label>Tür <select name="s_kind"><option value="textbox">metin alanı</option><option value="select">açılır liste</option></select></label>
+      <label>Etiket <input name="s_label" placeholder="ör. Vaka No"></label>
+      <label>Bölge <input name="s_region" placeholder="ör. Vaka"></label>
+      <label>Beklenen değer <input name="s_template" placeholder="ör. {vaka_no}"></label>
+    </fieldset>
+    <button type="submit">Başlangıç bağlamını kaydet</button>
+  </form>
+  <h3>Parametreler</h3>
+  <ul class="dz-params"></ul>
+  <form class="dz-param">
+    <label>Ad <input name="name" placeholder="ör. musteri_no" required></label>
+    <label>Başlık <input name="title" required></label>
+    <label>En fazla <input name="max_length" type="number" value="50" min="1"></label>
+    <label>Kaynak <select name="source"><option value="user_input">Kullanıcı girişi</option>
+      <option value="approved_constant">Onaylı sabit</option></select></label>
+    <label>Sabit <input name="constant"></label>
+    <button type="submit">Parametre ekle</button>
+  </form>
+  <h3>Adımlar</h3>
+  <form class="dz-step">
+    <label>Yapmak istediğiniz adım <input name="intent_text" size="50" placeholder="ör. Kefil müşteri numarasını yaz" required></label>
+    <button type="submit">Adım ekle</button>
+  </form>
+  <div class="dz-steps"></div>
+  <h3>Son inceleme</h3>
+  <form class="dz-fresh">
+    {% if lab_origin %}<label>Başlangıç ekranı <select name="entry"><option value="/pages/duplicates">Başvuran/Kefil</option>
+      <option value="/pages/note-form">Not ekleme</option><option value="/pages/dropdowns">Liste ve sekmeler</option>
+      <option value="/pages/table-paged">Sayfalı tablo</option><option value="/wizard/C-2001">Başvuru sihirbazı (çok ekran)</option></select></label>{% endif %}
+    <span class="dz-fresh-args"></span>
+    <button type="submit">Yeni oturum testi</button>
+  </form>
+  <ul class="dz-issues"></ul>
+  <div class="dz-review"></div>
+  <p>
+    <button type="button" data-action="approve">Onayla (yayıncı)</button>
+    <button type="button" data-action="publish">Yayımla</button>
+    <a href="/catalogs">Yayınları incele</a>
+  </p>
+  <p class="dz-publish muted"></p>
+</section>
+<p class="tl-error" role="alert"></p>
+<div class="dz-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='session_panel.js') }}"></script>
+<script src="{{ url_for('static', path='designer.js') }}"></script>{% endblock %}

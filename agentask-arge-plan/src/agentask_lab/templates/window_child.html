@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Pencere{% endblock %}
+{% block content %}
+<h1>Pencere formu</h1>
+<section aria-label="Pencere Formu">
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Pencere Notu</label><input id="{{ i }}" name="{{ new_id() }}" class="xecho"></div>
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">İkinci Not</label><input id="{{ i }}" name="{{ new_id() }}" class="xsecond"></div>
+</section>
+{% endblock %}
+{% block scripts %}<script>
+const q = new URLSearchParams(location.search);
+if (q.get("autoclose")) setTimeout(() => window.close(), 700);
+document.querySelector(".xecho").addEventListener("input", (e) => {
+  if (window.opener) window.opener.document.getElementById("echo").textContent = e.target.value;
+  if (q.get("spawn")) window.open("/pages/window-child", "_blank");
+});
+document.querySelector(".xsecond").addEventListener("input", (e) => {
+  if (window.opener) window.opener.document.getElementById("echo").textContent += "|" + e.target.value;
+});
+</script>{% endblock %}

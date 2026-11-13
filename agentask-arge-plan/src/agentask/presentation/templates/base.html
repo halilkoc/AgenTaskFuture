@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AgenTask{% endblock %} · AgenTask</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+  {% if local_admin %}<meta name="agentask-csrf" content="{{ csrf_token }}"><script src="{{ url_for('static', path='auth.js') }}"></script>{% endif %}
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">AgenTask</a>
+    <nav>
+      {% if can_assist %}<a href="/assistant">İşlem Asistanı</a>{% endif %}
+      {% if can_design %}<a href="/designer">Katalog Tasarımcısı</a>{% endif %}
+      <a href="/catalogs">Katalog ve yayınlar</a>
+      <a href="/runs">Çalışmalar</a>
+      {% if can_design %}<a href="/changes">Değişiklik/etki</a>{% endif %}
+    </nav>
+    <span class="user" title="Kimlik kaynağı: {{ principal.identity_source }}">{{ principal.display_name }}</span>
+    {% if local_admin %}<button type="button" class="logout-btn" data-logout>Çıkış</button>{% endif %}
+  </header>
+  {% if public_config.app_env != "production" %}
+  <div class="env-banner">Ar-Ge/test ortamı ({{ public_config.app_env }}) — üretim kullanımı için onaylı değildir.</div>
+  {% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  <script src="{{ url_for('static', path='app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

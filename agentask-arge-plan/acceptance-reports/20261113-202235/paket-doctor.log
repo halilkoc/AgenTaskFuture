@@ -1,0 +1,11 @@
+[TAMAM] Python: 3.12; gereken 3.12
+[TAMAM] Kimlik: geçici admin girişi (kurumsal SSO değildir)
+[UYARI] Onaylı işlemler: tanımlı değil; veri değiştiren adım kurulamaz
+[TAMAM] Çalışma kayıtları dizini: yazılabilir
+[TAMAM] Taslak dizini: yazılabilir
+[TAMAM] Dosya/kanıt dizini: yazılabilir
+[TAMAM] Tarayıcı: açıldı (156.0.8078.4)
+[UYARI] Hedef uygulama: bu makineden erişilemedi (ConnectError); kurum CA sertifikasını kontrol edin
+[TAMAM] MongoDB: bağlandı
+[TAMAM] Model hizmeti: LLM_ENABLED=false; kural tabanlı çalışır
+SONUÇ: BAŞLATILABİLİR (uyarıları okuyun)

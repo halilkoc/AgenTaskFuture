@@ -1,0 +1,53 @@
+"""Yayımlanmış katalog deposu (kaynak: MongoDB). Yalnız yayımlama servisi yazar."""
+
+from __future__ import annotations
+
+from typing import Protocol
+
+from agentask.domain.release import (
+    ActivationRecord,
+    ActivePointer,
+    OperationRevision,
+    ReleaseManifest,
+    ScreenRevision,
+)
+
+
+class CatalogStore(Protocol):
+    async def ensure_schema(self) -> None: ...
+
+    async def ping(self) -> bool: ...
+
+    async def put_revision(self, rev: OperationRevision) -> str:
+        """'inserted' | 'exists'. Aynı kimlik+revizyon farklı hash → ContentConflict."""
+        ...
+
+    async def latest_revision(self, app: str, op: str) -> OperationRevision | None: ...
+
+    async def get_revision(self, app: str, op: str, revision: int) -> OperationRevision | None: ...
+
+    async def put_screen(self, rev: ScreenRevision) -> str:
+        """catalog_screens: 'inserted' | 'exists'. Aynı ekran+revizyon farklı hash → ContentConflict."""
+        ...
+
+    async def latest_screen(self, app: str, screen_id: str) -> ScreenRevision | None: ...
+
+    async def get_screen(self, app: str, screen_id: str, revision: int) -> ScreenRevision | None: ...
+
+    async def insert_release(self, manifest: ReleaseManifest) -> None: ...
+
+    async def get_release(self, release_id: str) -> ReleaseManifest | None: ...
+
+    async def find_release_by_request(self, request_id: str) -> ReleaseManifest | None: ...
+
+    async def list_releases(self, app: str, env: str) -> list[ReleaseManifest]: ...
+
+    async def get_active(self, app: str, env: str) -> ActivePointer | None: ...
+
+    async def compare_and_set_active(
+        self, app: str, env: str, expected: str | None, new: str, by: str
+    ) -> bool: ...
+
+    async def add_activation(self, record: ActivationRecord) -> None: ...
+
+    async def list_activations(self, app: str, env: str) -> list[ActivationRecord]: ...

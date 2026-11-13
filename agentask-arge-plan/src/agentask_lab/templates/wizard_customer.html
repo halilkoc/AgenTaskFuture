@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Başvuru sihirbazı — müşteri{% endblock %}
+{% block content %}
+{% set vh = new_id() %}{% set vi = new_id() %}{% set mh = new_id() %}{% set mi = new_id() %}
+<div class="wizard" data-case-id="{{ case_id }}">
+<h1>Başvuru — müşteri seçimi</h1>
+<section aria-labelledby="{{ vh }}" class="panel"><h2 id="{{ vh }}">Vaka</h2>
+  <label for="{{ vi }}">Vaka No</label><input id="{{ vi }}" name="{{ new_id() }}" value="{{ case_id }}" readonly>
+</section>
+<section aria-labelledby="{{ mh }}" class="panel"><h2 id="{{ mh }}">Müşteri</h2>
+  <label for="{{ mi }}">Müşteri No</label><input id="{{ mi }}" name="{{ new_id() }}" class="wz-customer">
+</section>
+<p><button type="button" id="{{ new_id() }}" class="wz-next">Devam</button></p>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/wizard.js"></script>{% endblock %}

@@ -1,0 +1,29 @@
+F
+=================================== FAILURES ===================================
+_________ test_autocomplete_lost_selection_is_not_reported_as_restored _________
+
+env = Env(service=<agentask.application.services.runs.RunService object at 0x10f239b80>, sessions=<agentask.application.serv...'/private/var/folders/xc/hy3mgxfj5tx8xk075stn1nk00000gn/T/agentask-one-sntoke9i/test_autocomplete_lost_selecti0/runs'))
+
+    async def test_autocomplete_lost_selection_is_not_reported_as_restored(env: Env) -> None:
+        """Regresyon (2026-11-13): eşleşme yokken yalnız metin geri yazılır, alandaki gerçek seçim (data-value)
+        kaybolabilir. Bu durumda “eski değerine döndü” denmez; sonuç belirsizdir ve arama tekrarlanmaz."""
+        await env.goto(PAGE)
+        assert (
+            await env.run([auto("Ankara Merkez", expected_value="ANK")], "first")
+        ).status is RunStatus.COMPLETED
+        field = region(env, "Arama").get_by_label("Şehir", exact=True)
+        assert await field.get_attribute("data-value") == "ANK"
+        run = await env.run([auto("Yok Böyle")], "second")
+>       assert run.status is RunStatus.OUTCOME_UNKNOWN, [s.model_dump() for s in run.steps]
+E       AssertionError: [{'index': 0, 'command': {'op': 'ensure_choice', 'target': {'kind': 'combobox', 'labels': ['Şehir'], 'region': 'Arama'...found_row': False, 'choice': 'Yok Böyle', ...}, 'state': <StepState.KNOWN_FAILED: 'known_failed'>, 'attempts': 1, ...}]
+E       assert <RunStatus.FAILED: 'failed'> is <RunStatus.OUTCOME_UNKNOWN: 'outcome_unknown'>
+E        +  where <RunStatus.FAILED: 'failed'> = Run(run_id='run-vqFjz4QGl7C7PQ', owner_id='ayse', session_id='gjY3fNcjdYtI-Jor0AKjpQ', request_id='second', payload_ha..., 272978, tzinfo=TzInfo(0)), revision=6, binding=None, evidence=[], title=None, correlation_id=None, cancelled_by=None).status
+E        +  and   <RunStatus.OUTCOME_UNKNOWN: 'outcome_unknown'> = RunStatus.OUTCOME_UNKNOWN
+
+/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/integration/browser/test_controls_runtime.py:231: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+=========================== short test summary info ============================
+FAILED tests/integration/browser/test_controls_runtime.py::test_autocomplete_lost_selection_is_not_reported_as_restored
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 5.76s

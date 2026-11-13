@@ -1,0 +1,18 @@
+{
+  "actions": {
+    "kurum.ornek_kaydet": {
+      "action_id": "kurum.ornek_kaydet",
+      "title": "Ornek: Kaydet (kurumca onaylanmadan kullanmayin)",
+      "target": { "kind": "button", "labels": ["Kaydet"], "region": "Ornek Bolum" },
+      "effect": "non_mutating",
+      "retry_safe": false,
+      "params": [],
+      "outcome": {
+        "evidence": { "kind": "status_text" },
+        "success": { "mode": "contains", "text": "Kaydedildi" }
+      }
+    }
+  },
+  "blockers": [],
+  "profile": { "session_lost_path_prefixes": ["/prweb/login"], "session_lost_texts": [] }
+}

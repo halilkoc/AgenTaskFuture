@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Kayıtlar{% endblock %}
+{% block content %}
+<h1>Kayıt listesi</h1>
+{% set fid = new_id() %}
+<section aria-label="Liste Filtresi"><div class="field"><label for="{{ fid }}">Filtre Notu</label><input id="{{ fid }}" name="{{ new_id() }}"></div></section>
+<table id="{{ new_id() }}">
+  <caption>Kayıtlar</caption>
+  <thead><tr><th>Kayıt No</th><th>Durum</th><th>Satır Notu</th><th>İşlem</th></tr></thead>
+  <tbody>
+  {% for key in keys %}{% set nid = new_id() %}<tr id="{{ new_id() }}"><td>{{ key }}</td><td>Açık</td>
+    <td><input aria-label="Satır Notu" id="{{ nid }}" name="{{ new_id() }}"></td>
+    <td><a href="/pages/records/{{ key }}">Aç</a></td></tr>{% endfor %}
+  </tbody>
+</table>
+<nav aria-label="Sayfalama" class="pager">
+  {% if page < pages %}<a href="/pages/records?page={{ page + 1 }}">Sonraki</a>{% else %}<span aria-disabled="true">Sonraki</span>{% endif %}
+  <span>Sayfa {{ page }} / {{ pages }}</span>
+</nav>
+{% endblock %}

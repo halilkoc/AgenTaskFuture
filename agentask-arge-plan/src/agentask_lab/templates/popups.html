@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Pencereler ve dinamik ekran{% endblock %}
+{% block content %}
+{# Deney: sayfa içi pencere (açık/kapalı), engelleyici katman, iki etkin pencere, yeni pencere, tarayıcı
+   onay penceresi, ilgisiz sürekli DOM değişikliği ve alanın yeniden çizilmesi. Kalıcı id yok. #}
+<h1>Başvuru — pencereler</h1>
+{% set hb = new_id() %}{% set a = new_id() %}{% set n = new_id() %}
+<section aria-labelledby="{{ hb }}" class="panel">
+  <h2 id="{{ hb }}">Başvuru</h2>
+  <div class="field-host"><label for="{{ a }}">Müşteri No</label><input id="{{ a }}" name="{{ new_id() }}"></div>
+  <label for="{{ n }}">Not</label><input id="{{ n }}" name="{{ new_id() }}">
+  <button type="button" class="open-note">Not penceresini aç</button>
+  <button type="button" class="open-window">Belgeyi yeni pencerede aç</button>
+  <button type="button" class="ask-confirm">Kaydı sil</button>
+  <button type="button" class="redraw">Alanı yeniden çiz</button>
+  <p class="ticker">Son güncelleme: 0</p>
+</section>
+
+{% set hg = new_id() %}{% set g = new_id() %}
+<dialog aria-labelledby="{{ hg }}" class="hidden-dialog">
+  <h2 id="{{ hg }}">Gizli pencere</h2>
+  <label for="{{ g }}">Müşteri No</label><input id="{{ g }}" name="{{ new_id() }}">
+</dialog>
+
+{% set hn = new_id() %}{% set m = new_id() %}
+<dialog aria-labelledby="{{ hn }}" class="note-dialog">
+  <h2 id="{{ hn }}">Not ekle</h2>
+  <label for="{{ m }}">Not</label><input id="{{ m }}" name="{{ new_id() }}">
+  <button type="button" class="note-cancel">Vazgeç</button>
+</dialog>
+
+{% if decoy %}{% set hd = new_id() %}{% set hs = new_id() %}{% set d1 = new_id() %}
+{# Aldatıcı: aynı adlı ("Not ekle") ama içinde Not alanı olmayan pencere; arkada aynı adlı sayfa bölümü. #}
+<section aria-labelledby="{{ hs }}" class="panel decoy-section">
+  <h2 id="{{ hs }}">Not ekle</h2>
+  <label for="{{ d1 }}">Not</label><input id="{{ d1 }}" name="{{ new_id() }}">
+</section>
+<dialog aria-labelledby="{{ hd }}" class="decoy-dialog">
+  <h2 id="{{ hd }}">Not ekle</h2>
+  <p>Bu pencere farklı bir içerik taşıyor.</p>
+  <button type="button">Tamam</button>
+</dialog>
+{% endif %}
+{% if two %}{% set x1 = new_id() %}{% set x2 = new_id() %}
+<div role="dialog" aria-modal="true" aria-label="Birinci onay" class="two-a">
+  <label for="{{ x1 }}">Ad</label><input id="{{ x1 }}" name="{{ new_id() }}">
+</div>
+<div role="dialog" aria-modal="true" aria-label="İkinci onay" class="two-b">
+  <label for="{{ x2 }}">Ad</label><input id="{{ x2 }}" name="{{ new_id() }}">
+</div>
+{% endif %}
+{% if overlay is not none %}
+<div class="blocking-overlay" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;color:#fff;font-size:20px;padding:40px">Yükleniyor…</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const note = $(".note-dialog");
+  $(".open-note").addEventListener("click", () => note.showModal());
+  $(".note-cancel").addEventListener("click", () => note.close());
+  $(".open-window").addEventListener("click", () => window.open(location.pathname + "?child=1", "_blank"));
+  $(".ask-confirm").addEventListener("click", () => { $(".ticker").dataset.confirm = String(window.confirm("Kaydı silmek istiyor musunuz?")); });
+  function redraw() {
+    // Aynı anlamlı alan yeni bir DOM düğümüyle (yeni id) yeniden oluşturulur; değer korunmaz.
+    const host = $(".field-host");
+    const id = "f" + Math.random().toString(36).slice(2);
+    host.innerHTML = '<label for="' + id + '">Müşteri No</label><input id="' + id + '">';
+  }
+  $(".redraw").addEventListener("click", redraw);
+  // Küçük katman: alanın ortasını kapatan küçük bir kutu (sayfanın çok küçük bir kısmı).
+  function addCover() {
+    const inp = $(".field-host input");
+    const r = inp.getBoundingClientRect();
+    const c = document.createElement("div");
+    c.className = "small-cover";
+    c.textContent = "İpucu";
+    Object.assign(c.style, { position: "absolute", left: (r.left + scrollX + r.width / 2 - 40) + "px",
+      top: (r.top + scrollY) + "px", width: "80px", height: r.height + "px", background: "#fde68a", zIndex: 10 });
+    document.body.appendChild(c);
+  }
+  window.labAddCover = addCover;
+  {% if cover %}addCover();{% endif %}
+  {% if modal_open %}note.showModal();{% endif %}
+  {% if decoy %}$(".decoy-dialog").showModal();{% endif %}
+  {% if overlay %}setTimeout(() => { const o = $(".blocking-overlay"); if (o) o.remove(); }, {{ overlay }});{% endif %}
+  {% if ticker %}let i = 0; setInterval(() => { $(".ticker").textContent = "Son güncelleme: " + (++i); }, 40);{% endif %}
+})();
+</script>
+{% endblock %}

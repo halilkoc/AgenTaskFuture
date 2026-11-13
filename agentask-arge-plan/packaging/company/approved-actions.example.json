@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "kurum.ornek_kaydet": {
+      "action_id": "kurum.ornek_kaydet",
+      "title": "Ornek: Kaydet (kurumca onaylanmadan kullanmayin)",
+      "application_id": "pega_test",
+      "target": { "kind": "button", "labels": ["Kaydet"], "region": "Ornek Bolum" },
+      "effect": "mutating",
+      "retry_safe": false,
+      "params": [{ "name": "metin", "title": "Not", "max_length": 500 }],
+      "outcome": {
+        "evidence": { "kind": "status_text" },
+        "success": { "mode": "contains", "text": "Kaydedildi" }
+      },
+      "reconcile": {
+        "evidence": { "kind": "list_items", "name": "Kayitlar" },
+        "match": { "mode": "contains", "text": "{metin}" }
+      }
+    }
+  },
+  "blockers": [],
+  "profile": { "session_lost_path_prefixes": ["/prweb/login"] }
+}

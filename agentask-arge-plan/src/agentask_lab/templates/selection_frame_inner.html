@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}İç çerçeve{% endblock %}
+{% block content %}
+{% set sid = new_id() %}{% set uid = new_id() %}
+<div class="field"><label for="{{ sid }}">Teminat Türü</label>
+  <select id="{{ sid }}" name="{{ new_id() }}"><option value="">Seçiniz</option><option value="IPO">İpotek</option><option value="KFL">Kefalet</option></select></div>
+<div class="field"><span id="{{ uid }}">Teminat Sınıfı</span>
+  <div class="xcombo" role="combobox" tabindex="0" aria-labelledby="{{ uid }}" aria-expanded="false" aria-haspopup="listbox" data-delay-ms="0" data-redraw="0" data-trap="0"
+    data-options='[{"l":"Birinci","v":"A1"},{"l":"İkinci","v":"A2"}]'><span class="xcombo-value">Seçiniz</span></div></div>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

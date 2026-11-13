@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Kontroller{% endblock %}
+{% block content %}
+<h1>Kontroller</h1>
+{% macro box(label, extra="") %}{% set i = new_id() %}<div class="field"><input type="checkbox" class="xcount" id="{{ i }}" name="{{ new_id() }}" {{ extra|safe }}><label for="{{ i }}">{{ label }}</label></div>{% endmacro %}
+{% macro radios(legend, options) %}{% set g = new_id() %}<fieldset>{% if legend %}<legend>{{ legend }}</legend>{% endif %}
+  {% for label, value, extra in options %}{% set i = new_id() %}<div><input type="radio" class="xcount" name="{{ g }}" id="{{ i }}" value="{{ value }}" {{ extra|safe }}><label for="{{ i }}">{{ label }}</label></div>{% endfor %}</fieldset>{% endmacro %}
+{% macro auto(label, items, role=true) %}{% set i = new_id() %}{% set l = new_id() %}<div class="field"><label for="{{ i }}">{{ label }}</label>
+  <input class="xauto" id="{{ i }}" name="{{ new_id() }}" autocomplete="off" aria-controls="{{ l }}" {% if role %}role="combobox" aria-expanded="false"{% endif %} data-items='{{ items }}'>
+  <ul role="listbox" id="{{ l }}" aria-label="{{ label }} önerileri" hidden></ul></div>{% endmacro %}
+<section aria-label="Başvuru">
+  {{ box("Onaylıyorum") }}
+  {{ box("Zaten İşaretli", "checked") }}
+  {{ box("Kilitli", "disabled") }}
+  {{ box("Geri Alan", 'data-revert="1"') }}
+  {% set i = new_id() %}<div class="field"><input type="checkbox" class="xcount xhidden" id="{{ i }}" name="{{ new_id() }}" style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none"><label for="{{ i }}">Bildirim Al</label></div>
+  <div class="field"><span role="checkbox" class="xaria" tabindex="0" aria-checked="false" aria-label="Sözleşme">[ ] Sözleşme</span></div>
+  {{ radios("Teslimat", [("Kurye","K",""),("Şube","S","")]) }}
+  {{ radios("Yinelenen", [("Aynı","A1",""),("Aynı","A2",""),("Farklı","F","")]) }}
+  {{ radios("Kısıtlı", [("Açık","O",""),("Kapalı","C","disabled")]) }}
+  <div role="radiogroup" aria-label="Öncelik"><span role="radio" class="xradio" tabindex="0" aria-checked="false" data-value="Y">Yüksek</span> <span role="radio" class="xradio" tabindex="0" aria-checked="false" data-value="N">Normal</span></div>
+</section>
+<section aria-label="Kefil">
+  {{ box("Onaylıyorum") }}
+  {{ radios("Teslimat", [("Kurye","K",""),("Şube","S","")]) }}
+</section>
+<section aria-label="Adsız Grup">{{ radios("", [("Bir","1",""),("İki","2","")]) }}</section>
+<section aria-label="Çoklu">
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Etiketler</label><select multiple class="xmulti" id="{{ i }}" name="{{ new_id() }}" size="4"><option value="a">Alfa</option><option value="b" selected>Beta</option><option value="c">Gama</option><option value="d" disabled>Kapalı Seçenek</option></select></div>
+  <div role="listbox" aria-label="Yetkiler" aria-multiselectable="true" class="xarialist"><div role="option" aria-selected="false" data-value="r">Okuma</div><div role="option" aria-selected="true" data-value="w">Yazma</div><div role="option" aria-selected="false" data-value="x">Silme</div></div>
+</section>
+<section aria-label="Tarih">
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Başlangıç</label><input type="date" id="{{ i }}" name="{{ new_id() }}"></div>
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Bitiş</label><input id="{{ i }}" name="{{ new_id() }}"></div>
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Çeviren</label><input class="xshift" id="{{ i }}" name="{{ new_id() }}"></div>
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Takvimli</label><input readonly id="{{ i }}" name="{{ new_id() }}"></div>
+</section>
+<section aria-label="Yükleme">
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Belge</label><input type="file" class="xfile" id="{{ i }}" name="{{ new_id() }}"></div>
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Gizli Belge</label><input type="file" class="xfile" id="{{ i }}" name="{{ new_id() }}" style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none"></div>
+  <p role="status" class="xstatus"></p>
+</section>
+<section aria-label="Arama">
+  {{ auto("Şehir", '[{"l":"Ankara Merkez","v":"ANK"},{"l":"Antalya Merkez","v":"ANT"},{"l":"Çift Şube","v":"C1"},{"l":"Çift Şube","v":"C2"},{"l":"Yanlış Değer","v":"Y1","set":"Y2"}]') }}
+  {{ auto("Düz Arama", '[{"l":"Kuzey Bölge","v":"KB"}]', false) }}
+</section>
+{% endblock %}
+{% block scripts %}<script>window.__autoSearches = 0;</script><script src="/static/lab.js"></script>{% endblock %}

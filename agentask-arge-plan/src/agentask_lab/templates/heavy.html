@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Ağır sayfa{% endblock %}
+{% block content %}
+<h1>Çok alanlı form (deney)</h1>
+<section aria-label="Ek Alanlar" class="panel">
+{% for i in range(count) %}{% set fid = new_id() %}<label for="{{ fid }}">Alan {{ i }}</label><input id="{{ fid }}" name="{{ new_id() }}">
+{% endfor %}
+</section>
+{% endblock %}

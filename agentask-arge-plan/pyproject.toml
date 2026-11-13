@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentask"
+version = "0.2.1"
+description = "Pega katalog tabanlı otomasyon — Ar-Ge uygulaması (İşlem Asistanı + Katalog Tasarımcısı)"
+requires-python = ">=3.12,<3.13"
+# Sürümler 2026-11-05'te Python 3.12.0 üzerinde test edilip kilitlendi (bkz. requirements.lock).
+dependencies = [
+    "fastapi==0.162.0",
+    "starlette==1.10.0",
+    "uvicorn==0.54.0",
+    "jinja2==3.1.6",
+    "pydantic==2.14.3",
+    "pydantic-settings==2.16.2",
+    "python-dotenv==1.2.4",
+    "httpx==0.28.1",
+    "python-multipart==0.0.33",
+    "playwright==1.64.1",
+    "pymongo==4.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.2.0",
+    "pytest-asyncio==1.4.1.post1",
+    "ruff==0.17.3",
+    "mypy==2.4.1",
+]
+
+[project.scripts]
+agentask = "agentask.__main__:main"
+agentask-lab = "agentask_lab.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agentask = ["presentation/templates/*.html", "presentation/static/*"]
+agentask_lab = ["templates/*.html", "static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "browser: gerçek Playwright tarayıcısı ile çalışan entegrasyon testi",
+    "mongo: geçici yerel mongod ile gerçek MongoDB entegrasyon testi",
+    "docker: gerçek Docker Compose gerektiren yerel Mongo aracı testi (daemon yoksa BLOCKED olarak atlanır)",
+]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "S", "TID"]
+ignore = ["S101", "RUF001", "RUF002", "RUF003"]  # Türkçe metin (ı, İ) zorunlu
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S105", "S106"]
+# Settings değerini env'den okuyan üçüncü taraf sürücüye aktaran tek yer (bkz. ADR 0002).
+"src/agentask/config/runtime_env.py" = ["TID251"]
+# Gömülü sabit JavaScript kaynakları.
+"src/agentask/infrastructure/browser/*_js.py" = ["E501"]
+# Yerel geliştirme aracı: Docker CLI alt sürecine ortamı aktarır (yapılandırma okuması değil).
+"tools/local_mongo/compose.py" = ["TID251", "S603"]
+# Geliştirme kontrol komutu: sabit argümanlı lint/typecheck/pytest alt süreçleri.
+"tools/dev_check/__main__.py" = ["S603"]
+# Yerel aracın kendi tek ayar katmanı (LOCAL_MONGO_* önekli yazım hatalarını dotenv'den denetler).
+"tools/local_mongo/settings.py" = ["TID251"]
+"tests/integration/docker/*.py" = ["S603", "TID251"]
+# Yerel kabul aracı: pytest/pip alt süreçlerine yalıtılmış ortam verir (uygulama ayarı okuması değil).
+"tools/local_acceptance/*.py" = ["TID251", "S603"]
+# Madde eşleme tablosu: okunabilirlik için tek satırlık kayıtlar.
+"tools/local_acceptance/coverage.py" = ["E501"]
+"tests/integration/test_local_mongo_off.py" = ["S603"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"os.getenv".msg = "Ortam ayarları yalnızca agentask.config.Settings üzerinden okunur."
+"os.environ".msg = "Ortam ayarları yalnızca agentask.config.Settings üzerinden okunur."
+"dotenv".msg = "Ortam ayarları yalnızca agentask.config.Settings üzerinden okunur."
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+packages = ["agentask", "agentask_lab", "tools"]

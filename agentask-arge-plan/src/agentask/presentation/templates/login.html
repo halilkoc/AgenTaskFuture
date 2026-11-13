@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giriş · AgenTask</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+</head>
+<body>
+<main class="lg-page">
+  <section class="card">
+    <h1>AgenTask girişi</h1>
+    <p class="muted">Geçici yönetici girişi. Kurumsal SSO değildir. Hedef uygulama (Pega) oturumu bundan ayrıdır.</p>
+    <form class="lg-form" data-next="{{ next }}">
+      <label>Kullanıcı adı <input name="username" autocomplete="username" required maxlength="64"></label>
+      <label>Parola <input name="password" type="password" autocomplete="current-password" required maxlength="256"></label>
+      <button type="submit">Giriş yap</button>
+    </form>
+    <p class="tl-error" role="alert"></p>
+  </section>
+</main>
+<script src="{{ url_for('static', path='login.js') }}"></script>
+</body>
+</html>

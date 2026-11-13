@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Kontrol paneli{% endblock %}
+{% block content %}
+<h1>Senaryo kontrol paneli</h1>
+<p>Değerler <code>PUT /__lab/scenario</code> ile de değiştirilebilir. Yalnızca yerel bağlantıdan erişilir.</p>
+<form class="control-form">
+  {% for name, value in scenario.model_dump().items() %}
+  <label>{{ name }}
+    {% if name == "dialog" %}
+      <select name="dialog">{% for v in ["none", "modal", "unknown_modal", "native"] %}<option {% if v == value %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+    {% elif value is sameas true or value is sameas false %}
+      <input type="checkbox" name="{{ name }}" {% if value %}checked{% endif %}>
+    {% elif value is string %}
+      <input type="text" name="{{ name }}" value="{{ value }}">
+    {% else %}
+      <input type="number" name="{{ name }}" value="{{ value }}" min="0">
+    {% endif %}
+  </label>
+  {% endfor %}
+  <button type="submit">Uygula</button>
+</form>
+<p>
+  <button type="button" data-action="/__lab/sessions/expire">Oturumları sonlandır</button>
+  <button type="button" data-action="/__lab/reset">Her şeyi sıfırla</button>
+</p>
+<pre class="control-output" aria-live="polite"></pre>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

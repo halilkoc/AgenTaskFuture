@@ -1,0 +1,16 @@
+# Yalnız yerel Ar-Ge. Proje adı (-p) ve volume adı .env'den gelir; çalışma klasörü adına bağlı değildir.
+# Mongo yalnız 127.0.0.1'e açılır. Veri named volume'da kalır; 'python -m tools.local_mongo stop' veriyi silmez.
+services:
+  mongo:
+    image: ${LOCAL_MONGO_IMAGE:?LOCAL_MONGO_IMAGE gerekli}
+    ports:
+      - "127.0.0.1:${LOCAL_MONGO_PORT:?LOCAL_MONGO_PORT gerekli}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${LOCAL_MONGO_ROOT_USERNAME:-}
+      MONGO_INITDB_ROOT_PASSWORD: ${LOCAL_MONGO_ROOT_PASSWORD:-}
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+volumes:
+  mongo-data:
+    name: ${LOCAL_MONGO_VOLUME:?LOCAL_MONGO_VOLUME gerekli}

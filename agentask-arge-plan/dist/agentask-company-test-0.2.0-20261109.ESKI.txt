@@ -1,0 +1,3 @@
+ESKİ ADAY: agentask-company-test-0.2.0-20261109.zip yerine agentask-company-test-0.2.1-20261113.zip kullanılmalıdır.
+0.2.1 düzeltmesi: öneri alanında eşleşme yokken alandaki gerçek seçim geri gelmezse sonuç artık “Belirsiz” olur.
+0.2.0 bu durumda yanlışlıkla “eski değerine döndürüldü” diyordu.

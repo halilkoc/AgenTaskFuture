@@ -1,0 +1,65 @@
+"""Gözlem portu: frame takibi, bütçeli envanter, aday doğrulama, vurgulama ve seçim modu."""
+
+from __future__ import annotations
+
+from typing import Any, Protocol
+
+from agentask.domain.observation import LightFrame, PickEvent, Snapshot
+
+
+class PageObserverPort(Protocol):
+    @property
+    def current_snapshot(self) -> Snapshot | None: ...
+
+    @property
+    def native_dialog(self) -> tuple[str, str] | None:
+        """Açık native dialog (tür, kısaltılmış metin); kapatılmaz."""
+        ...
+
+    @property
+    def new_windows(self) -> int:
+        """Açık kalan yeni pencere/sekme sayısı; otomatik geçilmez/kapatılmaz."""
+        ...
+
+    def interruption_state(self) -> dict[str, Any]:
+        """Görünen kesintiler ve kimlikleri (browser_dialog, new_windows)."""
+        ...
+
+    async def dismiss_native_dialog(self, dialog_id: str) -> bool:
+        """Yalnız kullanıcının açık kararıyla ve yalnız görülen dialog için; kimlik eskiyse False."""
+        ...
+
+    async def close_new_windows(self, window_ids: list[str]) -> list[str] | None:
+        """Yalnız kullanıcının açık kararıyla ve yalnız görülen pencereler için; kimlik eskiyse None."""
+        ...
+
+    async def light_scan(self) -> list[LightFrame]: ...
+
+    async def observe(
+        self, detail_refs: set[str] | None = None, light: list[LightFrame] | None = None
+    ) -> Snapshot: ...
+
+    async def check_candidate(self, candidate_id: str) -> str | None:
+        """None → geçerli; aksi halde stale nedeni."""
+        ...
+
+    async def highlight(self, candidate_id: str, caption: str) -> None:
+        """Sayfaya olay göndermeden hedefi görsel olarak işaretler."""
+        ...
+
+    async def clear_highlight(self) -> None: ...
+
+    async def start_picker(self) -> None: ...
+
+    async def stop_picker(self) -> None: ...
+
+    @property
+    def picker_active(self) -> bool: ...
+
+    async def wait_raw_pick(self, timeout_s: float) -> bool:
+        """Seçim olayı geldiyse True (tarayıcıya dokunmaz)."""
+        ...
+
+    async def map_pick(self) -> PickEvent:
+        """Son seçimi güncel snapshot adayına çevirir; gerekirse yeniden gözlemler."""
+        ...

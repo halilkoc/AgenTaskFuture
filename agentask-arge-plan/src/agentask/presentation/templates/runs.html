@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Çalışmalar{% endblock %}
+{% block content %}
+<h1>Çalışmalar ve sonuçlar</h1>
+<p class="muted rn-storage">Yalnız kendi çalışmalarınızı görürsünüz. Kayıtlar uygulama sunucusunda dosya olarak tutulur
+(<code>RUN_DIRECTORY</code>); uygulama yeniden başlatıldığında korunur ve otomatik silinmez. Dizin kalıcı bir diskte
+değilse (ör. geçici konteyner) kayıtlar kaybolur. Uygulama logları ise yalnız konsola yazılır; bu ekranda görünmez.</p>
+<section class="card"><h2>Özet</h2><div class="rn-metrics muted">Yükleniyor…</div></section>
+<section class="card"><h2>Çalışmalarım</h2><table class="tl-table rn-list"></table></section>
+<section class="card"><h2>Çalışma ayrıntısı</h2><div class="rn-detail muted">Bir çalışma seçin.</div></section>
+<p class="tl-error" role="alert"></p>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='runs.js') }}"></script>{% endblock %}

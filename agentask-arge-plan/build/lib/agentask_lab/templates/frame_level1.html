@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block header %}{% endblock %}
+{% block body_class %}framed{% endblock %}
+{% block content %}
+{% set uid = new_id() %}
+<h2>Vaka Ayrıntıları</h2>
+<label for="{{ uid }}">Vaka Durumu</label><input id="{{ uid }}" name="{{ new_id() }}" value="İncelemede" readonly>
+<iframe title="Adres Bilgileri" src="/frames/level2" width="540" height="120"></iframe>
+{% endblock %}

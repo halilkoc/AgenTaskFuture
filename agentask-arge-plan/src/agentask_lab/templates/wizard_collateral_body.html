@@ -1,0 +1,28 @@
+{% set vh = new_id() %}{% set vi = new_id() %}{% set lh = new_id() %}
+<div class="wizard" data-case-id="{{ case_id }}" data-step="collateral"
+     data-timeout-ms="{{ scenario.client_timeout_ms }}">
+<h1>Başvuru — teminat bilgileri</h1>
+<section aria-labelledby="{{ vh }}" class="panel"><h2 id="{{ vh }}">Vaka</h2>
+  <label for="{{ vi }}">Vaka No</label><input id="{{ vi }}" name="{{ new_id() }}" value="{{ shown_case }}" readonly>
+</section>
+{% for _ in range(2 if duplicate else 1) %}
+{% set th = new_id() %}{% set ti = new_id() %}
+<section aria-labelledby="{{ th }}" class="panel"><h2 id="{{ th }}">Teminat</h2>
+  <label for="{{ ti }}">Teminat Tutarı</label><input id="{{ ti }}" name="{{ new_id() }}" class="wz-amount">
+  <iframe title="Teminat Belgeleri" src="/wizard/{{ case_id }}/documents?v={{ new_id() }}" width="520" height="90"></iframe>
+  <button type="button" id="{{ new_id() }}" class="wz-submit">Gönder</button>
+</section>
+{% endfor %}
+<p role="status" class="wz-status"></p>
+<h2 id="{{ lh }}">Gönderilen başvurular</h2>
+<ul aria-labelledby="{{ lh }}">
+  {% for a in applications %}<li>Başvuru #{{ a.application_no }}: {{ a.case_id }} — {{ a.amount }} ({{ a.user }})</li>{% endfor %}
+</ul>
+{% if scenario.wizard_dialog %}
+{% set did = new_id() %}
+<div class="overlay"><div role="dialog" aria-modal="true" aria-labelledby="{{ did }}" class="modal">
+  <h2 id="{{ did }}">Sistem bildirimi</h2><p>Teminat servisi geçici olarak meşgul.</p>
+  <button type="button" class="modal-close">Kapat</button>
+</div></div>
+{% endif %}
+</div>

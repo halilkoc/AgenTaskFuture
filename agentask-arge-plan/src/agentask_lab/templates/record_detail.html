@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Kayıt ayrıntısı{% endblock %}
+{% block content %}
+<h1>Kayıt ayrıntısı</h1>
+{% set kid = new_id() %}{% set nid = new_id() %}
+<section aria-label="Kayıt">
+  <div class="field"><label for="{{ kid }}">Kayıt No</label><input id="{{ kid }}" name="{{ new_id() }}" value="{{ key }}" readonly></div>
+  <div class="field"><label for="{{ nid }}">Detay Notu</label><input id="{{ nid }}" name="{{ new_id() }}"></div>
+</section>
+{% endblock %}

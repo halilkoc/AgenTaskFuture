@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Çalışmalar{% endblock %}
+{% block content %}
+<h1>Çalışmalar ve sonuçlar</h1>
+<section class="card"><h2>Özet</h2><div class="rn-metrics muted">Yükleniyor…</div></section>
+<section class="card"><h2>Çalışmalarım</h2><table class="tl-table rn-list"></table></section>
+<section class="card"><h2>Zaman çizelgesi</h2><div class="rn-detail muted">Bir çalışma seçin.</div></section>
+<p class="tl-error" role="alert"></p>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='runs.js') }}"></script>{% endblock %}

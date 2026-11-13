@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Not ekle{% endblock %}
+{% block content %}
+{% set nid = new_id() %}{% set lid = new_id() %}
+<h1>Vaka {{ case_id }} — Not ekle</h1>
+<form class="note-form" data-case-id="{{ case_id }}" data-timeout-ms="{{ scenario.client_timeout_ms }}"
+      data-dialog="{{ scenario.dialog }}">
+  <label for="{{ nid }}">Not</label>
+  <textarea id="{{ nid }}" name="{{ new_id() }}" maxlength="500"></textarea>
+  <button type="submit" id="{{ new_id() }}">Kaydet</button>
+  <p role="status" class="note-status"></p>
+</form>
+<h2 id="{{ lid }}">Mevcut notlar</h2>
+<ul aria-labelledby="{{ lid }}">
+  {% for note in notes %}<li>Not #{{ note.note_no }}: {{ note.text }} ({{ note.user }})</li>{% endfor %}
+</ul>
+{% if scenario.dialog == "modal" %}
+{% set did = new_id() %}
+<div class="overlay">
+  <div role="dialog" aria-modal="true" aria-labelledby="{{ did }}" class="modal">
+    <h2 id="{{ did }}">Uyarı</h2>
+    <p>Bu vaka başka bir kullanıcı tarafından güncellendi.</p>
+    <button type="button" class="modal-close">Tamam</button>
+  </div>
+</div>
+{% endif %}
+{% if scenario.dialog == "unknown_modal" %}
+{% set uid = new_id() %}
+<div class="overlay">
+  <div role="dialog" aria-modal="true" aria-labelledby="{{ uid }}" class="modal">
+    <h2 id="{{ uid }}">Onay Gerekli</h2>
+    <p>İşleme devam etmek istiyor musunuz?</p>
+    <button type="button" class="modal-close">Evet</button>
+    <button type="button" class="modal-close">Hayır</button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

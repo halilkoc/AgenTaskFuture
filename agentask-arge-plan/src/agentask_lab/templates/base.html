@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Deney{% endblock %} · Deney Uygulaması</title>
+  <link rel="stylesheet" href="/static/lab.css">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="lab-banner" role="note">Deney uygulaması — gerçek Pega değildir</div>
+  {% block header %}
+  <header class="lab-header">
+    <a href="/">Vaka Yönetimi (deney)</a>
+    {% if user %}<span>Kullanıcı: {{ user }}</span>{% endif %}
+  </header>
+  {% endblock %}
+  <main>{% block content %}{% endblock %}</main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

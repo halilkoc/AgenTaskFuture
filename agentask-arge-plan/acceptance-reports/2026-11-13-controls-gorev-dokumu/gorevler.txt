@@ -1,0 +1,32 @@
+=== test döngüsü ===
+--- görev Task-60 ---
+    eşyordam: Connection.run
+--- görev Task-59 ---
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/test_controls_flow_mongo.py", line 112, in test_checkbox_radio_autocomplete_from_design_to_assistant
+    once = await counts()
+    eşyordam: test_checkbox_radio_autocomplete_from_design_to_assistant
+=== uygulama sunucusu döngüsü ===
+--- görev Task-511 ---
+    eşyordam: PyMongoProtocol.read
+--- görev Task-57 ---
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/src/agentask/presentation/app.py", line 69, in _reap_periodically
+    await asyncio.sleep(interval)
+    eşyordam: _reap_periodically
+--- görev Task-13 ---
+    eşyordam: LifespanOn.main
+--- görev pymongo_server_rtt_task ---
+    eşyordam: AsyncPeriodicExecutor._run
+--- görev pymongo_server_monitor_task ---
+    eşyordam: AsyncPeriodicExecutor._run
+--- görev Task-12 ---
+    eşyordam: Server.serve
+--- görev Task-11 ---
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/support.py", line 34, in main
+    await task
+    eşyordam: AppServer.start.<locals>.run.<locals>.main
+--- görev Task-70 ---
+    eşyordam: Connection.run
+--- görev Task-510 ---
+    eşyordam: _poll_cancellation
+--- görev pymongo_kill_cursors_thread ---
+    eşyordam: AsyncPeriodicExecutor._run

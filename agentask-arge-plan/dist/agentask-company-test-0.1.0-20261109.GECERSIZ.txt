@@ -1,0 +1,2 @@
+GEÇERSİZ ADAY: agentask-company-test-0.1.0-20261109.zip şirket testinde kullanılmamalıdır.
+S1-S8 geliştirmelerinden önce üretildi. Geçerli paket: agentask-company-test-0.2.0-20261109.zip

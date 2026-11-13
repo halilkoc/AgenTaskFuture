@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}İşlem Asistanı{% endblock %}
+{% block content %}
+<h1>İşlem Asistanı</h1>
+<p class="muted">İşinizi yazın; eksik bilgileri tamamlayın, işlemin özetini kontrol edip başlatın. Yalnız yayımlanmış ve
+onaylı işlemler çalışır; yetki ve politika kontrolleri sunucudadır.</p>
+<section class="card as-app" aria-labelledby="as-app-title">
+  <h2 id="as-app-title">Uygulama</h2>
+  {% if applications %}
+  <label{% if applications|length == 1 %} hidden{% endif %}>Uygulama <select name="application">{% if applications|length > 1 %}<option value="">Seçin…</option>{% endif %}
+    {% for a in applications %}<option value="{{ a.id }}">{{ a.name }}</option>{% endfor %}</select></label>
+  {% if applications|length == 1 %}<p class="as-app-name"><strong>{{ applications[0].name }}</strong></p>{% endif %}
+  <button type="button" data-action="open-app">Uygulamayı oturumda aç</button>
+  {% else %}
+  <p class="as-apps-empty dz-bad">Yapılandırılmış uygulama yok. Yönetici AUTOMATION_APPLICATIONS_JSON ayarına en az bir
+  uygulama eklemeli; o zamana kadar işlem yorumlanamaz ve çalıştırılamaz.</p>
+  {% endif %}
+  <p class="as-app-status muted" role="status"></p>
+</section>
+{% include "_session_panel.html" %}
+<section class="card" aria-labelledby="as-s1">
+  <h2 id="as-s1">1. Ne yapmak istiyorsunuz?</h2>
+  <form class="as-ask">
+    <label>Talebiniz <input name="prompt" size="70" placeholder="ör. Kefil müşteri numarasını 00123 olarak gir"></label>
+    <button type="submit">Yorumla</button>
+    <button type="button" data-action="propose" hidden>Birden çok işlem öner (model)</button>
+  </form>
+  <p class="as-llm muted"></p>
+  <div class="as-result"></div>
+  <details class="as-ready-wrap"><summary>Hazır işlemlerden seç</summary><ul class="as-ready"></ul></details>
+</section>
+<section class="card" aria-labelledby="as-s2" hidden>
+  <h2 id="as-s2">2. Eksik bilgiler</h2>
+  <div class="as-missing"></div>
+</section>
+<section class="card" aria-labelledby="as-s3" hidden>
+  <h2 id="as-s3">3. Yapılacak işlemin özeti</h2>
+  <div class="as-plan"></div>
+</section>
+<section class="card" aria-labelledby="as-s4">
+  <h2 id="as-s4">4. Başlat / Durdur</h2>
+  <p class="muted">Seçili tarayıcı oturumunda çalışır. Gerekli ekranı oturumda açın.</p>
+  {% if lab_origin %}<label>Deney ekranı <select name="lab_page"><option value="/pages/duplicates">Başvuran/Kefil</option>
+    <option value="/pages/note-form">Not ekleme</option><option value="/pages/dropdowns">Liste ve sekmeler</option>
+    <option value="/wizard/C-2001">Başvuru sihirbazı (çok ekran)</option></select></label>
+  <button type="button" data-action="screen">Ekranı aç</button>{% endif %}
+  <span class="as-session muted"></span>
+  <p><label class="as-ack-wrap" hidden><input type="checkbox" name="ack"><span class="as-ack-text"> Bu işlem veri değiştirir; onaylıyorum</span></label>
+  <button type="button" data-action="run">Başlat</button> <button type="button" data-action="cancel">Durdur</button></p>
+</section>
+<section class="card" aria-labelledby="as-s5">
+  <h2 id="as-s5">5. Sonuç</h2>
+  <div class="rl-run muted">Henüz çalıştırma yok.</div>
+  <details class="as-run-tech"><summary>Adım ayrıntıları</summary><table class="tl-table rl-steps"></table></details>
+</section>
+{% if composition_enabled %}
+<section class="card">
+  <h2>Birleşik görev (deneysel, COMPOSITION_ENABLED)</h2>
+  <p class="muted">Yayımlanmış işlemleri sırayla birleştirir; sunucu statik doğrular ve düzleştirir. Koşul ve sınırlı
+  döngü API ile (/api/assistant/composite/*) kullanılabilir.</p>
+  <div class="as-comp-rows"></div>
+  <button type="button" data-action="comp-add">İşlem ekle</button>
+  <button type="button" data-action="comp-preview">Birleşik planı göster</button>
+  <button type="button" data-action="comp-run">Birleşik görevi çalıştır</button>
+  <p class="as-comp muted"></p>
+</section>
+{% endif %}
+<p class="tl-error" role="alert"></p>
+<div class="as-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+<script type="application/json" id="as-apps">{{ applications | tojson }}</script>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='session_panel.js') }}"></script>
+<script src="{{ url_for('static', path='assistant.js') }}"></script>{% endblock %}

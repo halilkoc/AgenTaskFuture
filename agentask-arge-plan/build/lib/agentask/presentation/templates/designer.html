@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Katalog Tasarımcısı{% endblock %}
+{% block content %}
+<h1>Katalog Tasarımcısı</h1>
+<p class="muted">Yapmak istediğiniz adımı yazın; sistem hedef adaylarını gösterir. Alanı işaretleyin, anlam/hedef/etki/
+parametreyi ayrı ayrı onaylayın, deneyin, sonucu onaylayın ve yeni oturum testiyle incelemeye hazırlayın.
+Model kullanılmaz. Diğer araçlar: <a href="/designer/targets">Hedef Deneme</a> · <a href="/designer/runs">İşlem Deneme</a>.</p>
+
+<section class="card">
+  <h2>Oturum</h2>
+  <button type="button" data-action="open">Oturum aç</button>
+  <span class="dz-session muted">Oturum yok</span>
+  <form class="dz-nav">
+    {% if lab_origin %}<label>Deney ekranı <select name="lab_page">
+      <option value="/pages/duplicates">Başvuran/Kefil</option><option value="/pages/note-form">Not ekleme</option>
+      <option value="/pages/dropdowns">Liste ve sekmeler</option><option value="/pages/table-paged">Sayfalı tablo</option>
+      <option value="/pages/frames">Frame'ler</option></select></label>
+    <button type="submit">Ekranı aç</button>{% endif %}
+  </form>
+</section>
+
+<section class="card">
+  <h2>Taslaklar</h2>
+  <form class="dz-create">
+    <label>İşlem kimliği <input name="operation_id" placeholder="ör. kefil_musteri_no" required></label>
+    <label>Başlık <input name="title" required></label>
+    <label>Açıklama <input name="description"></label>
+    <button type="submit">Yeni taslak</button>
+  </form>
+  <ul class="dz-drafts"></ul>
+</section>
+
+<section class="card dz-editor" hidden>
+  <h2 class="dz-title"></h2>
+  <p class="muted dz-meta"></p>
+  <h3>Parametreler</h3>
+  <ul class="dz-params"></ul>
+  <form class="dz-param">
+    <label>Ad <input name="name" placeholder="ör. musteri_no" required></label>
+    <label>Başlık <input name="title" required></label>
+    <label>En fazla <input name="max_length" type="number" value="50" min="1"></label>
+    <label>Kaynak <select name="source"><option value="user_input">Kullanıcı girişi</option>
+      <option value="approved_constant">Onaylı sabit</option></select></label>
+    <label>Sabit <input name="constant"></label>
+    <button type="submit">Parametre ekle</button>
+  </form>
+  <h3>Adımlar</h3>
+  <form class="dz-step">
+    <label>Yapmak istediğiniz adım <input name="intent_text" size="50" placeholder="ör. Kefil müşteri numarasını yaz" required></label>
+    <button type="submit">Adım ekle</button>
+  </form>
+  <div class="dz-steps"></div>
+  <h3>Son inceleme</h3>
+  <form class="dz-fresh">
+    {% if lab_origin %}<label>Başlangıç ekranı <select name="entry"><option value="/pages/duplicates">Başvuran/Kefil</option>
+      <option value="/pages/note-form">Not ekleme</option><option value="/pages/dropdowns">Liste ve sekmeler</option>
+      <option value="/pages/table-paged">Sayfalı tablo</option></select></label>{% endif %}
+    <span class="dz-fresh-args"></span>
+    <button type="submit">Yeni oturum testi</button>
+  </form>
+  <ul class="dz-issues"></ul>
+  <div class="dz-review"></div>
+  <p>
+    <button type="button" data-action="approve">Onayla (yayıncı)</button>
+    <button type="button" data-action="publish">Yayımla</button>
+    <a href="/catalogs">Yayınları incele</a>
+  </p>
+  <p class="dz-publish muted"></p>
+</section>
+<p class="tl-error" role="alert"></p>
+<div class="dz-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='designer.js') }}"></script>{% endblock %}

@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "local-mongo: dev (Mongo + uygulama)", "type": "process", "command": "${workspaceFolder}/.venv/bin/python", "args": ["-m", "tools.local_mongo", "dev"], "problemMatcher": []},
+    {"label": "local-mongo: up", "type": "process", "command": "${workspaceFolder}/.venv/bin/python", "args": ["-m", "tools.local_mongo", "up"], "problemMatcher": []},
+    {"label": "local-mongo: stop (veri korunur)", "type": "process", "command": "${workspaceFolder}/.venv/bin/python", "args": ["-m", "tools.local_mongo", "stop"], "problemMatcher": []},
+    {"label": "local-mongo: backup", "type": "process", "command": "${workspaceFolder}/.venv/bin/python", "args": ["-m", "tools.local_mongo", "backup"], "problemMatcher": []},
+    {"label": "agentask: uygulama (Mongo yönetimi yok)", "type": "process", "command": "${workspaceFolder}/.venv/bin/agentask", "args": [], "problemMatcher": []}
+  ]
+}

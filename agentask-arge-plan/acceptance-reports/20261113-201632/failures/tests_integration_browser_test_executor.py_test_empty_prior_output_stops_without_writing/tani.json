@@ -1,0 +1,7 @@
+{
+  "test": "tests/integration/browser/test_executor.py::test_empty_prior_output_stops_without_writing",
+  "asama": "teardown",
+  "ozet": "tests/integration/browser/test_executor.py:85: in env\n    await sessions.shutdown()\nsrc/agentask/application/services/browser_sessions.py:248: in shutdown\n    await self._factory.shutdown()\nsrc/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown\n    await playwright.stop()\n          ^^^^^^^^^^^^^^^^^\nE   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'",
+  "ekran_goruntuleri": [],
+  "trace_veya_ag_kaydi": false
+}

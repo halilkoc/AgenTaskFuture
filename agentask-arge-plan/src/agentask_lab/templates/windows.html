@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Pencereler{% endblock %}
+{% block content %}
+<h1>Pencereler</h1>
+<section aria-label="Ana">
+  {% set i = new_id() %}<div class="field"><label for="{{ i }}">Ana Not</label><input id="{{ i }}" name="{{ new_id() }}"></div>
+  <p id="echo"></p>
+  <button type="button" data-open="/pages/window-child">Pencere Aç</button>
+  <button type="button" data-open="/pages/window-child" data-count="2">İki Pencere</button>
+  <button type="button" data-open="/pages/window-child" data-foreign="1">Yabancı Pencere</button>
+  <button type="button" data-open="/pages/dropdowns">Yanlış Ekran</button>
+  <button type="button" data-open="/pages/window-child?autoclose=1">Kapanan Pencere</button>
+  <button type="button" data-open="/pages/window-child?spawn=1">Çoğalan Pencere</button>
+  <button type="button" id="noop">Pencere Açmaz</button>
+</section>
+{% endblock %}
+{% block scripts %}<script>
+document.querySelectorAll("button[data-open]").forEach((b) => b.addEventListener("click", () => {
+  const base = b.dataset.foreign ? (window.__otherOrigin || "") : "";
+  for (let n = 0; n < Number(b.dataset.count || 1); n++) window.open(base + b.dataset.open, "_blank");
+}));
+</script>{% endblock %}

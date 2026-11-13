@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sayfalı tablo{% endblock %}
+{% block content %}
+<h1>Başvuru listesi</h1>
+<table id="{{ new_id() }}">
+  <caption>Başvurular</caption>
+  <thead><tr><th>Başvuru No</th><th>Müşteri</th><th>Durum</th><th>İşlem</th></tr></thead>
+  <tbody>
+  {% for row in rows %}<tr id="{{ new_id() }}"><td>{{ row.key }}</td><td>{{ row.customer }}</td><td>{{ row.status }}</td><td><button type="button" id="{{ new_id() }}">Aç</button></td></tr>{% endfor %}
+  </tbody>
+</table>
+<nav aria-label="Sayfalama" class="pager">
+  {% if page > 1 %}<a href="/pages/table-paged?page={{ page - 1 }}">Önceki</a>{% else %}<span aria-disabled="true">Önceki</span>{% endif %}
+  <span>Sayfa {{ page }} / {{ page_count }}</span>
+  {% if page < page_count %}<a href="/pages/table-paged?page={{ page + 1 }}">Sonraki</a>{% else %}<span aria-disabled="true">Sonraki</span>{% endif %}
+</nav>
+{% endblock %}

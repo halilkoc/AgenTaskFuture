@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Frame'ler{% endblock %}
+{% block content %}
+<h1 id="{{ new_id() }}">Vaka {{ "C-1001" }} — Frame senaryosu</h1>
+<div id="{{ new_id() }}" class="frames">
+  <iframe title="Vaka Ayrıntıları" src="/frames/level1" width="600" height="340"></iframe>
+  <iframe title="Müşteri Kaydı (dış sistem)" src="{{ secondary }}/frames/cross" width="600" height="160"></iframe>
+  <div id="late-frame-slot" data-delay-ms="{{ scenario.late_frame_delay_ms }}"></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

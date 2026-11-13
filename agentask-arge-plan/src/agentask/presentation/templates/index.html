@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Ana sayfa{% endblock %}
+{% block content %}
+<h1>Hoş geldiniz</h1>
+<p>Rolünüze uygun çalışma alanını seçin.</p>
+<ul class="cards">
+  {% if can_assist %}<li><a href="/assistant">İşlem Asistanı</a><p>Onaylı katalog işlemlerini doğal dille başlatın.</p></li>{% endif %}
+  {% if can_design %}<li><a href="/designer">Katalog Tasarımcısı</a><p>İşlem adımlarını hazırlayın, doğrulayın ve onaya gönderin.</p></li>{% endif %}
+  {% if not can_assist and not can_design %}<li>Bu hesap için tanımlı bir çalışma alanı yok.</li>{% endif %}
+</ul>
+<p class="muted" id="llm-status">Model durumu: {{ "kullanılabilir" if public_config.llm_available else "kullanılamıyor" }}</p>
+{% endblock %}

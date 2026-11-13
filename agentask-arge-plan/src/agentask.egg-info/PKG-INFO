@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: agentask
+Version: 0.1.0
+Summary: Pega katalog tabanlı otomasyon — Ar-Ge uygulaması (İşlem Asistanı + Katalog Tasarımcısı)
+Requires-Python: <3.13,>=3.12
+Requires-Dist: fastapi==0.162.0
+Requires-Dist: starlette==1.10.0
+Requires-Dist: uvicorn==0.54.0
+Requires-Dist: jinja2==3.1.6
+Requires-Dist: pydantic==2.14.3
+Requires-Dist: pydantic-settings==2.16.2
+Requires-Dist: python-dotenv==1.2.4
+Requires-Dist: httpx==0.28.1
+Requires-Dist: python-multipart==0.0.33
+Requires-Dist: playwright==1.64.1
+Requires-Dist: pymongo==4.19.0
+Provides-Extra: dev
+Requires-Dist: pytest==9.2.0; extra == "dev"
+Requires-Dist: pytest-asyncio==1.4.1.post1; extra == "dev"
+Requires-Dist: ruff==0.17.3; extra == "dev"
+Requires-Dist: mypy==2.4.1; extra == "dev"

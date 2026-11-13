@@ -1,0 +1,166 @@
+F
+=================================== FAILURES ===================================
+____________ test_changed_action_blocks_old_release_until_retested _____________
+
+stack = (<function stack.<locals>.start at 0x107409120>, PosixPath('/private/var/folders/xc/hy3mgxfj5tx8xk075stn1nk00000gn/T/agentask-action.F85ZiVMbEA/test_changed_action_blocks_old0/actions.json'))
+lab = LabServer(primary='http://127.0.0.1:50459', secondary='http://127.0.0.1:50460', state=LabState(scenario=Scenario(delay...d90>, <agentask_lab.server._LabServer object at 0x107329d00>], _thread=<Thread(lab-server, started daemon 6186020864)>)
+
+    async def test_changed_action_blocks_old_release_until_retested(stack: Any, lab: LabServer) -> None:
+        start, path = stack
+        server = start()
+        base = f"http://127.0.0.1:{server.port}"
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
+            await ui.goto(f"{base}/prototype/designer")
+            await ui.locator("#pd-home").get_by_role("button", name="Yeni akış").click()
+            await ui.get_by_role("textbox", name="Akışın adı (zorunlu)").fill("Dosya notu")
+            await ui.get_by_role("button", name="Gerçek oturum").click()
+            await ui.get_by_role("button", name="Yeni oturum aç").click()
+            await expect(ui.locator("#pd-real-status")).to_contain_text("Yeni oturum açıldı")
+            sid = await ui.get_by_label("Tarayıcı oturumu").input_value()
+            await ui.request.post(
+                f"{base}/api/sessions/{sid}/navigate",
+                data={"url": f"{lab.primary}/__lab/autologin?user=ayse&next={PATH}"},
+            )
+            editor = ui.locator("#pd-editor")
+            await ui.locator("#pd-components").get_by_role("button", name="Alan doldur").click()
+            await editor.get_by_role("button", name="Ekrandaki alanları listele").click()
+            await editor.get_by_role("button", name="Not alanını seç").click()
+            await expect(editor.locator("[id$='-check']")).to_have_text(
+                "Ekranda tek olarak bulundu.", timeout=10000
+            )
+            await editor.get_by_label("Sabit değer").check()
+            await editor.get_by_label("Yazılacak değer").fill(NOTE)
+            await ui.locator("#pd-components").get_by_role("button", name="Onaylı işlem").click()
+            await editor.get_by_label("Hangi onaylı işlem?").select_option(label="Kurum notu ekle")
+            await editor.get_by_label("Sabit değer").check()
+            await editor.get_by_label("Yazılacak değer").fill(NOTE)
+            await ui.get_by_role("button", name="Taslağı kaydet").click()
+            await expect(ui.locator("#pd-draft-status")).to_contain_text("Taslak kaydedildi", timeout=30000)
+            panel = ui.locator("#pd-runpanel")
+            status = ui.locator("#pd-runpanel-status")
+            await panel.get_by_role("button", name="Ekranı tanıt", exact=True).click()
+            await panel.get_by_role("button", name="Bu işaretlerle ekranı tanıt").click()
+            await expect(panel).to_contain_text("Tanımlı:", timeout=15000)
+            steps = panel.locator(".pd-live__step")
+            for i in range(2):
+                step = steps.nth(i)
+                for box in await step.locator("[data-ack]").all():
+                    await box.check()
+                await step.get_by_role("button", name="Onayla", exact=True).click()
+                await expect(step).to_contain_text("Denemeye hazır", timeout=10000)
+                await step.get_by_label("Bu deneme hedef uygulamada işlem yapabilir").check()
+                await step.get_by_role("button", name="Gerçek dene").click()
+                await expect(step).to_contain_text("Sistem doğrulaması: BAŞARILI", timeout=25000)
+                await step.get_by_role("button", name="Sonucu onayla").click()
+                await expect(step).to_contain_text("Hazır", timeout=10000)
+            await panel.get_by_label("Başlangıç ekranı (deney uygulamasındaki yol)").fill(PATH)
+            await panel.get_by_role("button", name="Yeni oturum testi").click()
+            await expect(status).to_contain_text("Yeni oturum testi tamamlandı: BAŞARILI", timeout=40000)
+            await panel.get_by_role("button", name="Onayla (yayıncı)").click()
+            await expect(status).to_contain_text("Onaylandı (yayıncı)", timeout=10000)
+            await panel.get_by_role("button", name="Yayımla").click()
+            await expect(status).to_contain_text("Yayımlandı ve etkin: rel-", timeout=15000)
+            catalog = (await (await ui.request.get(f"{base}/api/assistant/catalog?application_id=lab")).json())[
+                "operations"
+            ]
+            operation = catalog[0]
+            release = await (
+                await ui.request.get(f"{base}/api/catalogs/releases/{operation['release_id']}")
+            ).json()
+            drafts = await (await ui.request.get(f"{base}/api/drafts")).json()
+            operation_hash = (await (await ui.request.get(f"{base}/api/actions")).json())["actions"][0][
+                "fingerprint"
+            ]
+            await browser.close()
+        server.stop()
+    
+        # Kurum dosyası değişti (aynı id, farklı davranış) ve uygulama yeniden başladı.
+        changed = {
+            **ACTION,
+            "outcome": {**ACTION["outcome"], "success": {"mode": "prefix", "text": "Kaydedildi"}},
+        }
+        path.write_text(json.dumps({"actions": {ACTION["action_id"]: changed}}), encoding="utf-8")
+        server = start()
+        base = f"http://127.0.0.1:{server.port}"
+        try:
+            async with httpx.AsyncClient(base_url=base, timeout=20) as api:
+                refused = await api.post(
+                    "/api/assistant/preview",
+                    json={
+                        "application_id": "lab",
+                        "release_id": operation["release_id"],
+                        "operation_id": operation["operation_id"],
+                        "arguments": {},
+                    },
+                )
+                assert refused.status_code == 422 and "action_changed" in refused.json()["details"]["reason"]
+                assert "Yeniden test ve onay" in refused.json()["safe_message"]
+                same = (await api.get(f"/api/catalogs/releases/{operation['release_id']}")).json()
+                assert same["manifest_hash"] == release["manifest_hash"]  # eski yayın ve kanıtı değişmez
+                draft = (await api.get(f"/api/drafts/{drafts[0]['draft_id']}")).json()
+                assert any("action_changed" in i for i in draft["issues"])
+                approve = await api.post(
+                    f"/api/drafts/{draft['draft_id']}/approve", json={"expected_revision": draft["revision"]}
+                )
+                assert approve.status_code == 409
+    
+            # Taslak yeniden açılıp kaydedilince yeni davranışa bağlanır; yeniden test edilmeden hazır sayılmaz.
+            async with async_playwright() as p:
+                browser = await p.chromium.launch()
+                ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
+                await ui.goto(f"{base}/prototype/designer")
+                await ui.get_by_role("button", name="Kayıtlı taslakları göster").click()
+                await ui.get_by_role("button", name="“Dosya notu” taslağını aç").click()
+                await ui.get_by_role("button", name="Yeni oturum aç").click()
+                await expect(ui.locator("#pd-real-status")).to_contain_text("Yeni oturum açıldı")
+                sid = await ui.get_by_label("Tarayıcı oturumu").input_value()
+                await ui.request.post(
+                    f"{base}/api/sessions/{sid}/navigate",
+                    data={"url": f"{lab.primary}/__lab/autologin?user=ayse&next={PATH}"},
+                )
+                await ui.get_by_role("button", name="Taslağı kaydet").click()
+                await expect(ui.locator("#pd-draft-status")).to_contain_text("Taslak kaydedildi", timeout=30000)
+                await browser.close()
+            async with httpx.AsyncClient(base_url=base, timeout=20) as api:
+                repinned = (await api.get(f"/api/drafts/{drafts[0]['draft_id']}")).json()
+                assert not any("action_changed" in i for i in repinned["issues"]), repinned["issues"]
+                action_step = next(s for s in repinned["steps"] if s["op"] == "invoke_approved_action")
+                assert action_step["status"] != "ready_for_review"
+                assert any("not_ready" in i for i in repinned["issues"])
+                current = (await api.get("/api/actions")).json()["actions"][0]["fingerprint"]
+                assert action_step["action_hash"] == current
+                assert current != operation_hash
+    
+            # Yeniden deneme, yeni oturum testi ve yayıncı onayından sonra çalışır; her aşamada tek not.
+            def notes() -> list[str]:
+                return [c["text"] for c in lab.control("GET", "/__lab/state").json()["commits"]]
+    
+            before = len(notes())
+            async with async_playwright() as p:
+                browser = await p.chromium.launch()
+                ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
+                await ui.goto(f"{base}/prototype/designer")
+                await ui.get_by_role("button", name="Kayıtlı taslakları göster").click()
+                await ui.get_by_role("button", name="“Dosya notu” taslağını aç").click()
+                await ui.get_by_role("button", name="Gerçek oturum", exact=True).click()
+>               await expect(ui.get_by_label("Tarayıcı oturumu")).to_have_value(sid, timeout=10000)
+E               AssertionError: Locator expected to have Value 'O0G-jVi6fcwA0oRN7GDiBw'
+E               Actual value:  
+E               Call log:
+E                 - Expect "to_have_value" get_by_label("Tarayıcı oturumu") with timeout 10000ms
+E                 - waiting for get_by_label("Tarayıcı oturumu")
+E                   24 × locator resolved to <select id="pd-real-session">…</select>
+E                      - unexpected value ""
+E               
+E               Aria snapshot:
+E               - combobox "Tarayıcı oturumu":
+E                 - option "Seçin…" [selected]
+E                 - option "O0G-jVi6 · http://127.0.0.1:50459/pages/note-form"
+
+/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/test_action_file_mongo.py:216: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_action_file_mongo.py::test_changed_action_blocks_old_release_until_retested
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 15.85s

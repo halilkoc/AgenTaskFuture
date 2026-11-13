@@ -1,0 +1,339 @@
+F
+=================================== FAILURES ===================================
+_________________________ test_company_candidate_flow __________________________
+/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/test_company_candidate_flow.py:210: in test_company_candidate_flow
+    await expect(status).to_contain_text("Yeni oturum testi tamamlandı: BAŞARILI", timeout=40000)
+E   AssertionError: Locator expected to contain text 'Yeni oturum testi tamamlandı: BAŞARILI'
+E   Actual value: Beklenen başlangıç ekranı görünmüyor; işlem başlatılmadı. Pencerede doğru ekranı açıp yeniden deneyin. 
+E   Call log:
+E     - Expect "to_contain_text" locator("#pd-runpanel-status") with timeout 40000ms
+E     - waiting for locator("#pd-runpanel-status")
+E       2 × locator resolved to <p role="status" aria-live="polite" id="pd-runpanel-status" class="pd-real__status is-busy">Çalışıyor…</p>
+E         - unexpected value "Çalışıyor…"
+E       81 × locator resolved to <p role="status" aria-live="polite" id="pd-runpanel-status" class="pd-real__status is-warn">Beklenen başlangıç ekranı görünmüyor; işlem başla…</p>
+E          - unexpected value "Beklenen başlangıç ekranı görünmüyor; işlem başlatılmadı. Pencerede doğru ekranı açıp yeniden deneyin."
+E   
+E   Aria snapshot:
+E   - status: Beklenen başlangıç ekranı görünmüyor; işlem başlatılmadı. Pencerede doğru ekranı açıp yeniden deneyin.
+------------------------------ Captured log setup ------------------------------
+DEBUG    asyncio:selector_events.py:64 Using selector: KqueueSelector
+------------------------------ Captured log call -------------------------------
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+WARNING  agentask.infrastructure.identity.local_admin:observability.py:59 auth_login
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.identity.local_admin:observability.py:59 auth_login
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.playwright_factory:playwright_factory.py:206 browser_launched engine=chromium
+INFO     agentask.application.services.browser_sessions:browser_sessions.py:165 browser_session_opened owner=admin purpose=interactive
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=22 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.application.services.executor:observability.py:59 run_started
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.application.services.executor:observability.py:59 run_finished
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.application.services.executor:observability.py:59 run_started
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.application.services.executor:observability.py:59 run_finished
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.application.services.executor:observability.py:59 run_started
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.application.services.executor:observability.py:59 run_finished
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.application.services.executor:observability.py:59 run_started
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat started", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2}
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.application.services.executor:observability.py:59 run_finished
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.application.services.executor:observability.py:59 run_started
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=18 incomplete=0
+INFO     agentask.application.services.executor:observability.py:59 step_done
+INFO     agentask.application.services.executor:observability.py:59 run_finished
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.designer:observability.py:59 draft_saved
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.application.services.browser_sessions:browser_sessions.py:165 browser_session_opened owner=admin purpose=verification
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=1 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=1 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=1 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=1 controls=0 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat succeeded", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2, "durationMS": 10005.53645900004, "reply": "{\"isWritablePrimary\": true, \"topologyVersion\": {\"processId\": {\"$oid\": \"6af7367f91e6353c25ff09ad\"}}, \"maxBsonObjectSize\": 16777216, \"maxMessageSizeBytes\": 48000000, \"maxWriteBatchSize\": 100000, \"localTime\": {\"$date\": \"2026-11-13T16:11:01.076Z\"}, \"logicalSessionTimeoutMinutes\": 30, \"connectionId\": 2, \"maxWireVersion\": 25, \"ok\": 1.0}"}
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat started", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2}
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=0 incomplete=0
+INFO     agentask.infrastructure.browser.observer:observer.py:382 observation_completed frames=3 controls=17 incomplete=0
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat succeeded", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2, "durationMS": 10003.430707999996, "reply": "{\"isWritablePrimary\": true, \"topologyVersion\": {\"processId\": {\"$oid\": \"6af7367f91e6353c25ff09ad\"}}, \"maxBsonObjectSize\": 16777216, \"maxMessageSizeBytes\": 48000000, \"maxWriteBatchSize\": 100000, \"localTime\": {\"$date\": \"2026-11-13T16:11:11.081Z\"}, \"logicalSessionTimeoutMinutes\": 30, \"connectionId\": 2, \"maxWireVersion\": 25, \"ok\": 1.0}"}
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat started", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2}
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat succeeded", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2, "durationMS": 9999.278291999985, "reply": "{\"isWritablePrimary\": true, \"topologyVersion\": {\"processId\": {\"$oid\": \"6af7367f91e6353c25ff09ad\"}}, \"maxBsonObjectSize\": 16777216, \"maxMessageSizeBytes\": 48000000, \"maxWriteBatchSize\": 100000, \"localTime\": {\"$date\": \"2026-11-13T16:11:21.082Z\"}, \"logicalSessionTimeoutMinutes\": 30, \"connectionId\": 2, \"maxWireVersion\": 25, \"ok\": 1.0}"}
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat started", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2}
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat succeeded", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2, "durationMS": 10001.551583000037, "reply": "{\"isWritablePrimary\": true, \"topologyVersion\": {\"processId\": {\"$oid\": \"6af7367f91e6353c25ff09ad\"}}, \"maxBsonObjectSize\": 16777216, \"maxMessageSizeBytes\": 48000000, \"maxWriteBatchSize\": 100000, \"localTime\": {\"$date\": \"2026-11-13T16:11:31.084Z\"}, \"logicalSessionTimeoutMinutes\": 30, \"connectionId\": 2, \"maxWireVersion\": 25, \"ok\": 1.0}"}
+DEBUG    pymongo.topology:logger.py:112 {"message": "Server heartbeat started", "topologyId": {"$oid": "6af73681987193162c423621"}, "serverHost": "127.0.0.1", "serverPort": 49902, "awaited": true, "driverConnectionId": 1, "serverConnectionId": 2}
+DEBUG    agentask.presentation.app:observability.py:59 http_request
+=========================== short test summary info ============================
+FAILED tests/e2e/test_company_candidate_flow.py::test_company_candidate_flow
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 54.44s

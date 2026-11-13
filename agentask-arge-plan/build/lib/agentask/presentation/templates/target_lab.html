@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Hedef Deneme{% endblock %}
+{% block content %}
+<h1>Hedef Deneme</h1>
+<p class="muted">Gözlem, anlamsal hedef arama ve manuel seçim. Bu ekran sayfada işlem yapmaz; yalnızca okur ve vurgular.
+Seçim ve vurguyu görmek için tarayıcı görünür modda olmalıdır (<code>BROWSER_HEADLESS=false</code>).</p>
+
+<section class="card" id="tl-session">
+  <h2>1. Oturum</h2>
+  <button type="button" data-action="open">Oturum aç</button>
+  <button type="button" data-action="close">Oturumu kapat</button>
+  <span class="tl-session-id muted">Oturum yok</span>
+</section>
+
+<section class="card">
+  <h2>2. Adres</h2>
+  <form class="tl-nav">
+    <label>Adres <input name="url" size="60" value="{{ target_base_url }}/login"></label>
+    <button type="submit">Git</button>
+  </form>
+  <p class="muted">Deney uygulamasında önce açılan tarayıcı penceresinde giriş yapın.</p>
+</section>
+
+<section class="card">
+  <h2>3. Gözlem</h2>
+  <button type="button" data-action="observe">Ekranı gözlemle</button>
+  <div class="tl-observe"></div>
+</section>
+
+<section class="card">
+  <h2>4. Hedef ara</h2>
+  <form class="tl-resolve">
+    <label>Tür
+      <select name="kind">
+        <option value="textbox">Metin alanı</option><option value="button">Düğme</option>
+        <option value="select">Açılır liste</option><option value="combobox">Özel açılır liste</option>
+        <option value="tab">Sekme</option><option value="table">Tablo</option>
+      </select>
+    </label>
+    <label>Etiketler (virgülle) <input name="labels" value="Müşteri No"></label>
+    <label>Bölüm <input name="region" placeholder="ör. Kefil"></label>
+    <label>Frame başlığı <input name="frame_title" placeholder="ör. Adres Bilgileri"></label>
+    <label>Satır anahtarı <input name="row_key" placeholder="ör. B-1003"></label>
+    <button type="submit">Ara</button>
+  </form>
+  <pre class="tl-spec muted"></pre>
+  <div class="tl-result"></div>
+</section>
+
+<section class="card">
+  <h2>5. Manuel seçim</h2>
+  <button type="button" data-action="picker-start">Seçimi başlat</button>
+  <button type="button" data-action="picker-stop">Seçimi durdur</button>
+  <button type="button" data-action="clear">Vurguyu temizle</button>
+  <div class="tl-pick muted">Seçim kapalı.</div>
+</section>
+<p class="tl-error" role="alert"></p>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='target_lab.js') }}"></script>{% endblock %}

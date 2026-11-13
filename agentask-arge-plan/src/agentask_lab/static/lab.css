@@ -1,0 +1,22 @@
+body { margin: 0; font-family: system-ui, sans-serif; background: #eef1f5; color: #1c2430; }
+body.framed { background: #fff; padding: .5rem; }
+body.external { background: #f4fbf3; }
+.lab-banner { background: #b3261e; color: #fff; font-weight: 600; padding: .3rem 1rem; font-size: .85rem; }
+.lab-header { display: flex; justify-content: space-between; padding: .5rem 1rem; background: #263445; }
+.lab-header a, .lab-header span { color: #fff; }
+main { padding: 1rem 1.5rem; }
+label { display: block; margin-top: .5rem; font-size: .9rem; }
+input, select, textarea { padding: .3rem; min-width: 240px; }
+.panel { background: #fff; padding: .75rem 1rem; margin: .75rem 0; border: 1px solid #ccd3dd; }
+.frames iframe { display: block; margin: .5rem 0; border: 1px solid #9aa6b5; background: #fff; }
+.combo { display: inline-block; min-width: 240px; padding: .3rem; border: 1px solid #888; background: #fff; cursor: pointer; }
+.combo-list { list-style: none; margin: 0; padding: 0; border: 1px solid #888; background: #fff; width: 250px; }
+.combo-list li { padding: .3rem; cursor: pointer; }
+.combo-list li:hover { background: #dde7f5; }
+table { border-collapse: collapse; background: #fff; }
+td, th { border: 1px solid #ccd3dd; padding: .25rem .6rem; text-align: left; }
+.scroll { height: 220px; overflow-y: auto; border: 1px solid #9aa6b5; background: #fff; width: 520px; }
+.pager { margin-top: .5rem; display: flex; gap: 1rem; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; }
+.modal { background: #fff; padding: 1rem 1.5rem; border-radius: 6px; max-width: 420px; }
+.alert { color: #8a1c14; font-weight: 600; }

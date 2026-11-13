@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Açılır listeler{% endblock %}
+{% block content %}
+<h1>Kart başvurusu</h1>
+{% set sid = new_id() %}{% set lid = new_id() %}{% set cid = new_id() %}
+<div class="field">
+  <label for="{{ sid }}">Şube</label>
+  <select id="{{ sid }}" name="{{ new_id() }}">
+    <option value="">Seçiniz</option>
+    {% for value, label in branches %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+  </select>
+</div>
+<div class="field">
+  <span id="{{ lid }}">Ürün Tipi</span>
+  <div id="{{ cid }}" class="combo" role="combobox" tabindex="0" aria-labelledby="{{ lid }}"
+       aria-expanded="false" aria-haspopup="listbox"
+       data-options="{{ products | join('|') }}" data-delay-ms="{{ scenario.combobox_delay_ms }}">
+    <span class="combo-value">Seçiniz</span>
+  </div>
+  <input type="hidden" name="{{ new_id() }}" class="combo-hidden">
+</div>
+{% set t1 = new_id() %}{% set t2 = new_id() %}{% set p1 = new_id() %}{% set p2 = new_id() %}
+<div role="tablist" aria-label="Başvuru sekmeleri" class="tabs">
+  <button type="button" role="tab" id="{{ t1 }}" aria-selected="true" aria-controls="{{ p1 }}">Kart Bilgileri</button>
+  <button type="button" role="tab" id="{{ t2 }}" aria-selected="false" aria-controls="{{ p2 }}">Teslimat</button>
+</div>
+<div role="tabpanel" id="{{ p1 }}" aria-labelledby="{{ t1 }}">Kart bilgileri bölümü</div>
+<div role="tabpanel" id="{{ p2 }}" aria-labelledby="{{ t2 }}" hidden>
+  {% set aid = new_id() %}<label for="{{ aid }}">Teslimat Adresi</label><input id="{{ aid }}" name="{{ new_id() }}">
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

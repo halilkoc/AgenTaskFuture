@@ -1,0 +1,135 @@
+Timeout (0:04:00)!
+Thread 0x000000017285f000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017d96f000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017c963000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017b957000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017a94b000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py", line 89 in _worker
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017993f000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/unix_events.py", line 1416 in _do_waitpid
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x0000000178933000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x0000000177927000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 334 in wait
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/queue.py", line 171 in get
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1113 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017691b000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/unix_events.py", line 1416 in _do_waitpid
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x000000017590f000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py", line 89 in _worker
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x0000000174903000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py", line 89 in _worker
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x00000001738f7000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/selectors.py", line 561 in select
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 1913 in _run_once
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 618 in run_forever
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 651 in run_until_complete
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 194 in run
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/support.py", line 36 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x00000001717c7000 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/selectors.py", line 561 in select
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 1913 in _run_once
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 618 in run_forever
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 651 in run_until_complete
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 194 in run
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/support_lab.py", line 46 in _run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 989 in run
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1052 in _bootstrap_inner
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/threading.py", line 1009 in _bootstrap
+
+Thread 0x00000001f76a1300 (most recent call first):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/selectors.py", line 561 in select
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 1913 in _run_once
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 618 in run_forever
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 651 in run_until_complete
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118 in run
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py", line 906 in inner
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/python.py", line 187 in pytest_pyfunc_call
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147 in _multicall
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183 in _hookexec
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197 in __call__
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/python.py", line 1798 in runtest
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py", line 570 in runtest
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 184 in pytest_runtest_call
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147 in _multicall
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183 in _hookexec
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197 in __call__
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 250 in <lambda>
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 361 in from_call
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 249 in call_and_report
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 139 in runtestprotocol
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 118 in pytest_runtest_protocol
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147 in _multicall
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183 in _hookexec
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197 in __call__
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/main.py", line 411 in pytest_runtestloop
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147 in _multicall
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183 in _hookexec
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197 in __call__
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/main.py", line 387 in _main
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/main.py", line 333 in wrap_session
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/main.py", line 380 in pytest_cmdline_main
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147 in _multicall
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183 in _hookexec
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197 in __call__
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py", line 262 in _main
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py", line 286 in _console_main
+  File "/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/.venv/bin/pytest", line 6 in <module>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Aynı isimli kontroller{% endblock %}
+{% block content %}
+<h1>Başvuru — taraf bilgileri</h1>
+{% for party in ["Başvuran", "Kefil"] %}
+{% set hid = new_id() %}{% set a = new_id() %}{% set b = new_id() %}
+<section aria-labelledby="{{ hid }}" class="panel">
+  <h2 id="{{ hid }}">{{ party }}</h2>
+  <label for="{{ a }}">{{ scenario.guarantor_customer_label if party == "Kefil" else "Müşteri No" }}</label><input id="{{ a }}" name="{{ new_id() }}">
+  <label for="{{ b }}">Ad Soyad</label><input id="{{ b }}" name="{{ new_id() }}">
+  <button type="button" id="{{ new_id() }}" class="party-save">Kaydet</button>
+  <p role="status" class="party-status"></p>
+</section>
+{% endfor %}
+{% endblock %}

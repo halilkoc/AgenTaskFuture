@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Hassas alanlar{% endblock %}
+{% block content %}
+{% set a = new_id() %}{% set b = new_id() %}{% set c = new_id() %}{% set d = new_id() %}{% set e = new_id() %}
+<h1>Güvenlik doğrulaması (deney)</h1>
+<section aria-label="Doğrulama" class="panel">
+  <label for="{{ a }}">Kullanıcı Parolası</label><input id="{{ a }}" name="{{ new_id() }}" type="password">
+  <label for="{{ b }}">Tek Kullanımlık Kod</label><input id="{{ b }}" name="{{ new_id() }}" autocomplete="one-time-code">
+  <label for="{{ c }}">Kart Güvenlik Kodu</label><input id="{{ c }}" name="{{ new_id() }}">
+  <label for="{{ d }}">Açıklama</label><input id="{{ d }}" name="{{ new_id() }}">
+  <label for="{{ e }}">Gizli Soru</label>
+  <select id="{{ e }}" name="{{ new_id() }}" autocomplete="off" data-sensitive="true">
+    <option>Seçiniz</option><option>İlk okulunuz</option>
+  </select>
+  <button type="button" id="{{ new_id() }}">Doğrula</button>
+</section>
+{% endblock %}

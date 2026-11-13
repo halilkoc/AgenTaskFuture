@@ -1,0 +1,30 @@
+:root { --fg: #1d2330; --muted: #5b6475; --accent: #1f5fbf; --bg: #f6f7f9; --line: #d9dde4; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg); background: var(--bg); }
+.topbar { display: flex; gap: 1.5rem; align-items: center; padding: .75rem 1.5rem; background: #fff; border-bottom: 1px solid var(--line); }
+.topbar nav { display: flex; gap: 1rem; flex: 1; }
+.brand { font-weight: 700; text-decoration: none; color: var(--fg); }
+a { color: var(--accent); }
+.user { color: var(--muted); font-size: .9rem; }
+.env-banner { background: #fff4d6; border-bottom: 1px solid #f0d98c; padding: .4rem 1.5rem; font-size: .85rem; }
+main { max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; }
+.cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.cards li { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; }
+.cards a { font-weight: 600; }
+.muted { color: var(--muted); }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: .75rem 1rem; margin: 1rem 0; }
+.card label { display: inline-block; margin: .25rem .75rem .25rem 0; }
+[hidden] { display: none !important; } /* yukarıdaki gibi görünüm kuralları hidden özniteliğini ezmesin */
+.card h2 { font-size: 1.05rem; margin: .2rem 0 .6rem; }
+.tl-table { border-collapse: collapse; width: 100%; font-size: .85rem; margin-top: .5rem; }
+.tl-table td, .tl-table th { border-bottom: 1px solid var(--line); padding: .25rem .4rem; text-align: left; }
+.badge { display: inline-block; padding: .1rem .5rem; border-radius: 4px; font-weight: 600; }
+.badge.resolved { background: #d8f3dc; } .badge.ambiguous { background: #fff1c2; } .badge.unresolved { background: #fde2e1; }
+.tl-error { color: #a4161a; font-weight: 600; }
+.dz-card { margin: .6rem 0; }
+.dz-card h4 { margin: .2rem 0; }
+.dz-ok { color: #1b5e20; font-weight: 600; } .dz-bad { color: #a4161a; font-weight: 600; }
+
+.lg-page { max-width: 420px; margin: 4rem auto; }
+.lg-form label { display: block; }
+.logout-btn { margin-left: .75rem; }

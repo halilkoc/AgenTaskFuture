@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Aynı isimli kontroller{% endblock %}
+{% block content %}
+{% if layout == "similar" %}<h1>Kefil değişiklik talebi</h1>{% else %}<h1>Başvuru — taraf bilgileri</h1>{% endif %}
+{% set parties = ["Başvuran", "Kefil", "Kefil"] if layout == "duplicate_guarantor" else ["Başvuran", "Kefil"] %}
+{% for party in parties %}
+{% set hid = new_id() %}{% set a = new_id() %}{% set b = new_id() %}
+<section aria-labelledby="{{ hid }}" class="panel" data-party="{{ party }}">
+  <h2 id="{{ hid }}">{{ party }}</h2>
+  <label for="{{ a }}">{{ scenario.guarantor_customer_label if party == "Kefil" else "Müşteri No" }}</label><input id="{{ a }}" name="{{ new_id() }}">
+  {% if layout == "similar" and party == "Kefil" %}
+  <label for="{{ b }}">Talep Notu</label><input id="{{ b }}" name="{{ new_id() }}">
+  {% else %}
+  <label for="{{ b }}">Ad Soyad</label><input id="{{ b }}" name="{{ new_id() }}">
+  {% if layout == "with_change_note" and party == "Kefil" %}{% set c = new_id() %}
+  <label for="{{ c }}">Talep Notu</label><input id="{{ c }}" name="{{ new_id() }}">
+  {% endif %}
+  {% endif %}
+  <button type="button" id="{{ new_id() }}" class="party-save">Kaydet</button>
+  <p role="status" class="party-status"></p>
+</section>
+{% endfor %}
+{% endblock %}
+{% block scripts %}
+{% if scenario.party_switch != "none" and layout == "standard" %}
+<script>
+// Deney: Başvuran alanına yazılınca uygulama benzer ama farklı ekrana geçer (SPA içi DOM değişimi veya gezinme).
+(function () {
+  const first = document.querySelector('section[data-party="Başvuran"] input');
+  let switched = false;
+  first.addEventListener("input", function () {
+    if (switched) return; switched = true;
+    {% if scenario.party_switch == "navigate" %}
+    location.assign(location.pathname + "?layout=similar");
+    {% else %}
+    (function () {
+      document.querySelector("h1").textContent = "Kefil değişiklik talebi";
+      const sec = document.querySelector('section[data-party="Kefil"]');
+      const labels = sec.querySelectorAll("label"); const inputs = sec.querySelectorAll("input");
+      const fresh = "x" + Math.random().toString(36).slice(2);
+      labels[1].textContent = "Talep Notu"; labels[1].htmlFor = fresh;
+      const replacement = document.createElement("input"); replacement.id = fresh; replacement.name = fresh + "n";
+      inputs[1].replaceWith(replacement);
+    })();
+    {% endif %}
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

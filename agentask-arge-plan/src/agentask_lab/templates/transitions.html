@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Geçiş senaryoları{% endblock %}
+{% block content %}
+<h1>Geçiş senaryoları</h1>
+{% set sid = new_id() %}{% set nid = new_id() %}
+<section aria-label="Başlangıç">
+  <div class="field"><label for="{{ nid }}">Referans</label><input id="{{ nid }}" name="{{ new_id() }}"></div>
+  <div class="field"><label for="{{ sid }}">İşlem Türü</label>
+    <select id="{{ sid }}" class="xnavselect" data-target="{{ '/pages/transitions' if scenario.selection_outcome == 'reject' else '/pages/transition-target' }}" name="{{ new_id() }}">
+      <option value="">Seçiniz</option><option value="git">Hedefe Git</option></select></div>
+  <p><a href="/pages/transition-target">Detaya git</a></p>
+  <p><a href="/pages/transition-target">Aynı Bağlantı</a> <a href="/pages/transition-target">Aynı Bağlantı</a></p>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

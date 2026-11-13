@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}İşlem Deneme{% endblock %}
+{% block content %}
+<h1>İşlem Deneme</h1>
+<p class="muted">Desteklenen komutlarla adım adım deneme. Hedefler P2 ile çözülür; belirsiz hedefte işlem yapılmaz.
+Bu ekran Katalog Tasarımcısı değildir; yayın yapmaz.</p>
+
+<section class="card">
+  <h2>1. Oturum ve ekran</h2>
+  <button type="button" data-action="open">Oturum aç</button>
+  <button type="button" data-action="close">Oturumu kapat</button>
+  <span class="rl-session muted">Oturum yok</span>
+  <form class="rl-nav">
+    {% if lab_origin %}
+    <label>Deney ekranı
+      <select name="lab_page">
+        <option value="/pages/note-form">Not ekleme (veri değiştirir)</option>
+        <option value="/pages/duplicates">Aynı isimli alanlar (Başvuran/Kefil)</option>
+        <option value="/pages/dropdowns">Açılır listeler ve sekmeler</option>
+        <option value="/pages/table-paged">Sayfalı tablo</option>
+        <option value="/pages/table-scroll">Kaydırmalı tablo</option>
+        <option value="/pages/frames">İç içe frame'ler</option>
+      </select>
+    </label>
+    <button type="submit" name="go" value="lab">Deney ekranını aç</button>
+    {% endif %}
+    <label>veya adres <input name="url" size="40" value="{{ target_base_url }}/"></label>
+    <button type="submit" name="go" value="url">Git</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>2. Adım</h2>
+  <form class="rl-step">
+    <label>Komut
+      <select name="op">
+        <option value="ensure_value">Değer yaz (ensure_value)</option>
+        <option value="ensure_choice">Seçim yap (ensure_choice)</option>
+        <option value="activate_tab">Sekme aç (activate_tab)</option>
+        <option value="find_record">Kayıt bul (find_record)</option>
+        <option value="read">Oku (read)</option>
+        <option value="assert_condition">Koşul doğrula (assert_condition)</option>
+        <option value="invoke_approved_action">Onaylı aksiyon (invoke_approved_action)</option>
+      </select>
+    </label>
+    <fieldset class="rl-target">
+      <legend>Hedef (anlamsal tanım)</legend>
+      <label>Tür <select name="kind">
+        <option value="textbox">Metin alanı</option><option value="select">Açılır liste</option>
+        <option value="combobox">Özel açılır liste</option><option value="tab">Sekme</option>
+        <option value="table">Tablo</option><option value="button">Düğme</option></select></label>
+      <label>Etiket <input name="labels" placeholder="ör. Müşteri No"></label>
+      <label>Bölüm <input name="region" placeholder="ör. Kefil"></label>
+      <label>Frame başlığı <input name="frame_title"></label>
+      <label>Satır anahtarı <input name="row_key"></label>
+      <button type="button" data-action="resolve">Hedefi doğrula (P2)</button>
+      <button type="button" data-action="pick">Tarayıcıda seç</button>
+      <span class="rl-resolve muted"></span>
+    </fieldset>
+    <fieldset class="rl-op" data-for="ensure_value"><legend>Değer</legend>
+      <label>Yazılacak değer <input name="value"></label></fieldset>
+    <fieldset class="rl-op" data-for="ensure_choice"><legend>Seçim</legend>
+      <label>Seçenek <input name="choice"></label></fieldset>
+    <fieldset class="rl-op" data-for="find_record"><legend>Kayıt</legend>
+      <label>İş anahtarı <input name="key" placeholder="ör. B-1027"></label>
+      <label>Gezinme <select name="navigation"><option value="none">Tek sayfa</option>
+        <option value="paged">Sayfalı (Sonraki)</option><option value="scroll">Kaydırmalı</option></select></label>
+      <label>Sonraki düğmesi <input name="next_label" value="Sonraki"></label>
+      <label>Liste sonu metni <input name="end_text" value="Tüm kayıtlar yüklendi"></label></fieldset>
+    <fieldset class="rl-op" data-for="assert_condition"><legend>Başarı koşulu</legend>
+      <label>Koşul <select name="condition">
+        <option value="value_equals">Alan değeri eşittir</option><option value="choice_equals">Seçim eşittir</option>
+        <option value="tab_active">Sekme etkin</option><option value="text_present">Durum metni</option></select></label>
+      <label>Beklenen <input name="expected"></label>
+      <label>Metin eşleşmesi <select name="match_mode"><option value="prefix">ile başlar</option>
+        <option value="equals">eşittir</option><option value="contains">içerir</option></select></label></fieldset>
+    <fieldset class="rl-op" data-for="invoke_approved_action"><legend>Onaylı aksiyon</legend>
+      <label>Aksiyon <select name="action_id"></select></label>
+      <span class="rl-params"></span>
+      <p class="muted rl-action-info"></p></fieldset>
+    <button type="submit">Adımı ekle</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>3. Plan</h2>
+  <label>Örnek senaryo <select class="rl-example">
+    <option value="">— seçin —</option>
+    <option value="note">Vakaya not ekle (yazma + onaylı aksiyon)</option>
+    <option value="guarantor">Kefil bilgisi (bağlamla ayrım + ekran aksiyonu)</option>
+    <option value="card">Kart başvurusu (liste, özel liste, sekme, metin)</option>
+    <option value="record">Kayıt bul (sayfalı tablo)</option>
+    <option value="ambiguous">Belirsiz hedef (işlem yapılmamalı)</option>
+  </select></label>
+  <ol class="rl-plan"></ol>
+  <button type="button" data-action="clear-plan">Planı temizle</button>
+  <button type="button" data-action="run">Çalıştır</button>
+  <button type="button" data-action="cancel">İptal et</button>
+  <button type="button" data-action="resume">Devam et</button>
+</section>
+
+<section class="card">
+  <h2>4. Sonuç</h2>
+  <p class="rl-run muted">Henüz çalıştırma yok.</p>
+  <table class="tl-table rl-steps"></table>
+</section>
+<p class="tl-error" role="alert"></p>
+<div class="rl-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='run_lab.js') }}"></script>{% endblock %}

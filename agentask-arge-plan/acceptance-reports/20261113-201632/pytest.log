@@ -1,0 +1,856 @@
+....E.E.E.............E...E.E.E.E.E..E.E.E.E.E.E..E.E.E.E.E.E.E.E.E.E.E. [ 40%]
+E.E.E.E.E.E.E.E.E.E.E.E.E.E..E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E........ [ 75%]
+.............E.E.E.E.E.E.E.E.E.E.E.E.E.E.E.E                             [100%]
+==================================== ERRORS ====================================
+_ ERROR at teardown of test_definition_changed_after_planning_is_not_dispatched _
+tests/integration/browser/test_action_definition_runtime.py:58: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_unknown_outcome_without_reconcile_is_safe_and_not_a_crash _
+tests/integration/browser/test_action_definition_runtime.py:58: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_______ ERROR at teardown of test_session_lost_text_pauses_before_action _______
+tests/integration/browser/test_action_definition_runtime.py:58: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_empty_prior_output_stops_without_writing ______
+tests/integration/browser/test_executor.py:85: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____________ ERROR at teardown of test_link_trigger_reaches_target _____________
+tests/integration/browser/test_transition_triggers.py:47: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+___________ ERROR at teardown of test_duplicate_link_is_not_clicked ____________
+tests/integration/browser/test_transition_triggers.py:47: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_________ ERROR at teardown of test_choice_trigger_reaches_target_once _________
+tests/integration/browser/test_transition_triggers.py:47: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_ ERROR at teardown of test_choice_that_does_not_navigate_times_out_without_reselecting _
+tests/integration/browser/test_transition_triggers.py:47: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_____ ERROR at teardown of test_already_selected_does_not_claim_transition _____
+tests/integration/browser/test_transition_triggers.py:47: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_____________ ERROR at teardown of test_only_found_row_is_written ______________
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+______ ERROR at teardown of test_row_order_change_does_not_change_target _______
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+___________ ERROR at teardown of test_missing_record_writes_nothing ____________
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+________ ERROR at teardown of test_paged_search_with_custom_next_label _________
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+________________ ERROR at teardown of test_duplicate_key_pauses ________________
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_row_step_without_found_record_is_refused ______
+tests/integration/browser/test_record_runtime.py:31: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____ ERROR at teardown of test_checkbox_same_label_is_separated_by_section _____
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_ ERROR at teardown of test_checkbox_without_section_is_ambiguous_and_untouched _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+__________ ERROR at teardown of test_already_in_state_makes_no_click ___________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+________________ ERROR at teardown of test_uncheck_is_verified _________________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+____ ERROR at teardown of test_visually_hidden_input_goes_through_its_label ____
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+___________________ ERROR at teardown of test_aria_checkbox ____________________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+__________ ERROR at teardown of test_disabled_checkbox_is_not_changed __________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+___________ ERROR at teardown of test_hidden_checkbox_is_not_changed ___________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+________ ERROR at teardown of test_checkbox_behind_modal_is_not_changed ________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_app_reverting_checkbox_is_single_send_and_never_success _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_____ ERROR at teardown of test_radio_groups_with_same_name_are_separated ______
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+__________ ERROR at teardown of test_radio_second_time_makes_no_click __________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+__________________ ERROR at teardown of test_aria_radiogroup ___________________
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_ ERROR at teardown of test_bad_radio_option_stops_without_change[Yinelenen-Ayn\u0131] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_bad_radio_option_stops_without_change[K\u0131s\u0131tl\u0131-Kapal\u0131] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_bad_radio_option_stops_without_change[Teslimat-Posta] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_autocomplete_delayed_redrawn_exact_pick _______
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_______ ERROR at teardown of test_autocomplete_plain_input_when_declared _______
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_ ERROR at teardown of test_autocomplete_no_exact_match_restores_and_says_so[Yok B\xf6yle] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_autocomplete_no_exact_match_restores_and_says_so[\xc7ift \u015eube] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_autocomplete_no_exact_match_restores_and_says_so[Ankara] _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_autocomplete_lost_selection_is_not_reported_as_restored _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+___ ERROR at teardown of test_autocomplete_already_selected_does_not_search ____
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_ ERROR at teardown of test_autocomplete_label_right_value_wrong_is_not_success _
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+___ ERROR at teardown of test_combobox_input_without_declaration_is_rejected ___
+tests/integration/browser/test_controls_runtime.py:30: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+________ ERROR at teardown of test_exact_set_replaces_current_selection ________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_______ ERROR at teardown of test_same_set_in_any_order_makes_no_change ________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+______ ERROR at teardown of test_bad_member_stops_before_any_change[Yok] _______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_bad_member_stops_before_any_change[Kapal\u0131 Se\xe7enek] _
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____ ERROR at teardown of test_aria_multiselect_applies_only_the_difference ____
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_____ ERROR at teardown of test_single_select_command_still_rejects_multi ______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_native_date_is_written_iso_and_verified _______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+___________ ERROR at teardown of test_text_date_uses_declared_format ___________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_____ ERROR at teardown of test_invalid_date_is_never_written[31.02.2026] ______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_invalid_date_is_never_written[1.2.2026] _______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_____ ERROR at teardown of test_invalid_date_is_never_written[yar\u0131n] ______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+__________ ERROR at teardown of test_app_changing_the_date_is_failure __________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_______ ERROR at teardown of test_readonly_calendar_field_is_not_forced ________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+________ ERROR at teardown of test_upload_sends_once_with_original_name ________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+______ ERROR at teardown of test_visually_hidden_file_input_is_supported _______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+___________ ERROR at teardown of test_another_users_file_is_not_sent ___________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____________ ERROR at teardown of test_disallowed_type_is_not_sent _____________
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_uncertain_upload_is_not_resent_on_resume ______
+tests/integration/browser/test_multi_date_file_runtime.py:46: in ctx
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_expected_window_is_used_and_main_screen_reverified _
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+_ ERROR at teardown of test_multiple_or_missing_window_stops[\u0130ki Pencere] _
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=2
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_multiple_or_missing_window_stops[Pencere A\xe7maz] _
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____________ ERROR at teardown of test_wrong_origin_is_not_adopted _____________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_________ ERROR at teardown of test_declared_other_origin_is_accepted __________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+_______ ERROR at teardown of test_wrong_screen_in_window_writes_nothing ________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+____ ERROR at teardown of test_window_closing_early_is_unknown_not_success _____
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+__________ ERROR at teardown of test_application_closes_window_itself __________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+_________ ERROR at teardown of test_window_not_closing_by_itself_stops _________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+__________ ERROR at teardown of test_extra_window_while_working_stops __________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_unexpected_window_still_stops_without_declaration __
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.infrastructure.browser.observer:observer.py:151 new_window_open count=1
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+_ ERROR at teardown of test_optional_dialog_appears_and_defined_button_is_used _
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+__ ERROR at teardown of test_optional_dialog_absent_causes_no_wait_or_failure __
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+_____ ERROR at teardown of test_different_text_or_two_dialogs_stop[other] ______
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______ ERROR at teardown of test_different_text_or_two_dialogs_stop[two] _______
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+______________ ERROR at teardown of test_undeclared_dialog_stops _______________
+tests/integration/browser/test_window_modal_runtime.py:49: in env
+    await sessions.shutdown()
+src/agentask/application/services/browser_sessions.py:248: in shutdown
+    await self._factory.shutdown()
+src/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown
+    await playwright.stop()
+          ^^^^^^^^^^^^^^^^^
+E   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+=========================== short test summary info ============================
+ERROR tests/integration/browser/test_action_definition_runtime.py::test_definition_changed_after_planning_is_not_dispatched
+ERROR tests/integration/browser/test_action_definition_runtime.py::test_unknown_outcome_without_reconcile_is_safe_and_not_a_crash
+ERROR tests/integration/browser/test_action_definition_runtime.py::test_session_lost_text_pauses_before_action
+ERROR tests/integration/browser/test_executor.py::test_empty_prior_output_stops_without_writing
+ERROR tests/integration/browser/test_transition_triggers.py::test_link_trigger_reaches_target
+ERROR tests/integration/browser/test_transition_triggers.py::test_duplicate_link_is_not_clicked
+ERROR tests/integration/browser/test_transition_triggers.py::test_choice_trigger_reaches_target_once
+ERROR tests/integration/browser/test_transition_triggers.py::test_choice_that_does_not_navigate_times_out_without_reselecting
+ERROR tests/integration/browser/test_transition_triggers.py::test_already_selected_does_not_claim_transition
+ERROR tests/integration/browser/test_record_runtime.py::test_only_found_row_is_written
+ERROR tests/integration/browser/test_record_runtime.py::test_row_order_change_does_not_change_target
+ERROR tests/integration/browser/test_record_runtime.py::test_missing_record_writes_nothing
+ERROR tests/integration/browser/test_record_runtime.py::test_paged_search_with_custom_next_label
+ERROR tests/integration/browser/test_record_runtime.py::test_duplicate_key_pauses
+ERROR tests/integration/browser/test_record_runtime.py::test_row_step_without_found_record_is_refused
+ERROR tests/integration/browser/test_controls_runtime.py::test_checkbox_same_label_is_separated_by_section
+ERROR tests/integration/browser/test_controls_runtime.py::test_checkbox_without_section_is_ambiguous_and_untouched
+ERROR tests/integration/browser/test_controls_runtime.py::test_already_in_state_makes_no_click
+ERROR tests/integration/browser/test_controls_runtime.py::test_uncheck_is_verified
+ERROR tests/integration/browser/test_controls_runtime.py::test_visually_hidden_input_goes_through_its_label
+ERROR tests/integration/browser/test_controls_runtime.py::test_aria_checkbox
+ERROR tests/integration/browser/test_controls_runtime.py::test_disabled_checkbox_is_not_changed
+ERROR tests/integration/browser/test_controls_runtime.py::test_hidden_checkbox_is_not_changed
+ERROR tests/integration/browser/test_controls_runtime.py::test_checkbox_behind_modal_is_not_changed
+ERROR tests/integration/browser/test_controls_runtime.py::test_app_reverting_checkbox_is_single_send_and_never_success
+ERROR tests/integration/browser/test_controls_runtime.py::test_radio_groups_with_same_name_are_separated
+ERROR tests/integration/browser/test_controls_runtime.py::test_radio_second_time_makes_no_click
+ERROR tests/integration/browser/test_controls_runtime.py::test_aria_radiogroup
+ERROR tests/integration/browser/test_controls_runtime.py::test_bad_radio_option_stops_without_change[Yinelenen-Ayn\u0131]
+ERROR tests/integration/browser/test_controls_runtime.py::test_bad_radio_option_stops_without_change[K\u0131s\u0131tl\u0131-Kapal\u0131]
+ERROR tests/integration/browser/test_controls_runtime.py::test_bad_radio_option_stops_without_change[Teslimat-Posta]
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_delayed_redrawn_exact_pick
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_plain_input_when_declared
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_no_exact_match_restores_and_says_so[Yok B\xf6yle]
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_no_exact_match_restores_and_says_so[\xc7ift \u015eube]
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_no_exact_match_restores_and_says_so[Ankara]
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_lost_selection_is_not_reported_as_restored
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_already_selected_does_not_search
+ERROR tests/integration/browser/test_controls_runtime.py::test_autocomplete_label_right_value_wrong_is_not_success
+ERROR tests/integration/browser/test_controls_runtime.py::test_combobox_input_without_declaration_is_rejected
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_exact_set_replaces_current_selection
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_same_set_in_any_order_makes_no_change
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_bad_member_stops_before_any_change[Yok]
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_bad_member_stops_before_any_change[Kapal\u0131 Se\xe7enek]
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_aria_multiselect_applies_only_the_difference
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_single_select_command_still_rejects_multi
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_native_date_is_written_iso_and_verified
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_text_date_uses_declared_format
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_invalid_date_is_never_written[31.02.2026]
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_invalid_date_is_never_written[1.2.2026]
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_invalid_date_is_never_written[yar\u0131n]
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_app_changing_the_date_is_failure
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_readonly_calendar_field_is_not_forced
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_upload_sends_once_with_original_name
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_visually_hidden_file_input_is_supported
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_another_users_file_is_not_sent
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_disallowed_type_is_not_sent
+ERROR tests/integration/browser/test_multi_date_file_runtime.py::test_uncertain_upload_is_not_resent_on_resume
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_expected_window_is_used_and_main_screen_reverified
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_multiple_or_missing_window_stops[\u0130ki Pencere]
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_multiple_or_missing_window_stops[Pencere A\xe7maz]
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_wrong_origin_is_not_adopted
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_declared_other_origin_is_accepted
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_wrong_screen_in_window_writes_nothing
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_window_closing_early_is_unknown_not_success
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_application_closes_window_itself
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_window_not_closing_by_itself_stops
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_extra_window_while_working_stops
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_unexpected_window_still_stops_without_declaration
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_optional_dialog_appears_and_defined_button_is_used
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_optional_dialog_absent_causes_no_wait_or_failure
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_different_text_or_two_dialogs_stop[other]
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_different_text_or_two_dialogs_stop[two]
+ERROR tests/integration/browser/test_window_modal_runtime.py::test_undeclared_dialog_stops
+114 passed, 74 errors in 300.91s (0:05:00)

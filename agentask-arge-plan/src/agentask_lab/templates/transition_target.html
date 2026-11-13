@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Hedef ekran{% endblock %}
+{% block content %}
+<h1>Hedef Ekran</h1>
+{% set nid = new_id() %}{% set mid = new_id() %}
+<section aria-label="Hedef">
+  <div class="field"><label for="{{ nid }}">Hedef Alan</label><input id="{{ nid }}" name="{{ new_id() }}"></div>
+  <div class="field"><label for="{{ mid }}">Hedef Notu</label><input id="{{ mid }}" name="{{ new_id() }}"></div>
+</section>
+{% endblock %}

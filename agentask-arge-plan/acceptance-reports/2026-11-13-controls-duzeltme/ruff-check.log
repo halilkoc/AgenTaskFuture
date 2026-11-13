@@ -1,0 +1,11 @@
+E501 Line too long (112 > 110)
+   --> tests/e2e/test_controls_flow_mongo.py:112:111
+    |
+111 |         async def counts() -> tuple[Any, Any, int]:
+112 |             # Hedef sayfa uygulama sunucusunun döngüsündedir; doğrudan beklenirse yanıt hiç dönmez (2026-11-13).
+    |                                                                                                               ^^
+113 |             result: tuple[Any, Any, int] = await flow.in_server(read_counts())
+114 |             return result
+    |
+
+Found 1 error.

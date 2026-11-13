@@ -1,0 +1,32 @@
+F
+=================================== FAILURES ===================================
+____________ test_changed_action_blocks_old_release_until_retested _____________
+/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/test_action_file_mongo.py:222: in test_changed_action_blocks_old_release_until_retested
+    await flow.confirm_and_try(1)
+/Users/halilkoc/Documents/GitHub/AgenTaskFuture/agentask-arge-plan/tests/e2e/flow_helpers.py:163: in confirm_and_try
+    await expect(step).to_contain_text("Sistem doğrulaması: BAŞARILI", timeout=25000)
+E   AssertionError: Locator expected to contain text 'Sistem doğrulaması: BAŞARILI'
+E   Actual value: Onaylı işlemi çalıştır: Kurum notu ekle. İş etkisi: veri değiştirir (kayıt yapar); sonuç kanıtla doğrulanır, belirsizse tekrar gönderilmez. · Sonuç onayı bekliyorBu deneme hedef uygulamada işlem yapabilir; onaylıyorumGerçek deneSistem doğrulaması başarısız. 
+E   Call log:
+E     - Expect "to_contain_text" locator("#pd-runpanel").locator(".pd-live__step").nth(1) with timeout 25000ms
+E     - waiting for locator("#pd-runpanel").locator(".pd-live__step").nth(1)
+E       2 × locator resolved to <li class="pd-live__step">…</li>
+E         - unexpected value "Onaylı işlemi çalıştır: Kurum notu ekle. İş etkisi: veri değiştirir (kayıt yapar); sonuç kanıtla doğrulanır, belirsizse tekrar gönderilmez. · Denemeye hazırBu deneme hedef uygulamada işlem yapabilir; onaylıyorumGerçek dene"
+E       52 × locator resolved to <li class="pd-live__step">…</li>
+E          - unexpected value "Onaylı işlemi çalıştır: Kurum notu ekle. İş etkisi: veri değiştirir (kayıt yapar); sonuç kanıtla doğrulanır, belirsizse tekrar gönderilmez. · Sonuç onayı bekliyorBu deneme hedef uygulamada işlem yapabilir; onaylıyorumGerçek deneSistem doğrulaması başarısız."
+E   
+E   Aria snapshot:
+E   - listitem:
+E     - paragraph:
+E       - strong: "Onaylı işlemi çalıştır: Kurum notu ekle. İş etkisi: veri değiştirir (kayıt yapar); sonuç kanıtla doğrulanır, belirsizse tekrar gönderilmez."
+E       - text: · Sonuç onayı bekliyor
+E     - checkbox "Bu deneme hedef uygulamada işlem yapabilir; onaylıyorum"
+E     - text: Bu deneme hedef uygulamada işlem yapabilir; onaylıyorum
+E     - button "Gerçek dene"
+E     - paragraph: Sistem doğrulaması başarısız.
+------------------------------ Captured log call -------------------------------
+WARNING  agentask.application.services.executor:observability.py:59 run_finished
+=========================== short test summary info ============================
+FAILED tests/e2e/test_action_file_mongo.py::test_changed_action_blocks_old_release_until_retested
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 31.28s

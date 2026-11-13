@@ -1,0 +1,440 @@
+{
+  "started": "2026-11-13T20:22:36",
+  "finished": "2026-11-13T20:27:33",
+  "tree": "b766a0bc851c8f7b8f288321026e6a7f4cb54b82b52a3c87e763fd6a0280f87f",
+  "pytest_exit": 0,
+  "exit": 0,
+  "isolation": "değişiklik yok (.env, var/, kalıcı MongoDB sayıları)",
+  "package": {
+    "status": "GEÇTİ",
+    "name": "agentask-company-test-0.2.1-20261113.zip",
+    "sha256": "5cf379642d5dc296c953481afe1024b73755b79ce7c8a033d66259cd16455d95",
+    "checks": {
+      "yasak_yol": "0",
+      "ozet_uyusmayan": "0",
+      "wheel_kaynak_farki": "0",
+      "venv": "çıkış 0",
+      "kurulum": "çıkış 0",
+      "check_config": "çıkış 0",
+      "doctor": "çıkış 0"
+    }
+  },
+  "preflight": {
+    "mongod": "var",
+    "gecici_port": "bağlanabilir",
+    "port_8000": "boş (kullanılmaz)",
+    "port_8100": "boş (kullanılmaz)",
+    "port_8101": "boş (kullanılmaz)",
+    "port_27017": "dolu (kullanılmaz, dokunulmaz)",
+    "chromium": "156.0.8078.4"
+  },
+  "items": [
+    {
+      "number": 1,
+      "title": "Yanlış ve doğru parolayla giriş",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Giriş sayfasına yönlenir; yanlış parolada genel hata; doğru parolada tasarımcı.",
+      "human": "Ekranın anlaşılırlığı ve metinlerin yerindeliği insan değerlendirmesidir.",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 2,
+      "title": "Yeni akış, gerçek oturum, uygulamayı aç",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Prototip rozeti ve temsili düğmeler gizli; hedef giriş sayfası oturumda açıldı.",
+      "human": "Testler görünmez tarayıcıda çalışır; görünür pencerenin açılışı elle görülmedi.",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 3,
+      "title": "Hedefe giriş ve seçim ekranı",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Oturumda hedefe girildi; Kefil bölümündeki alan görünür.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 4,
+      "title": "Kefil › Şube sabit Konak tanımı",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py",
+        "tests/e2e/test_new_designer_choice_mongo.py"
+      ],
+      "verified": "Tanım ve kaydetme sonrası sayfadaki tüm alanlar başlangıçla aynı (Şube hâlâ Seçiniz).",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 2,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py, test_new_designer_choice_mongo.py"
+    },
+    {
+      "number": 5,
+      "title": "Kaydet, yenile, yeniden aç",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Yenileme sonrası oturum sürer; 5 adım değerleriyle gelir; eksik yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 6,
+      "title": "Ekran tanıtma, onay, gerçek deneme",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "BAŞARILI; sayfa farkı yalnız tanımlı dört alan (Kefil › Şube = Konak dahil).",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 7,
+      "title": "Elle girişli yeni oturum testi başlar",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "“Elle giriş bekleniyor”; ayrı doğrulama oturumu açılır.",
+      "human": "Testler görünmez tarayıcıda çalışır; görünür pencerenin açılışı elle görülmedi.",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 8,
+      "title": "Girişsiz devam reddedilir",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "“giriş ekranında”; BAŞARILI yazılmaz, deneme başlamaz.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 9,
+      "title": "Giriş sonrası devam",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "“Yeni oturum testi tamamlandı: BAŞARILI”; doğrulama oturumu kapandı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 10,
+      "title": "Yayıncı onayı ve yayın",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Onay geçerli; mesajdaki yayın kimliği API'deki etkin yayınla aynı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 11,
+      "title": "İşlem Asistanı ile çalıştırma",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_company_candidate_flow.py"
+      ],
+      "verified": "Başarılı; onay kutusu yok; yalnız tanımlı alanlar değişti (Başvuran › Şube boş); destek no /runs ile aynı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_company_candidate_flow.py"
+    },
+    {
+      "number": 12,
+      "title": "Onaylı işlem: her çalıştırmada tek not",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_new_designer_approved_action_mongo.py"
+      ],
+      "verified": "Kaydetmede 0, deneme/yeni oturum/Asistan'da birer not; adımın aksiyon özeti güncel özetle aynı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_new_designer_approved_action_mongo.py"
+    },
+    {
+      "number": 13,
+      "title": "Yanıt kaybında mükerrer yok",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_new_designer_approved_action_mongo.py",
+        "tests/integration/browser/test_action_definition_runtime.py"
+      ],
+      "verified": "Yanıtı kaybolan çalıştırma Başarılı ve tek yeni not; sonuç doğrulanamazsa tekrar yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 4,
+      "note": "",
+      "evidence": "test_new_designer_approved_action_mongo.py, test_action_definition_runtime.py"
+    },
+    {
+      "number": 14,
+      "title": "Çok ekranlı başvuru tasarımdan Asistan'a",
+      "baseline": "yeni_test",
+      "tests": [
+        "tests/e2e/test_wizard_acceptance_mongo.py"
+      ],
+      "verified": "Kayıt bağlamı kontrolü geçiş tanımında; rota iki ekran; tutar yazıldı; her çalıştırmada tek geçiş.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_wizard_acceptance_mongo.py"
+    },
+    {
+      "number": 15,
+      "title": "Yanlış vaka ekranında durma",
+      "baseline": "yeni_test",
+      "tests": [
+        "tests/e2e/test_wizard_acceptance_mongo.py"
+      ],
+      "verified": "C-2001-B açılınca Duraklatıldı; tutar boş; destek no görünür; doğru vakada yeniden çalıştı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_wizard_acceptance_mongo.py"
+    },
+    {
+      "number": 16,
+      "title": "Çalışma geçmişi ve çıkış",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_wizard_acceptance_mongo.py"
+      ],
+      "verified": "Aşama, neden, sonraki adım dolu; teknik ayrıntı kapalı; destek no aynı; çıkış girişe döner.",
+      "human": "Ekranın anlaşılırlığı ve metinlerin yerindeliği insan değerlendirmesidir.",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "test_wizard_acceptance_mongo.py"
+    },
+    {
+      "number": 17,
+      "title": "Aksiyon dosyası değişince yeniden onay",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_action_file_mongo.py",
+        "tests/integration/browser/test_action_definition_runtime.py"
+      ],
+      "verified": "Eski yayın 422 action_changed, manifest değişmedi; yeni özete bağlanıp yeniden test, yayın ve tek not.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 4,
+      "note": "",
+      "evidence": "test_action_file_mongo.py, test_action_definition_runtime.py"
+    },
+    {
+      "number": 18,
+      "title": "Yayın geri ve ileri alma",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_release_activation_ui.py",
+        "tests/unit/test_release_activation.py"
+      ],
+      "verified": "Yayıncı dışı 403; kısa gerekçe reddi; geri ve ileri alma; iki yayın korunur; iki etkinleştirme kaydı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 8,
+      "note": "",
+      "evidence": "test_release_activation_ui.py, test_release_activation.py"
+    },
+    {
+      "number": 19,
+      "title": "Okunan değer işleme ve bileşene",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_output_binding_mongo.py",
+        "tests/integration/browser/test_executor.py::test_empty_prior_output_stops_without_writing"
+      ],
+      "verified": "Okunan değer tek gönderimle kaydedildi; boş okumada adım durdu, kayıt yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 3,
+      "note": "",
+      "evidence": "test_output_binding_mongo.py, test_executor.py::test_empty_prior_output_stops_without_writing"
+    },
+    {
+      "number": 20,
+      "title": "Bağlantı ve seçimle geçiş",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_transition_triggers_mongo.py",
+        "tests/integration/browser/test_transition_triggers.py"
+      ],
+      "verified": "Hedef alan yazıldı; aynı adlı bağlantıda tıklama yok, sayfa aynı kaldı.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 7,
+      "note": "",
+      "evidence": "test_transition_triggers_mongo.py, test_transition_triggers.py"
+    },
+    {
+      "number": 21,
+      "title": "Kayıt bul, satırdan aç, bağlam",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_record_flow_mongo.py",
+        "tests/integration/browser/test_record_runtime.py"
+      ],
+      "verified": "Doğru kaydın detayı yazıldı; yalnız bulunan satır değişti; yinelenen/yok/yanlış kayıtta yazma yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 7,
+      "note": "",
+      "evidence": "test_record_flow_mongo.py, test_record_runtime.py"
+    },
+    {
+      "number": 22,
+      "title": "Onay kutusu ve seçenek grubu",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_controls_flow_mongo.py",
+        "tests/integration/browser/test_controls_runtime.py"
+      ],
+      "verified": "Yalnız Başvuru değişti, Kefil aynı; ikinci çalıştırmada kutu ve radyoda 0 yeni tıklama.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 26,
+      "note": "",
+      "evidence": "test_controls_flow_mongo.py, test_controls_runtime.py"
+    },
+    {
+      "number": 23,
+      "title": "Öneri alanı doğru/yok/iki eşleşme",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_controls_flow_mongo.py",
+        "tests/integration/browser/test_controls_runtime.py"
+      ],
+      "verified": "Tam eşleşme ve gerçek değer doğrulandı; seçim kaybolunca Belirsiz, iki eşleşmede Başarısız; tekrar yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 26,
+      "note": "",
+      "evidence": "test_controls_flow_mongo.py, test_controls_runtime.py"
+    },
+    {
+      "number": 24,
+      "title": "Çoklu seçim küme farkı",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_multi_date_file_flow_mongo.py",
+        "tests/integration/browser/test_multi_date_file_runtime.py"
+      ],
+      "verified": "Alandaki küme birebir istenen küme; yalnız fark uygulandı; eksik/devre dışı üyede 0 değişiklik.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 19,
+      "note": "",
+      "evidence": "test_multi_date_file_flow_mongo.py, test_multi_date_file_runtime.py"
+    },
+    {
+      "number": 25,
+      "title": "Tarih alanları",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_multi_date_file_flow_mongo.py",
+        "tests/integration/browser/test_multi_date_file_runtime.py"
+      ],
+      "verified": "type=date ISO yazıldı; 31.02 tasarımda reddedildi ve alana yazılmadı; çeviren uygulama başarısız.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 19,
+      "note": "",
+      "evidence": "test_multi_date_file_flow_mongo.py, test_multi_date_file_runtime.py"
+    },
+    {
+      "number": 26,
+      "title": "Dosya yükleme",
+      "baseline": "kismi",
+      "tests": [
+        "tests/e2e/test_multi_date_file_flow_mongo.py",
+        "tests/integration/browser/test_multi_date_file_runtime.py",
+        "tests/unit/test_artifacts.py"
+      ],
+      "verified": "Ad/tür/boyut doğru, tek gönderim; içerik uyuşmayan dosya alınmadı; belirsizde tekrar yok.",
+      "human": "",
+      "status": "GEÇTİ",
+      "cases": 37,
+      "note": "",
+      "evidence": "test_multi_date_file_flow_mongo.py, test_multi_date_file_runtime.py, test_artifacts.py"
+    },
+    {
+      "number": 27,
+      "title": "Beklenen pencere ve isteğe bağlı modal",
+      "baseline": "tam",
+      "tests": [
+        "tests/e2e/test_window_modal_flow_mongo.py",
+        "tests/integration/browser/test_window_modal_runtime.py"
+      ],
+      "verified": "Pencerede yazıldı, ana ekran doğrulandı, açık pencere yok; beklenmeyen/çift pencere ve farklı modal durdu.",
+      "human": "Testler görünmez tarayıcıda çalışır; görünür pencerenin açılışı elle görülmedi.",
+      "status": "GEÇTİ",
+      "cases": 18,
+      "note": "",
+      "evidence": "test_window_modal_flow_mongo.py, test_window_modal_runtime.py"
+    },
+    {
+      "number": 28,
+      "title": "Paket içeriği ve temiz kurulum",
+      "baseline": "kismi",
+      "tests": [
+        "package"
+      ],
+      "verified": "Özetler uyuşuyor; yasak yol yok; wheel kaynakla aynı; temiz ortamda kurulum, --check-config, --doctor.",
+      "human": "Windows .ps1 betikleri ve Windows wheel kurulumu yalnız Windows'ta denenebilir.",
+      "status": "GEÇTİ",
+      "cases": 1,
+      "note": "",
+      "evidence": "paket denetimi"
+    }
+  ],
+  "failures": []
+}

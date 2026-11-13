@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akış Tasarımcısı (Prototip) · AgenTask</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='prototype_designer.css') }}">
+  {% if local_admin %}<meta name="agentask-csrf" content="{{ csrf_token }}"><script src="{{ url_for('static', path='auth.js') }}"></script>{% endif %}
+</head>
+<body class="pd">
+  <a class="pd-skip" href="#pd-flow">Adımlara geç</a>
+
+  <svg class="pd-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-fill" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="i-select" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 11l4 4 4-4"/></symbol>
+    <symbol id="i-press" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="3"/><path d="M9 12h6"/></symbol>
+    <symbol id="i-goto" viewBox="0 0 24 24"><rect x="3" y="4" width="8" height="16" rx="1.5"/><path d="M14 12h7M18 8l3 4-3 4"/></symbol>
+    <symbol id="i-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+    <symbol id="i-read" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="i-call" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/><path d="M7 11v6h6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+    <symbol id="i-publish" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></symbol>
+  </svg>
+
+  <header class="pd-header">
+    <div class="pd-header__brand">
+      <a class="pd-header__home" href="/">AgenTask</a>
+      <span class="pd-header__sep" aria-hidden="true">/</span>
+      <h1 class="pd-header__title">Akış Tasarımcısı</h1>
+      <span class="pd-badge pd-badge--proto" id="pd-proto-badge">Prototip</span>
+    </div>
+    <nav class="pd-header__nav" aria-label="Diğer sayfalar">
+      {% if local_admin %}<button type="button" class="pd-btn pd-btn--ghost pd-btn--sm" data-logout>Çıkış</button>{% endif %}
+      <button type="button" id="pd-theme-toggle" class="pd-theme-toggle" aria-pressed="false">
+        <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-moon"/></svg><span>Koyu tema</span>
+      </button>
+      <a href="/designer">Mevcut Katalog Tasarımcısı</a>
+      <span class="pd-header__user">{{ principal.display_name }}</span>
+    </nav>
+  </header>
+
+  <p class="pd-notice" role="note">
+    <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-info"/></svg>
+    <strong id="pd-notice-label">Prototip:</strong> <span id="pd-notice-text">gerçek sisteme bağlanmaz. Veriler yalnız bu sayfada; yenileyince silinir.</span>
+  </p>
+
+  <!-- AKIŞLAR: başlangıç görünümü -->
+  <main id="pd-home" class="pd-home" aria-labelledby="pd-home-title" tabindex="-1">
+    <section class="pd-panel pd-home__panel">
+      <div class="pd-home__head">
+        <div>
+          <h2 id="pd-home-title">Akışlar</h2>
+          <p class="pd-help">Akışlar yalnız bu sayfanın belleğinde tutulur; sayfa yenilenince silinir.</p>
+        </div>
+        <button type="button" id="pd-new-flow" class="pd-btn pd-btn--primary">
+          <svg class="pd-ico" aria-hidden="true"><use href="#i-plus"/></svg>Yeni akış
+        </button>
+      </div>
+      <p id="pd-home-apps" class="pd-msg pd-msg--missing" hidden></p>
+      <div class="pd-home__drafts">
+        <button type="button" id="pd-load-drafts" class="pd-btn pd-btn--ghost pd-btn--sm">Kayıtlı taslakları göster</button>
+        <p class="pd-help">Kalıcı taslaklar sunucudaki taslak deposundadır; sayfa yenilense de kalır.</p>
+        <ul id="pd-draft-list" class="pd-flowlist" aria-label="Kayıtlı taslaklar"></ul>
+      </div>
+      <ul id="pd-flow-list" class="pd-flowlist" aria-label="Akış listesi"></ul>
+      <div id="pd-flow-list-empty" class="pd-empty" hidden>
+        <p class="pd-empty__title">Henüz akış yok</p>
+        <p>“Yeni akış” ile başlayın. Vazgeçerseniz hiçbir şey oluşturulmaz.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="pd-layout" id="pd-editor-view" hidden>
+    <!-- SOL: bileşenler ve yeniden kullanılabilir akışlar -->
+    <aside id="pd-left" class="pd-panel pd-left" aria-labelledby="pd-left-title">
+      <h2 id="pd-left-title" class="pd-visually-hidden">Ekleyebilecekleriniz</h2>
+      <!-- Dar pencerede panel akış içinde açılır/kapanır (üstüne binmez); geniş pencerede düğme gizlidir. -->
+      <button type="button" id="pd-left-toggle" class="pd-left__toggle" aria-expanded="true" aria-controls="pd-left">
+        <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-plus"/></svg>
+        <span class="pd-left__toggle-text">Bileşenler ve tarayıcı oturumu</span>
+        <span id="pd-left-alert" class="pd-badge pd-badge--danger" hidden>Müdahale gerekiyor</span>
+        <span class="pd-left__toggle-state" aria-hidden="true"></span>
+      </button>
+
+      <section class="pd-section" aria-labelledby="pd-source-title">
+        <h3 id="pd-source-title" class="pd-section__title">Alan seçme kaynağı</h3>
+        <div class="pd-segmented pd-segmented--block" role="group" aria-labelledby="pd-source-title">
+          <button type="button" id="pd-src-mock" aria-pressed="true">Temsili ekranlar</button>
+          <button type="button" id="pd-src-real" aria-pressed="false">Gerçek oturum</button>
+        </div>
+        <p id="pd-src-help" class="pd-help pd-src-help">Temsili ekranlar yalnız bu sayfada çalışır; gerçek uygulamaya bağlanmaz.</p>
+        <div id="pd-real" class="pd-real" hidden>
+          <div class="pd-field">
+            <label class="pd-label" for="pd-real-session">Tarayıcı oturumu</label>
+            <select id="pd-real-session"></select>
+          </div>
+          <div class="pd-real__buttons">
+            <button type="button" id="pd-real-refresh" class="pd-btn pd-btn--ghost pd-btn--sm">Yenile</button>
+            <button type="button" id="pd-real-new" class="pd-btn pd-btn--ghost pd-btn--sm">Yeni oturum aç</button>
+            <button type="button" id="pd-real-open" class="pd-btn pd-btn--secondary pd-btn--sm">Uygulamayı oturumda aç</button>
+          </div>
+          <p id="pd-real-url" class="pd-help"></p>
+          <p id="pd-real-status" class="pd-real__status" role="status" aria-live="polite"></p>
+          <div id="pd-real-intr" class="pd-real__intr" role="alert" hidden></div>
+          <p class="pd-help">Alanı oturumun tarayıcı penceresinde seçersiniz. Seçim sırasında uygulamada tıklama,
+            kayıt veya gönderme yapılmaz. Oturumda girişi siz yaparsınız; yetki uygulamanın kendisindedir.</p>
+        </div>
+      </section>
+
+      <section class="pd-section" aria-labelledby="pd-intent-title">
+        <h3 id="pd-intent-title" class="pd-section__title">Ne yapmak istiyorsunuz?</h3>
+        <form id="pd-intent-form" class="pd-intent" novalidate>
+          <label class="pd-label" for="pd-intent-input">Kendi cümlenizle yazın</label>
+          <textarea id="pd-intent-input" rows="2" maxlength="160"
+                    aria-describedby="pd-intent-help"
+                    placeholder="Örn. Kefil müşteri numarasını yaz"></textarea>
+          <p id="pd-intent-help" class="pd-help">Öneri temsilidir: gerçek model yerine basit kurallar kullanılır.</p>
+          <button type="submit" class="pd-btn pd-btn--secondary pd-btn--block">
+            <svg class="pd-ico" aria-hidden="true"><use href="#i-spark"/></svg>Öneri al
+          </button>
+        </form>
+        <div id="pd-intent-result" class="pd-intent-result" aria-live="polite"></div>
+      </section>
+
+      <section class="pd-section" aria-labelledby="pd-components-title">
+        <h3 id="pd-components-title" class="pd-section__title">Bileşenler</h3>
+        <ul id="pd-components" class="pd-components"></ul>
+      </section>
+
+      <section class="pd-section" aria-labelledby="pd-library-title">
+        <h3 id="pd-library-title" class="pd-section__title">Yeniden kullanılabilir akışlar</h3>
+        <div id="pd-library"></div>
+      </section>
+    </aside>
+
+    <!-- ORTA: akış ve adım kartları -->
+    <main id="pd-flow" class="pd-panel pd-center" aria-labelledby="pd-flow-title" tabindex="-1">
+      <h2 id="pd-flow-title" class="pd-visually-hidden">Akış</h2>
+      <div class="pd-flowbar">
+        <div class="pd-flowbar__nav">
+          <button type="button" id="pd-back" class="pd-btn pd-btn--ghost pd-btn--sm">
+            <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-back"/></svg>Akışlara dön
+          </button>
+          <p id="pd-dirty" class="pd-dirty" role="status"></p>
+          <button type="button" id="pd-save-flow" class="pd-btn pd-btn--secondary pd-btn--sm" aria-describedby="pd-save-help">
+            <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-save"/></svg>Sayfada sakla
+          </button>
+          <span id="pd-save-help" class="pd-visually-hidden">Yalnız bu sayfanın belleğine saklar; kalıcı kayıt değildir.</span>
+        </div>
+        <div class="pd-draftbar" aria-label="Kalıcı taslak">
+          <button type="button" id="pd-save-draft" class="pd-btn pd-btn--primary pd-btn--sm">
+            <svg class="pd-ico pd-ico--sm" aria-hidden="true"><use href="#i-save"/></svg>Taslağı kaydet
+          </button>
+          <p id="pd-draft-status" class="pd-draft-status" role="status" aria-live="polite">Kalıcı taslak yok.</p>
+          <a id="pd-open-designer" class="pd-btn pd-btn--ghost pd-btn--sm" hidden>Dene, onayla ve yayımla</a>
+        </div>
+        <div class="pd-flowbar__row">
+          <div class="pd-field pd-field--grow">
+            <label class="pd-label" for="pd-flow-name">Akışın adı <span class="pd-req">(zorunlu)</span></label>
+            <input id="pd-flow-name" type="text" maxlength="80" autocomplete="off"
+                   placeholder="Örn. Kefil bilgisi gir" aria-describedby="pd-flow-name-err">
+            <p id="pd-flow-name-err" class="pd-msg" data-msg-for="pd-flow-name" hidden></p>
+          </div>
+          <div class="pd-field">
+            <label class="pd-label" for="pd-flow-app">Uygulama <span class="pd-req">(zorunlu)</span></label>
+            <select id="pd-flow-app" aria-describedby="pd-flow-app-err"></select>
+            <p id="pd-flow-app-name" class="pd-app-name" hidden></p>
+            <p id="pd-flow-app-err" class="pd-msg" hidden></p>
+          </div>
+        </div>
+        <div class="pd-flowbar__row pd-flowbar__row--actions">
+          <div class="pd-field">
+            <label class="pd-label" for="pd-flow-start">Başlangıç ekranı (temsili)</label>
+            <select id="pd-flow-start"></select>
+          </div>
+          <p id="pd-trial-status" class="pd-trial-status" aria-live="polite"></p>
+          <div class="pd-actions">
+            <button type="button" id="pd-try-flow" class="pd-btn pd-btn--primary">
+              <svg class="pd-ico" aria-hidden="true"><use href="#i-play"/></svg>Akışı dene
+            </button>
+            <button type="button" id="pd-publish" class="pd-btn pd-btn--publish">
+              <svg class="pd-ico" aria-hidden="true"><use href="#i-publish"/></svg>Yayımla…
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="pd-selection-bar" class="pd-selection-bar" hidden>
+        <p id="pd-selection-text"></p>
+        <button type="button" id="pd-save-component" class="pd-btn pd-btn--secondary">
+          <svg class="pd-ico" aria-hidden="true"><use href="#i-save"/></svg>Yeniden kullanılabilir bileşen olarak kaydet
+        </button>
+        <button type="button" id="pd-clear-selection" class="pd-btn pd-btn--ghost">Seçimi temizle</button>
+      </div>
+
+      <ol id="pd-steps" class="pd-steps" aria-label="Akışın adımları"></ol>
+      <div id="pd-empty" class="pd-empty" hidden>
+        <p class="pd-empty__title">Henüz adım yok</p>
+        <p>Soldan <strong>Alan doldur</strong> bileşenini ekleyin ya da yapmak istediğinizi yazın.</p>
+        <button type="button" id="pd-load-sample" class="pd-btn pd-btn--ghost">Örnek akışla başla</button>
+      </div>
+      <section id="pd-runpanel" class="pd-live" aria-labelledby="pd-runpanel-title" hidden>
+        <h3 id="pd-runpanel-title" class="pd-live__title">Gerçek deneme ve yayın</h3>
+        <p class="pd-msg pd-msg--missing">Gerçek deneme hedef uygulamada işlem yapabilir. Yalnız test kaydında deneyin.</p>
+        <div id="pd-runpanel-body"></div>
+        <p id="pd-runpanel-status" class="pd-real__status" role="status" aria-live="polite"></p>
+      </section>
+      <p class="pd-help pd-reorder-help">Adımları tutamaktan sürükleyerek veya
+        <strong>Yukarı/Aşağı</strong> düğmeleriyle sıralayabilirsiniz.</p>
+    </main>
+
+    <!-- SAĞ: seçilen adımın düzenleyicisi -->
+    <aside class="pd-panel pd-right" aria-labelledby="pd-editor-title">
+      <h2 id="pd-editor-title" class="pd-visually-hidden">Seçilen adım</h2>
+      <div id="pd-editor"></div>
+    </aside>
+  </div>
+
+  <!-- Alan seçme: temsili uygulama -->
+  <dialog id="pd-picker" class="pd-dialog pd-dialog--wide" aria-labelledby="pd-picker-title">
+    <div class="pd-dialog__head">
+      <h2 id="pd-picker-title">Temsili uygulamada seçin</h2>
+      <span class="pd-badge pd-badge--proto">Prototip · gerçek tarayıcı değil</span>
+      <button type="button" class="pd-icon-btn" data-close aria-label="Kapat">
+        <svg class="pd-ico" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <p id="pd-picker-help" class="pd-help pd-picker-help"></p>
+    <div class="pd-picker-screens" role="group" aria-label="Gösterilen ekran (prototip)">
+      <span class="pd-label">Gösterilen ekran:</span>
+      <div id="pd-picker-screens" class="pd-segmented"></div>
+    </div>
+    <div id="pd-picker-app" class="pd-mock-host"></div>
+    <div class="pd-dialog__foot">
+      <button type="button" class="pd-btn pd-btn--ghost" data-close>Vazgeç</button>
+    </div>
+  </dialog>
+
+  <!-- Deneme -->
+  <dialog id="pd-trial" class="pd-dialog pd-dialog--wide" aria-labelledby="pd-trial-title">
+    <div class="pd-dialog__head">
+      <h2 id="pd-trial-title">Deneme</h2>
+      <span class="pd-badge pd-badge--proto">Prototip · temsili uygulamada çalışır</span>
+      <button type="button" class="pd-icon-btn" data-close aria-label="Kapat">
+        <svg class="pd-ico" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div class="pd-trial">
+      <div class="pd-trial__side">
+        <div id="pd-trial-setup"></div>
+        <ol id="pd-trial-progress" class="pd-progress" aria-label="Deneme ilerlemesi"></ol>
+        <p id="pd-trial-result" class="pd-trial-result" role="status" aria-live="polite"></p>
+      </div>
+      <div id="pd-trial-app" class="pd-mock-host"></div>
+    </div>
+    <div class="pd-dialog__foot">
+      <button type="button" id="pd-trial-stop" class="pd-btn pd-btn--ghost" hidden>Durdur</button>
+      <button type="button" class="pd-btn pd-btn--ghost" data-close>Kapat</button>
+    </div>
+  </dialog>
+
+  <!-- Bileşen olarak kaydet -->
+  <dialog id="pd-component-dialog" class="pd-dialog" aria-labelledby="pd-component-title">
+    <form id="pd-component-form" method="dialog" novalidate>
+      <div class="pd-dialog__head">
+        <h2 id="pd-component-title">Yeniden kullanılabilir bileşen olarak kaydet</h2>
+        <button type="button" class="pd-icon-btn" data-close aria-label="Kapat">
+          <svg class="pd-ico" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <div id="pd-component-body" class="pd-dialog__body"></div>
+      <div class="pd-dialog__foot">
+        <button type="button" class="pd-btn pd-btn--ghost" data-close>Vazgeç</button>
+        <button type="submit" id="pd-component-submit" class="pd-btn pd-btn--primary">Kaydet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Yayın (yalnız gösterim) -->
+  <dialog id="pd-publish-dialog" class="pd-dialog" aria-labelledby="pd-publish-title">
+    <div class="pd-dialog__head">
+      <h2 id="pd-publish-title">Yayımla</h2>
+      <span class="pd-badge pd-badge--proto">Prototip · gerçek yayın yapılmaz</span>
+      <button type="button" class="pd-icon-btn" data-close aria-label="Kapat">
+        <svg class="pd-ico" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div id="pd-publish-body" class="pd-dialog__body"></div>
+    <div class="pd-dialog__foot">
+      <button type="button" class="pd-btn pd-btn--ghost" data-close>Kapat</button>
+      <button type="button" id="pd-publish-confirm" class="pd-btn pd-btn--publish">Yayımla (prototip gösterimi)</button>
+    </div>
+  </dialog>
+
+  <!-- Ortak onay: kayıp olacaksa sorulur -->
+  <dialog id="pd-confirm" class="pd-dialog" aria-labelledby="pd-confirm-title" aria-describedby="pd-confirm-text">
+    <div class="pd-dialog__head"><h2 id="pd-confirm-title"></h2></div>
+    <div class="pd-dialog__body"><p id="pd-confirm-text"></p></div>
+    <div class="pd-dialog__foot">
+      <button type="button" id="pd-confirm-keep" class="pd-btn pd-btn--primary"></button>
+      <button type="button" id="pd-confirm-discard" class="pd-btn pd-btn--danger"></button>
+    </div>
+  </dialog>
+
+  <script type="application/json" id="pd-apps">{{ applications | tojson }}</script>
+  <div id="pd-toasts" class="pd-toasts" aria-live="polite" aria-atomic="false"></div>
+  <p id="pd-live" class="pd-visually-hidden" aria-live="assertive"></p>
+
+  <script src="{{ url_for('static', path='prototype_designer.js') }}"></script>
+</body>
+</html>

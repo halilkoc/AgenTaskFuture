@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}İşlem Asistanı{% endblock %}
+{% block content %}
+<h1>İşlem Asistanı</h1>
+<p class="muted">Yalnızca etkin yayındaki onaylı işlemler çalıştırılır. Talep yorumlanır, eksik bilgi sorulur, plan
+sunucuda yayından derlenir ve onayınızla çalışır. Model önerileri her zaman onay ister.</p>
+<section class="card">
+  <h2>1. Talep</h2>
+  <form class="as-ask">
+    <label>Ne yapmak istiyorsunuz? <input name="prompt" size="70" placeholder="ör. Kefil müşteri numarasını 00123 olarak gir"></label>
+    <label><input type="checkbox" name="use_model"> Eşleşmezse kurum içi modelden öneri iste</label>
+    <button type="submit">Yorumla</button>
+  </form>
+  <p class="as-llm muted"></p>
+  <div class="as-result"></div>
+</section>
+<section class="card" hidden>
+  <h2>2. Plan</h2>
+  <div class="as-plan"></div>
+</section>
+<section class="card">
+  <h2>3. Çalıştırma</h2>
+  <button type="button" data-action="open">Oturum aç</button>
+  {% if lab_origin %}<label>Deney ekranı <select name="lab_page"><option value="/pages/duplicates">Başvuran/Kefil</option>
+    <option value="/pages/note-form">Not ekleme</option><option value="/pages/dropdowns">Liste ve sekmeler</option></select></label>
+  <button type="button" data-action="screen">Ekranı aç</button>{% endif %}
+  <span class="as-session muted">Oturum yok</span>
+  <p><label class="as-ack-wrap" hidden><input type="checkbox" name="ack"> Bu işlem veri değiştirir; onaylıyorum</label>
+  <button type="button" data-action="run">Çalıştır</button> <button type="button" data-action="cancel">İptal et</button></p>
+  <p class="rl-run muted">Henüz çalıştırma yok.</p>
+  <table class="tl-table rl-steps"></table>
+</section>
+{% if composition_enabled %}
+<section class="card">
+  <h2>Birleşik görev (deneysel, COMPOSITION_ENABLED)</h2>
+  <p class="muted">Yayımlanmış işlemleri sırayla birleştirir; sunucu statik doğrular ve düzleştirir. Koşul ve sınırlı
+  döngü API ile (/api/assistant/composite/*) kullanılabilir.</p>
+  <div class="as-comp-rows"></div>
+  <button type="button" data-action="comp-add">İşlem ekle</button>
+  <button type="button" data-action="comp-preview">Birleşik planı göster</button>
+  <button type="button" data-action="comp-run">Birleşik görevi çalıştır</button>
+  <p class="as-comp muted"></p>
+</section>
+{% endif %}
+<p class="tl-error" role="alert"></p>
+<div class="as-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='assistant.js') }}"></script>{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Gecikmeli yükleme{% endblock %}
+{% block content %}
+<h1>Talep formu</h1>
+<p class="loading" data-reveal-delay-ms="{{ scenario.reveal_delay_ms }}">Yükleniyor…</p>
+<template id="delayed-content">
+  {% set tid = new_id() %}
+  <h2>Başvuru Formu</h2>
+  <label for="{{ tid }}">Talep Açıklaması</label><input id="{{ tid }}" name="{{ new_id() }}">
+</template>
+<div class="delayed-target"></div>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

@@ -1,0 +1,7 @@
+{
+  "test": "tests/integration/browser/test_window_modal_runtime.py::test_multiple_or_missing_window_stops[Pencere A\\xe7maz]",
+  "asama": "teardown",
+  "ozet": "tests/integration/browser/test_window_modal_runtime.py:49: in env\n    await sessions.shutdown()\nsrc/agentask/application/services/browser_sessions.py:248: in shutdown\n    await self._factory.shutdown()\nsrc/agentask/infrastructure/browser/playwright_factory.py:262: in shutdown\n    await playwright.stop()\n          ^^^^^^^^^^^^^^^^^\nE   TypeError: _capturing_exit() missing 3 required positional arguments: 'exc_type', 'exc', and 'tb'",
+  "ekran_goruntuleri": [],
+  "trace_veya_ag_kaydi": false
+}

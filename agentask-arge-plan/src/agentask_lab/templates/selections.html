@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Seçim senaryoları{% endblock %}
+{% block content %}
+<h1>Seçim senaryoları</h1>
+<section aria-label="Ekran Bilgisi"><p>Başvuru ekranı <button type="button">Yardım</button></p></section>
+{% for owner in ["Başvuran", "Kefil"] %}{% set sid = new_id() %}{% set nid = new_id() %}
+<section aria-label="{{ owner }}">
+  <h2>{{ owner }}</h2>
+  <div class="field"><label for="{{ nid }}">Ad Soyad</label><input id="{{ nid }}" name="{{ new_id() }}"></div>
+  <div class="field"><label for="{{ sid }}">Şube</label>
+    <select id="{{ sid }}" name="{{ new_id() }}"><option value="">Seçiniz</option>
+      {% for value, label in branches %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      <option value="kapali" disabled>Kapalı Şube</option>
+      <option value="aynia">Yinelenen Şube</option><option value="aynib">Yinelenen Şube</option>
+    </select></div>
+</section>
+{% endfor %}
+{% set uid = new_id() %}{% set bid = new_id() %}{% set rid = new_id() %}
+<section aria-label="Ürün">
+  <h2>Ürün</h2>
+  <div class="field"><label for="{{ rid }}">Merkez Kodu</label>
+    <select id="{{ rid }}" name="{{ new_id() }}"><option value="">Seçiniz</option>
+      <option value="M01">Merkez</option>
+      <option value="{{ 'X99' if scenario.selection_catalog == 'changed' else 'S02' }}">Sahil</option></select></div>
+  <div class="field"><span id="{{ uid }}">Ürün Tipi</span>
+    <div class="xcombo" role="combobox" tabindex="0" aria-labelledby="{{ uid }}" aria-expanded="false" aria-haspopup="listbox"
+      data-delay-ms="{{ scenario.selection_options_delay_ms }}" data-redraw="{{ 1 if scenario.selection_redraw else 0 }}"
+      data-trap="{{ 1 if scenario.selection_value_trap else 0 }}"
+      data-options='[{"l":"Bireysel Kart","v":"BRY"},{"l":"Ticari Kart","v":"TCR"},{"l":"Kapalı Kart","v":"KPL","d":true},{"l":"Çift Kart","v":"C1"},{"l":"Çift Kart","v":"C2"}{% if scenario.selection_catalog == "changed" %},{"l":"Yeni Kart","v":"YNI"}{% endif %}]'><span class="xcombo-value">Seçiniz</span></div></div>
+  <div class="field"><span id="{{ bid }}">Kart Rengi</span>
+    <button type="button" class="xcombo" aria-labelledby="{{ bid }}" aria-haspopup="listbox" aria-expanded="false" data-delay-ms="0" data-redraw="0" data-trap="0"
+      data-options='[{"l":"Mavi","v":"BLU"},{"l":"Gri","v":"GRY"}]'><span class="xcombo-value">Seçiniz</span></button></div>
+  {% set delivery = new_id() %}
+  <div class="field"><span id="{{ delivery }}">Teslimat Yöntemi</span>
+    <ul class="xlist" role="listbox" tabindex="0" aria-labelledby="{{ delivery }}">
+      <li role="option" aria-selected="false" data-value="SUBE">Şubeden</li><li role="option" aria-selected="false" data-value="KRG">Kargo</li></ul></div>
+</section>
+{% set lid = new_id() %}{% set pid = new_id() %}
+<section aria-label="Bağımlı Liste">
+  <div class="field"><label for="{{ lid }}">Bölge</label>
+    <select id="{{ lid }}" class="xlate" data-delay-ms="{{ scenario.selection_options_delay_ms }}"
+      data-items="{{ 'Doğu|Batı' if scenario.selection_catalog == 'changed' else 'Marmara|Ege' }}" name="{{ new_id() }}"><option value="">Seçiniz</option></select></div>
+</section>
+<section aria-label="Kayıt Etkili">
+  {% set knid = new_id() %}<div class="field"><label for="{{ knid }}">Kayıt Notu</label><input id="{{ knid }}" name="{{ new_id() }}"></div>
+  <div class="field"><label for="{{ pid }}">Öncelik</label>
+    <select id="{{ pid }}" class="xcommit" data-outcome="{{ scenario.selection_outcome }}" name="{{ new_id() }}">
+      <option value="">Seçiniz</option><option value="N">Normal</option><option value="Y">Yüksek</option></select></div>
+  <p role="status" class="xstatus"></p>
+</section>
+{% set cid = new_id() %}{% set mid = new_id() %}{% set tid = new_id() %}
+<section aria-label="Ödeme">
+  <div class="field"><label for="{{ cid }}">Para Birimi</label>
+    <select id="{{ cid }}" name="{{ new_id() }}"><option value="">Seçiniz</option><option value="TRY">Türk Lirası</option><option value="USD">Dolar</option></select></div>
+</section>
+{% if scenario.selection_modal %}
+<div role="dialog" aria-modal="true" aria-labelledby="{{ tid }}" class="modal-box">
+  <h2 id="{{ tid }}">Döviz Onayı</h2>
+  <div class="field"><label for="{{ mid }}">Para Birimi</label>
+    <select id="{{ mid }}" name="{{ new_id() }}"><option value="">Seçiniz</option><option value="TRY">Türk Lirası</option><option value="USD">Dolar</option></select></div>
+</div>
+{% endif %}
+<section aria-label="Desteklenmeyen">
+  <div class="field"><select multiple aria-label="Etiketler" name="{{ new_id() }}"><option>A</option><option>B</option></select></div>
+  <div class="field"><input role="combobox" aria-label="Şehir Ara" aria-expanded="false" name="{{ new_id() }}"></div>
+  {% set bad = new_id() %}<div class="field"><span id="{{ bad }}">Kırık Liste</span>
+    <div role="combobox" tabindex="0" aria-labelledby="{{ bad }}" aria-expanded="false" class="xbroken">Seçiniz</div></div>
+</section>
+<iframe title="Teminat Çerçevesi" src="/frames/selection-outer" width="700" height="260"></iframe>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

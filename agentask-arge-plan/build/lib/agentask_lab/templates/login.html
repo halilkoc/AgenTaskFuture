@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Giriş{% endblock %}
+{% block content %}
+<h1>Giriş</h1>
+{% if reason == "expired" %}<p class="alert" role="alert">Oturumunuz sona erdi. Lütfen yeniden giriş yapın.</p>{% endif %}
+{% if reason == "required" %}<p class="info">Devam etmek için giriş yapın.</p>{% endif %}
+{% set uid = new_id() %}
+<form method="post" action="/login">
+  <label for="{{ uid }}">Kullanıcı adı</label>
+  <input id="{{ uid }}" name="user" required maxlength="64" autocomplete="off">
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit">Giriş yap</button>
+</form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Değişiklik ve etki{% endblock %}
+{% block content %}
+<h1>Değişiklik ve etki</h1>
+<p class="muted">Yayımlanmış bir işlemin elemanlarını güncel ekranla anlamsal olarak karşılaştırır (HTML kimliği, sıra
+ve kayıt değeri karşılaştırılmaz). Onarım yeni taslak açar; etkin yayın değişmez.</p>
+{% include "_session_panel.html" %}
+<section class="card">
+  <h2>1. İşlem ve ekran</h2>
+  <label>İşlem <select name="operation"></select></label>
+  {% if lab_origin %}<label>Deney ekranı <select name="lab_page"><option value="/pages/duplicates">Başvuran/Kefil</option>
+    <option value="/pages/note-form">Not ekleme</option><option value="/pages/dropdowns">Liste ve sekmeler</option></select></label>
+  <button type="button" data-action="screen">Ekranı aç</button>{% endif %}
+  <span class="ch-session muted"></span>
+  <p><button type="button" data-action="analyze">Ekranla karşılaştır</button></p>
+  <div class="ch-result"></div>
+</section>
+<section class="card">
+  <h2>2. Ortak bileşen etkisi</h2>
+  <label>Kontrol adapteri <select name="kind"><option value="">—</option><option>textbox</option><option>select</option>
+    <option>combobox</option><option>tab</option><option>table</option></select></label>
+  <label>Onaylı aksiyon <input name="action_id" placeholder="ör. lab.add_case_note"></label>
+  <button type="button" data-action="dependency">Etkilenen işlemleri bul</button>
+  <div class="ch-dependency"></div>
+</section>
+<p class="tl-error" role="alert"></p>
+<div class="ch-config" data-lab-origin="{{ lab_origin or '' }}" hidden></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='session_panel.js') }}"></script>
+<script src="{{ url_for('static', path='changes.js') }}"></script>{% endblock %}

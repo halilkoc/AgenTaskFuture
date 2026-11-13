@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Kaydırmalı tablo{% endblock %}
+{% block content %}
+<h1>Hesap hareketleri (deney verisi)</h1>
+<div class="scroll" role="region" aria-label="Hareketler listesi" tabindex="0"
+     data-batch="{{ scenario.scroll_batch }}" id="{{ new_id() }}">
+  <table>
+    <caption>Hareketler</caption>
+    <thead><tr><th>Başvuru No</th><th>Müşteri</th><th>Durum</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="scroll-status" aria-live="polite"></p>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/lab.js"></script>{% endblock %}

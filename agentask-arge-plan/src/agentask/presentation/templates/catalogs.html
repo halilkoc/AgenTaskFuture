@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Katalog ve yayınlar{% endblock %}
+{% block content %}
+<h1>Katalog ve yayınlar</h1>
+<p class="muted">Yayımlanmış sürümler değişmezdir; etkin yayın en son karşılaştır-ve-değiştir ile atanır. Eski bir
+yayına bağlı çalışmalar o yayınla devam eder.</p>
+<section class="card"><h2>Yayınlar</h2><div class="ct-list muted">Yükleniyor…</div></section>
+<section class="card"><h2>Yayın ayrıntısı</h2><div class="ct-detail muted">Bir yayın seçin.</div></section>
+<p class="tl-error" role="alert"></p>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='catalogs.js') }}"></script>{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Başvuru sihirbazı — özet{% endblock %}
+{% block content %}
+{% set vh = new_id() %}{% set vi = new_id() %}{% set lh = new_id() %}
+<h1>Başvuru — özet</h1>
+<section aria-labelledby="{{ vh }}" class="panel"><h2 id="{{ vh }}">Vaka</h2>
+  <label for="{{ vi }}">Vaka No</label><input id="{{ vi }}" name="{{ new_id() }}" value="{{ case_id }}" readonly>
+</section>
+<p role="status">{% if number %}Başvuru alındı (No #{{ number }}){% endif %}</p>
+<h2 id="{{ lh }}">Gönderilen başvurular</h2>
+<ul aria-labelledby="{{ lh }}">
+  {% for a in applications %}<li>Başvuru #{{ a.application_no }}: {{ a.case_id }} — {{ a.amount }} ({{ a.user }})</li>{% endfor %}
+</ul>
+<p><a href="/wizard/{{ case_id }}">Yeni başvuru</a> <button type="button" id="{{ new_id() }}">Yazdır</button></p>
+{% endblock %}
