@@ -25,10 +25,10 @@ function dialog(text) {
 let shown = false;
 document.querySelector(".xfirst").addEventListener("input", () => {
   if (shown) return; shown = true;
-  setTimeout(() => {
-    if (mode === "info") dialog("Kaydınız işleniyor");
-    if (mode === "other") dialog("Hesabınız kapatılacak");
-    if (mode === "two") { dialog("Kaydınız işleniyor"); dialog("Kaydınız işleniyor"); }
-  }, 30);
+  // Pencere yazmanın sonucu olarak hemen açılır. Gecikmeli açılış (eski 30 ms) sonraki adımla yarışıyordu:
+  // adımlar Firefox'ta 30 ms'den kısa sürebildiği için senaryo motora göre değişiyordu.
+  if (mode === "info") dialog("Kaydınız işleniyor");
+  if (mode === "other") dialog("Hesabınız kapatılacak");
+  if (mode === "two") { dialog("Kaydınız işleniyor"); dialog("Kaydınız işleniyor"); }
 });
 </script>{% endblock %}

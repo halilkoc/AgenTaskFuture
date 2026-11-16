@@ -20,6 +20,7 @@ from tests.e2e import test_designer_ui as flow
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
 from tests.legacy_catalog import seed_legacy_release
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 from tests.unit.test_publishing import ready_draft
@@ -85,7 +86,7 @@ async def test_legacy_release_migrated_through_ui(
     before = await raw(store)
     try:
         async with async_playwright() as p:
-            browser = await p.chromium.launch()
+            browser = await ui_engine(p).launch()
             ui = await browser.new_page()
 
             # 1) Eski yayın: asistan açıkça reddeder (migration_required), ekran kontrolü atlanmaz.

@@ -16,6 +16,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.test_app import TWO_APPS
+from tests.support_browser import ui_engine
 
 pytestmark = pytest.mark.browser
 
@@ -53,7 +54,7 @@ async def test_prototype_designer_core_flow(app_server: AppServer) -> None:
     requests: list[str] = []
     errors: list[str] = []
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
         ui.on("request", lambda r: requests.append(r.url))
         ui.on("pageerror", lambda e: errors.append(str(e)))
@@ -286,7 +287,7 @@ async def test_prototype_designer_core_flow(app_server: AppServer) -> None:
 
 async def test_prototype_picker_does_not_trigger_actions_and_flags_ambiguity(app_server: AppServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1280, "height": 900})
         await ui.goto(f"http://127.0.0.1:{app_server.port}/prototype/designer")
         await _new_flow(ui, "Seçici denemesi")
@@ -333,7 +334,7 @@ async def test_prototype_picker_does_not_trigger_actions_and_flags_ambiguity(app
 
 async def test_prototype_stop_and_application_switch(app_server: AppServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1280, "height": 900})
         await ui.goto(f"http://127.0.0.1:{app_server.port}/prototype/designer")
         await _new_flow(ui, "Durdurma ve uygulama")

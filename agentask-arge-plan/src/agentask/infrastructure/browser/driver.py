@@ -31,6 +31,7 @@ from agentask.config.settings import Settings
 from agentask.domain.actions import ErrorClass, EvidenceSpec
 from agentask.domain.choices import ChoiceOption
 from agentask.infrastructure.browser import driver_js as js
+from agentask.infrastructure.browser.blocked_frames import frame_unusable
 from agentask.infrastructure.browser.inventory_js import INTERACTION_AT
 from agentask.infrastructure.browser.observer import PageObserver
 
@@ -334,7 +335,7 @@ class PlaywrightDriver:
             return [OpenDialog(frame_ref=None, native=True, name=native[0], text=native[1])]
         dialogs: list[OpenDialog] = []
         for frame in self._page.frames:
-            if frame.is_detached() or frame.url.startswith("chrome-error://"):
+            if frame_unusable(frame):
                 continue
             try:
                 found = await asyncio.wait_for(

@@ -22,4 +22,4 @@ if (-not (Test-Path ".env")) {
 } else {
     Write-Host ".env zaten var; degistirilmedi."
 }
-Write-Host "Kurulum tamam. Tarayici adimi icin INSTALL.md bolum 3'e bakin."
+Write-Host "Kurulum tamam. Bu betik tarayici indirmez. Motor secimi (BROWSER_ENGINE) ve tarayici dosyalari icin INSTALL.md bolum 3'e bakin."

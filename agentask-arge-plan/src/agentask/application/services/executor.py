@@ -565,6 +565,13 @@ class Executor:
                 )
                 raise self._fail(step, exc.error_class, exc.message, status) from None
 
+    def _stop_on_new_window(self, ctx: _Ctx, step: StepRecord | None) -> None:
+        if ctx.observer.new_windows:
+            if step is not None:
+                step.error_class = ErrorClass.NEW_WINDOW.value
+                step.message = "Yeni bir pencere veya sekme açıldı; otomatik geçilmedi, müdahale gerekli."
+            raise _Stop(RunStatus.PAUSED_BLOCKED, ErrorClass.NEW_WINDOW.value)
+
     async def _gate(self, ctx: _Ctx, step: StepRecord | None, pending: ScreenDef | None = None) -> None:
         if ctx.adopted and ctx.handle.window_closed:
             if step is not None:
@@ -574,11 +581,7 @@ class Executor:
                 )
             raise _Stop(RunStatus.OUTCOME_UNKNOWN, ErrorClass.NEW_WINDOW.value)
         """Engelleyici pencere ve oturum kontrolü. Yalnız onaylı engelleyicide tanımlı düğmeye basılır."""
-        if ctx.observer.new_windows:
-            if step is not None:
-                step.error_class = ErrorClass.NEW_WINDOW.value
-                step.message = "Yeni bir pencere veya sekme açıldı; otomatik geçilmedi, müdahale gerekli."
-            raise _Stop(RunStatus.PAUSED_BLOCKED, ErrorClass.NEW_WINDOW.value)
+        self._stop_on_new_window(ctx, step)
         for _ in range(3):
             opened = await ctx.driver.open_dialogs()
             dialogs = [d for d in opened if not await self._expected_dialog(ctx, d, pending)]
@@ -685,6 +688,9 @@ class Executor:
             if resolution.outcome is Outcome.RESOLVED and snapshot and resolution.candidate_id:
                 control = snapshot.control(resolution.candidate_id)
                 if control is not None:
+                    # Önceki adımın açtığı pencerenin bildirimi adım başındaki kontrolden sonra gelebilir
+                    # (Firefox'ta görüldü); hedef çözüldükten sonra, eylemden hemen önce yeniden bakılır.
+                    self._stop_on_new_window(ctx, step)
                     return control
             if resolution.outcome is Outcome.AMBIGUOUS:
                 raise self._fail(

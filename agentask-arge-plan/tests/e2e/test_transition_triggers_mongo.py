@@ -11,6 +11,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = [pytest.mark.browser, pytest.mark.mongo]
@@ -77,7 +78,7 @@ async def add_target_fill(flow: Flow) -> None:
 
 async def test_link_transition_end_to_end(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Bağlantıyla geç", PATH)
         editor = await flow.add("Ekrana geç")
         await editor.get_by_role("button", name="Ekrandaki düğmeleri listele").click()
@@ -96,7 +97,7 @@ async def test_link_transition_end_to_end(app_server: AppServer, lab: LabServer)
 
 async def test_choice_transition_end_to_end(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Seçimle geç", PATH)
         editor = await flow.pick("Seçim yap", "Başlangıç bölümündeki İşlem Türü alanını seç")
         await expect(editor.locator(".pd-optlist")).to_contain_text("Hedefe Git", timeout=10000)

@@ -23,6 +23,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e.layout_probe import probe
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = pytest.mark.browser
@@ -98,7 +99,7 @@ async def test_designer_layout_has_no_overlap_or_clipping(
 ) -> None:
     shots = tmp_path / "layout"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         problems: dict[str, Any] = {}
         sid: str | None = None
         for width, zoom in VIEWS:
@@ -132,7 +133,7 @@ async def test_left_panel_collapses_in_flow_and_keeps_state(app_server: AppServe
     """Dar pencerede sol panel akış içinde açılır/kapanır (örtmez); kesinti gelince açılır; seçili adım ve
     oturum korunur. Geniş pencerede düğme görünmez."""
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ctx = await browser.new_context(viewport={"width": 1024, "height": 900})
         ui = await ctx.new_page()
         sid = await prepare(ui, app_server, lab, None)

@@ -104,7 +104,7 @@ def create_app(settings: Settings, container: Container | None = None) -> FastAP
     container = container or build_container(settings)
     app = FastAPI(
         title="AgenTask",
-        version="0.2.1",
+        version="0.3.0",
         # Production'da etkileşimli API dokümanı kapalı; OpenAPI şeması development/test için.
         docs_url=None if settings.is_production else "/docs",
         redoc_url=None,

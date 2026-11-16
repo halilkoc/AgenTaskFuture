@@ -106,6 +106,9 @@ async def test_find_record_paged_by_business_key(handle: PlaywrightContextHandle
     table = await target(handle, kind="table", labels=["Başvurular"])
 
     async def relocate(_: ObservedControl) -> ObservedControl:
+        # Yürütücü yeniden bulmayı hedef hazır olana dek bekler (`_resolve`); bu yardımcı beklemediği için
+        # Firefox'ta sayfa yeni yüklenirken tablo "görünür değil" çıkabiliyordu. Aynı bekleme eklendi.
+        await handle.page.get_by_role("table", name="Başvurular").wait_for()
         return await target(handle, kind="table", labels=["Başvurular"])
 
     found = await REG.for_control(table).find_record(

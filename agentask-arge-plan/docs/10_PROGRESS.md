@@ -967,6 +967,15 @@ Bu eksikler P0–P7 fixture geliştirmesini durdurmaz; gerçek entegrasyonun do�
 - **Hata kaydı:** dar kapsamlı `ruff --fix` 27 `noqa` açıklamasını sildi; satırlar geri kondu, gerekçe metinlerinin çoğu kayboldu.
 - **Doğrulanmadı:** Windows, gerçek Pega/SSO ve kurum bağlantıları.
 
+### 2026-11-16 — Tarayıcı motoru seçimi (0.3.0, ADR 0025)
+- **Ayar:** mevcut `BROWSER_ENGINE` genişletildi (varsayılan chromium; firefox desteklenir; webkit gerekçesiyle reddedilir). İkinci ayar veya paralel uyarlayıcı eklenmedi. Playwright 1.64.1 değişmedi.
+- **Değişen ürün dosyaları:** `config/settings.py`, `diagnostics.py`, `infrastructure/browser/{blocked_frames.py (yeni), playwright_factory.py, observer.py, driver.py, inventory_js.py}`, `application/services/executor.py`, `agentask_lab/templates/optional_modal.html`, `presentation/app.py`, `pyproject.toml`, `.env.example`.
+- **Paket/belge:** `packaging/company/{INSTALL.md, KNOWN_LIMITS.md, install.ps1}`, `docs/05`, `docs/18`, `docs/adr/0025-tarayici-motoru-secimi.md`.
+- **Test/araç:** `tests/support_browser.py` (yeni), `tests/conftest.py`, 29 test dosyası, `tests/unit/test_browser_engine_settings.py` (yeni), `tests/integration/browser/test_browser_engine.py` (yeni), `tools/local_acceptance/{__main__,guard}.py`.
+- **Kanıt:** Chromium 947 passed + Docker 3; Firefox entegrasyon 251 passed, e2e 38 passed; Firefox kabul 28/28 (`acceptance-reports/20261116-164525/`). WebKit doğrulanmadı.
+- **Paket:** `agentask-company-test-0.3.0-20261116.zip`, SHA-256 `b91f750cb4c4ebf8efa558d7cf8154f7085d7327932754187fb425fecd52acad`.
+- **Doğrulanmadı:** Windows'ta Firefox kurulumu, gerçek Pega/SSO.
+
 ### STATUS.md arşivi — 2026-11-09 aday sürüm devam noktası
 ## Devam noktası (2026-11-09) — şirket testi aday sürümü
 **Hedef:** yerelde tek aday sürüm; gerçek şirket bağlantıları yalnız şirkette kabul edilir. Değerlendirme: `docs/16_COMPANY_TEST_READINESS.md`.

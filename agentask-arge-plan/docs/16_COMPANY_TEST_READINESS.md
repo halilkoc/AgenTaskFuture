@@ -3,7 +3,7 @@
 Tek uygulama, tek kullanıcı, yerel çalıştırma içindir. **Yerelde geçmek, gerçek Pega/SSO/kurum bağlantısı kabulü değildir.**
 Kanıt sütunundaki testler 2026-11-09 koşusunda çalıştırıldı (`var/verification/company-candidate-2026-11-09/`).
 
-> **Güncel:** Bu değerlendirme 0.1.0 adayı içindir ve **o paket geçersizdir**. Geçerli paket `agentask-company-test-0.2.1-20261113.zip` (0.2.0 eski aday); S1–S9 kanıtı `var/verification/company-final-2026-11-09/`, plan ve durum `docs/STATUS.md`. Aşağıdaki “Kalan” sütunundaki autocomplete, Kayıt bul ve çıktıdan bileşen girdisi maddeleri 0.2.0'da lab düzeyinde kapatıldı.
+> **Güncel:** Bu değerlendirme 0.1.0 adayı içindir ve **o paket geçersizdir**. Geçerli paket `agentask-company-test-0.3.0-20261116.zip` (tarayıcı motoru seçimi, ADR 0025; 0.2.1 yalnız Chromium'lu önceki aday, 0.2.0 eski aday); S1–S9 kanıtı `var/verification/company-final-2026-11-09/`, plan ve durum `docs/STATUS.md`. Aşağıdaki “Kalan” sütunundaki autocomplete, Kayıt bul ve çıktıdan bileşen girdisi maddeleri 0.2.0'da lab düzeyinde kapatıldı.
 
 ## Aşama değerlendirmesi (etiket değil, kod ve test kanıtı)
 | Aşama | Değerlendirme | Kanıt | Kalan |

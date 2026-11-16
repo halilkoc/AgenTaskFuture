@@ -21,9 +21,54 @@ powershell -ExecutionPolicy Bypass -File .\hash-admin.ps1
 Bütünlük: `SHA256SUMS.txt` paket dosyalarının özetlerini içerir. Kurum politikası isterse `Get-FileHash` ile doğrulayın.
 
 ## 3. Tarayıcı (Mac'ten kopyalamayın)
-Playwright tarayıcı dosyaları platforma özeldir. Birini seçin:
+Motor `.env` içindeki `BROWSER_ENGINE` ile seçilir: `chromium` (varsayılan; satır yoksa da chromium) veya `firefox`.
+Uygulama **yalnız seçilen motoru** başlatır; bulunamazsa hata verir, başka motora geçmez.
+Playwright tarayıcı dosyaları platforma özeldir; Windows için Windows'ta hazırlanmalıdır.
+
+### 3.1 Chromium kullanılamıyorsa: Firefox
+```
+BROWSER_ENGINE=firefox
+BROWSER_EXECUTABLE_PATH=
+PLAYWRIGHT_BROWSERS_PATH=C:\AgenTask\pw-browsers
+BROWSER_HEADLESS=false
+```
+- Bilgisayarda kurulu olağan Firefox **kullanılamaz**: Playwright Firefox'u yalnız kendi derlemesiyle sürer. Bu yüzden
+  `BROWSER_EXECUTABLE_PATH` Firefox ile reddedilir; boş bırakın.
+- Bu paketteki Playwright sürümü **1.64.1**'dir ve `firefox-1555` (Firefox 157.0) derlemesini bekler. Klasör adındaki
+  numara farklıysa tarayıcı bulunamaz.
+- `playwright install firefox` yalnız Firefox'u ve Playwright'ın yardımcı dosyalarını (ffmpeg; Windows'ta winldd)
+  indirir; **Chromium indirmez**. `install.ps1` hiçbir tarayıcı indirmez.
+
+Tarayıcı dosyalarını sağlamanın iki yolu (ikisi de kurum onaylı kaynaktan):
+- **Kurum aynası (şirket bilgisayarında):**
+  ```powershell
+  $env:PLAYWRIGHT_BROWSERS_PATH="C:\AgenTask\pw-browsers"
+  $env:PLAYWRIGHT_DOWNLOAD_HOST="https://ayna.kurum.example/playwright"
+  .\.venv\Scripts\playwright.exe install firefox
+  ```
+  Ayna, Playwright'ın indirme yolunu (`.../builds/firefox/1555/...`) aynen sunmalıdır.
+- **Çevrimdışı (internet olan, onaylı başka bir Windows x64 bilgisayarda hazırlanır):**
+  1. O bilgisayarda Python 3.12 ile `pip install playwright==1.64.1`.
+  2. `$env:PLAYWRIGHT_BROWSERS_PATH="C:\pw-browsers"` sonra `playwright install firefox`.
+  3. `C:\pw-browsers` klasörünün **tamamını** (`firefox-1555`, `ffmpeg-*`, `winldd-*`) kurum onaylı yolla şirket
+     bilgisayarına, örneğin `C:\AgenTask\pw-browsers` altına kopyalayın.
+  4. `.env` içinde `PLAYWRIGHT_BROWSERS_PATH=C:\AgenTask\pw-browsers` yazın ve `doctor.ps1` çalıştırın.
+
+`doctor.ps1` seçili motoru, tarayıcı dosyasının bulunup bulunmadığını ve başlatma sonucunu ayrı satırlarda gösterir;
+kendi başına indirme yapmaz. Firefox yalnız Mac üzerindeki deney uygulamasında denendi; **Windows'ta kurulumu ve gerçek
+Pega/SSO ile çalışması doğrulanmadı** (bkz. `KNOWN_LIMITS.md`).
+
+**WebKit kullanılamaz.** `BROWSER_ENGINE=webkit` yazılırsa uygulama başlamaz ve nedenini söyler:
+```
+BROWSER_ENGINE=webkit   # REDDEDİLİR: "BROWSER_ENGINE=webkit bu sürümde kullanılamaz ..."
+```
+WebKit, uygulamanın izinli adres sınırını korumak için kullandığı yönlendirme denetimini desteklemiyor; giriş dahil
+yönlendirme içeren akışlar çalışmıyor. Sınır gevşetilerek çalıştırılmadı.
+
+### 3.2 Chromium (varsayılan)
+Birini seçin:
 - **A. Kurulu Edge/Chrome:** `.env` içinde `BROWSER_EXECUTABLE_PATH=C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`.
-  İndirme gerekmez. Kurulu tarayıcı sürümüyle uyum bu ortamda doğrulanmalıdır.
+  İndirme gerekmez. Kurulu tarayıcı sürümüyle uyum bu ortamda doğrulanmalıdır. Yalnız `BROWSER_ENGINE=chromium` ile geçerlidir.
 - **B. Kurum aynası:** `$env:PLAYWRIGHT_DOWNLOAD_HOST="https://ayna.kurum.example/playwright"` sonra
   `.\.venv\Scripts\playwright.exe install chromium`.
 - **C. Başka bir Windows bilgisayarda hazırlanmış Playwright tarayıcı klasörü:** `PLAYWRIGHT_BROWSERS_PATH` ile gösterin.
@@ -54,7 +99,8 @@ Adres: `http://127.0.0.1:8000`. `start.ps1` önce kontrolü çalıştırır; `HA
 
 | Görülen | Olası neden | Çözüm |
 |---|---|---|
-| `[HATA] Tarayıcı` | Tarayıcı kurulu değil | Bölüm 3 |
+| `[HATA] Tarayıcı dosyası` / `Tarayıcı başlatma` | Seçili motorun dosyaları yok veya açılamıyor | Bölüm 3 |
+| `BROWSER_EXECUTABLE_PATH yalnız BROWSER_ENGINE=chromium ...` | Firefox ile özel tarayıcı yolu verilmiş | Yolu boş bırakın (Bölüm 3.1) |
 | `[HATA] MongoDB` | URI, ağ veya CA | Bölüm 4 |
 | `[UYARI] Hedef uygulama` | Ağ/CA; tarayıcı yine erişebilir | Tarayıcıda açmayı deneyin |
 | Giriş sonrası hedefe gidilemiyor | SSO adresi izinli listede yok | `TARGET_ALLOWED_ORIGINS` |

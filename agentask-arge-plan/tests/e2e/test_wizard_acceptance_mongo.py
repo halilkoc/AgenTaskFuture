@@ -13,6 +13,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow, admin_settings, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = [pytest.mark.browser, pytest.mark.mongo]
@@ -73,7 +74,7 @@ async def customer_field(flow: Flow) -> str:
 
 async def test_wizard_design_publish_wrong_case_history_logout(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Teminat gir", START, admin=True)
         await flow.pick("Bilgi oku", "Vaka bölümündeki Vaka No alanını seç")
         editor = await flow.pick("Alan doldur", "Müşteri bölümündeki Müşteri No alanını seç")

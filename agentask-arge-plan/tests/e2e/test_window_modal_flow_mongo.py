@@ -11,6 +11,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = [pytest.mark.browser, pytest.mark.mongo]
@@ -46,7 +47,7 @@ async def design_main(flow: Flow) -> None:
 
 async def test_new_window_from_design_to_assistant(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Pencerede not yaz", WINDOWS)
         editor = await flow.add("Ekrana geç")
         await editor.get_by_role("button", name="Ekrandaki düğmeleri listele").click()
@@ -103,7 +104,7 @@ async def test_new_window_from_design_to_assistant(app_server: AppServer, lab: L
 
 async def test_optional_dialog_from_design_to_assistant(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Bilgi penceresi", MODAL)
         for label, value in (("Birinci", "bir"), ("İkinci", "iki")):
             editor = await flow.pick("Alan doldur", f"Bilgiler bölümündeki {label} alanını seç")

@@ -206,8 +206,10 @@ async def test_screen_change_before_next_action_stops_without_writing(env: Env, 
     )
     if switch == "dom":  # SPA içi değişim: yazma tamamlandı, sonraki adımdan önce ekran yeniden doğrulandı
         assert run.steps[1].state is StepState.SUCCEEDED and failed.index == 2
-    else:  # gezinme yazmanın doğrulamasını bozdu (FRAME_CHANGED); tekrar denemeden önce ekran reddetti
-        assert failed.index == 1 and "FRAME_CHANGED" in failed.recoveries
+    elif failed.index == 1:  # gezinme yazmanın doğrulamasını bozdu; tekrar denemeden önce ekran reddetti
+        assert "FRAME_CHANGED" in failed.recoveries
+    else:  # gezinme doğrulamadan sonra tamamlandı (Firefox'ta görülür): sonraki adım durur
+        assert run.steps[1].state is StepState.SUCCEEDED and failed.index == 2
     # Kefil adımına hiç gelinmedi: Başvuran'a tek yazma dışında sürücü eylemi yok.
     assert [w[0] for w in env.writes] == ["fill"]
     assert all(s.state is StepState.PENDING for s in run.steps[failed.index + 1 :])

@@ -28,6 +28,7 @@ from agentask.application.errors import DependencyUnavailable, NavigationNotAllo
 from agentask.config.runtime_env import apply_playwright_environment
 from agentask.config.settings import Settings
 from agentask.domain.origins import OriginPolicy, origin_of
+from agentask.infrastructure.browser.blocked_frames import note_navigation
 from agentask.infrastructure.browser.driver import PlaywrightDriver
 from agentask.infrastructure.browser.observer import PageObserver
 from agentask.infrastructure.browser.picker_js import BINDING
@@ -202,7 +203,10 @@ class PlaywrightContextFactory:
                     settings.browser_engine.value,
                     type(exc).__name__,
                 )
-                raise DependencyUnavailable("Tarayıcı başlatılamadı.") from None
+                raise DependencyUnavailable(
+                    f"Tarayıcı başlatılamadı (BROWSER_ENGINE={settings.browser_engine.value}). "
+                    "Başka motora geçilmez; `agentask --doctor` ile denetleyin."
+                ) from None
             logger.info("browser_launched engine=%s", settings.browser_engine.value)
             return self._browser
 
@@ -213,6 +217,7 @@ class PlaywrightContextFactory:
             return
         if not self._policy.allows(url):
             logger.warning("navigation_blocked resource=%s", request.resource_type)
+            note_navigation(request, blocked=True)
             await route.abort("blockedbyclient")
             return
         # Playwright route handler'ı yönlendirme adımlarında çağırmaz. Bu yüzden yanıt max_redirects=0 ile
@@ -222,14 +227,17 @@ class PlaywrightContextFactory:
             response = await route.fetch(max_redirects=0)
         except Exception as exc:
             logger.warning("guarded_fetch_failed type=%s", type(exc).__name__)
+            note_navigation(request, blocked=True)
             await route.abort("failed")
             return
         if 300 <= response.status < 400:
             location = response.headers.get("location")
             if location is not None and not self._policy.allows(urljoin(url, location)):
                 logger.warning("redirect_blocked resource=%s", request.resource_type)
+                note_navigation(request, blocked=True)
                 await route.abort("blockedbyclient")
                 return
+        note_navigation(request, blocked=False)
         await route.fulfill(response=response)
 
     async def create_context(self, owner_id: str) -> PlaywrightContextHandle:

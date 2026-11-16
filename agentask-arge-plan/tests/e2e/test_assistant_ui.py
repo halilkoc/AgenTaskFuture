@@ -15,6 +15,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e import test_designer_ui as flow
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -44,7 +45,7 @@ def app_server(make_env_file: EnvFileFactory, lab: LabServer, tmp_path: Path) ->
 
 async def test_assistant_runs_published_operation(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await flow.author_ready_draft(ui, app_server.port)
         await ui.get_by_role("button", name="Onayla (yayıncı)").click()

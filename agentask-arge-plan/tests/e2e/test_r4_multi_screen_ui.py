@@ -15,6 +15,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -110,7 +111,7 @@ async def add_value_step(ui: Page, index: int, intent: str, candidate: str, temp
 async def test_multi_screen_designed_published_and_run_from_ui(app_server: AppServer, lab: LabServer) -> None:
     base = f"http://127.0.0.1:{app_server.port}"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await ui.goto(f"{base}/designer")
         await ui.get_by_role("button", name="Yeni oturum aç").click()

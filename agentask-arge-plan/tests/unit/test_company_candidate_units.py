@@ -73,6 +73,7 @@ def test_doctor_reports_without_secrets(
     settings = load_settings(
         make_env_file(
             CATALOG_BACKEND="disabled",
+            BROWSER_ENGINE="chromium",
             BROWSER_EXECUTABLE_PATH=str(tmp_path / "yok.exe"),
             RUN_DIRECTORY=str(tmp_path / "r"),
             DRAFT_DIRECTORY=str(tmp_path / "d"),

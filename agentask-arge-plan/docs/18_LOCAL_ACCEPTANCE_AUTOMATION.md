@@ -10,7 +10,17 @@ ortamda (elle SSO girişinden sonra) uygulanacak kabul yaklaşımını anlatır.
 ```
 .venv/bin/python -m tools.local_acceptance            # tam koşu (madde 28 dahil)
 .venv/bin/python -m tools.local_acceptance --skip-package --timeout-s 1800
+.venv/bin/python -m tools.local_acceptance --browser-engine firefox   # veya kabukta BROWSER_ENGINE=firefox
 ```
+
+- **Tarayıcı motoru (0.3.0):** `chromium` (varsayılan) veya `firefox`. Seçim hem testin arayüz tarayıcısına hem uygulamanın
+  hedef tarayıcısına uygulanır (`AGENTASK_TEST_BROWSER_ENGINE` test değişkeni → `BROWSER_ENGINE` ayarı). `guard.py` her
+  tarayıcı başlatmasını taraf (arayüz/hedef) ve motor adıyla sayar; başka motor başlatılmak istenirse o test hata alır.
+  Koşu sonunda `browser-launches.json` denetlenir: iki taraf da seçili motorla en az bir kez açılmamışsa veya başka motor
+  açılmışsa çıkış kodu 1 olur. Ön koşul denetimi yalnız seçili motoru dener; indirme yapmaz. `webkit` reddedilir (ADR 0025).
+- **macOS'ta Firefox:** bu Mac'te Firefox gerçek kullanıcı dizininde “Could not find profile folder” ile kapanıyor (neden
+  belirlenemedi). Testler Firefox'u geçici bir kullanıcı diziniyle (`CFFIXED_USER_HOME`) başlatır; Playwright tarayıcı
+  dosyalarının yeri değişmez. Bu yalnız test ortamı önlemidir, ürün ayarı değildir.
 
 - **Rapor:** `acceptance-reports/<zaman>/`. İçerik: `report.md`, `report.json`, `junit.xml`, `pytest.log`, `pytest-exit-code.txt`, `exit-code.txt`, `paket-*.log`. Başarısız test varsa `failures/<test>/tani.json` ve ekran görüntüleri de yazılır.
 - **Mac uykusu:** koşu uykuya karşı `caffeinate -i` ile kendini yeniden başlatır. Otomatik tekrar yoktur.
@@ -21,9 +31,9 @@ ortamda (elle SSO girişinden sonra) uygulanacak kabul yaklaşımını anlatır.
 | Kod | Anlam |
 |---|---|
 | 0 | 28 maddenin hepsi GEÇTİ |
-| 1 | En az bir test veya madde başarısız (KALDI) ya da pytest sıfırdan farklı döndü |
+| 1 | En az bir test veya madde başarısız (KALDI), pytest sıfırdan farklı döndü ya da seçili motor dışında tarayıcı açıldı |
 | 2 | Başarısız yok, ama OTOMATİK DOĞRULANAMADI madde var |
-| 3 | Ön koşul eksik (mongod, Chromium), kabukta yerel olmayan adres var veya başka bir koşu sürüyor |
+| 3 | Ön koşul eksik (mongod, seçili tarayıcı motoru), geçersiz/desteklenmeyen motor, kabukta yerel olmayan adres var veya başka bir koşu sürüyor |
 | 4 | Yalıtım ihlali: koşu sırasında `.env`, `var/` veya kalıcı MongoDB sayıları değişti |
 | 5 | Süre sınırı aşıldı; koşu kesildi, sonuçsuz maddeler OTOMATİK DOĞRULANAMADI |
 

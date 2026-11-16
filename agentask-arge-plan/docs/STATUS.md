@@ -73,7 +73,57 @@ Yalnız lab kabulüdür; kurum log altyapısı, Pega/SSO veya ürünün tümün�
 - Başarılı işlemde destek numarası İşlem Asistanı ve Çalışmalar ekranında aynı.
 - Yanlış ekranda çalıştırmada işlem yapılmadan duruldu ve hata bilgisi gösterildi.
 
-## Güncel durum ve kesin devam noktası (2026-11-13)
+## Güncel durum ve kesin devam noktası (2026-11-16) — tarayıcı motoru seçimi, 0.3.0
+
+**Geçerli aday paket:** `dist/agentask-company-test-0.3.0-20261116.zip`, sürüm **0.3.0**.
+- SHA-256 `b91f750cb4c4ebf8efa558d7cf8154f7085d7327932754187fb425fecd52acad`, 44.792.801 bayt, 41 dosya.
+- Dosya listesi ve üretim kaydı: `var/verification/company-candidate-0.3.0-20261116/package/`.
+- 0.2.1 ZIP'ine dokunulmadı (özeti aynı: `5cf37964…`); yalnız Chromium ile kullanılabilen önceki adaydır.
+
+**Yeni (ADR 0025):** `BROWSER_ENGINE=chromium|firefox`. Verilmezse chromium (eski `.env` çalışır). Yalnız seçilen motor başlatılır;
+bulunamazsa motor adıyla hata verilir, başka motora geçilmez. `BROWSER_EXECUTABLE_PATH` yalnız chromium içindir; firefox ile
+reddedilir. `--doctor` motoru, tarayıcı dosyasını ve başlatma sonucunu ayrı satırlarda gösterir; indirme yapmaz.
+
+**WebKit reddedilir (açık karar):** WebKit, hedef adres sınırının dayandığı “yönlendirme yanıtını denetleyip iletme” adımını
+desteklemiyor (`Route.fulfill: Cannot fulfill with redirect status`). Giriş dahil yönlendirme içeren akışlar çalışmıyor.
+`BROWSER_ENGINE=webkit` ayar doğrulamasında gerekçesiyle reddedilir; sınır gevşetilmedi. Yeniden üretim:
+`var/verification/browser-engines-20261116/kesif/webkit-yonlendirme-yeniden-uretim.py`. WebKit gerekiyorsa ayrı iş ve karar gerekir.
+
+**Firefox ile bulunan ve düzeltilen ürün hataları:**
+- Engellenen alt çerçeve yalnız Chromium'un `chrome-error://` adresiyle tanınıyordu. Firefox'ta engellenen çerçeve “tarandı”
+  sayılıyor, eksik tarama işlemi durdurmuyordu. Engelleme artık isteği kesen yerde kaydediliyor (`blocked_frames.py`).
+- Kaydırma alanından büyük tablonun merkezi alan dışında kalınca tablo “katman arkasında” sayılıyordu (motordan bağımsız;
+  Chromium'da da yeniden üretildi). Regresyon: `test_table_larger_than_its_scroll_area_is_not_reported_as_covered`.
+- Önceki adımın açtığı fazladan pencerenin bildirimi adım başındaki kontrolden sonra gelirse sonraki yazma yapılıyordu.
+  Yeni pencere artık hedef çözüldükten sonra, eylemden hemen önce de denetleniyor.
+
+**Test ve lab değişiklikleri (başarı ölçütü gevşetilmeden):**
+- Testlerin arayüz tarayıcısı ve uygulamanın hedef tarayıcısı `AGENTASK_TEST_BROWSER_ENGINE` ile aynı motoru kullanır
+  (`tests/support_browser.py`); 29 test dosyasındaki sabit `chromium.launch` kaldırıldı.
+- Lab “isteğe bağlı pencere” sayfası pencereyi 30 ms gecikme yerine yazmanın sonucu olarak hemen açıyor (gecikme sonraki adımla
+  yarışıyordu). Gezinmeyle ekran değişimi testinde hatanın 1. veya 2. adımda kaydedilmesi kabul edilir; iki durumda da tek
+  yazma, `SCREEN_NOT_RECOGNIZED` ve sonraki adımların beklemesi aynen doğrulanır. Engellenen gezinmenin hata metni motora göre
+  seçilir; ölçüt “izinsiz adrese istek gitmedi”dir. Sayfalı tablo testinin yardımcısı, yürütücü gibi tablo hazır olana dek bekler.
+
+**Sonuçlar (kanıt: `var/verification/company-candidate-0.3.0-20261116/regression/`):**
+- Chromium tam regresyon: 947 passed, çıkış 0; Docker 3 passed; ruff, format, mypy, JS, `dev_check` çıkış 0 (kod özeti `b0e131fc…`).
+- Firefox: tarayıcı entegrasyon + lab 251 passed (ilk koşuda 1 test yardımcısı hatası; düzeltilip tümü yeniden koşuldu, `32-…`),
+  uçtan uca 38 passed. Regresyondan sonra değişen tek dosya o test yardımcısıdır (`tests/integration/browser/test_driver_adapters.py`).
+- Firefox ile tek komutlu kabul: **28/28 GEÇTİ, araç çıkış 0, pytest çıkış 0** (114 passed). Arayüz 91, hedef 15 başlatmanın
+  hepsi firefox; başka motor 0. Yalıtım değişmedi. Rapor: `acceptance-reports/20261116-164525/report.md`.
+- WebKit: başlatma dışında hiçbir akış doğrulanmadı; geçti sayılmaz.
+- `--check-config` / `--doctor` çıktıları: `var/verification/browser-engines-20261116/cli-kontrolleri.log`.
+
+**Bu Mac'e özgü not:** Firefox gerçek kullanıcı dizininde “Could not find profile folder” ile kapanıyor (neden belirlenemedi).
+Testler Firefox'u geçici kullanıcı diziniyle başlatır. Uygulamayı bu Mac'te Firefox ile elle çalıştırmak aynı hataya takılabilir.
+
+**Doğrulanmadı (şirkette):** Windows'ta Firefox kurulumu ve çevrimdışı tarayıcı klasörü, Windows `.ps1` betikleri, gerçek
+Pega/SSO (Firefox ile dahil), kurumsal MongoDB/TLS, model, S3, görünür tarayıcıda pencere deneyimi.
+
+**Kesin devam noktası:** paket 0.3.0 şirkete taşınır; `INSTALL.md` bölüm 3.1 ile Firefox dosyaları sağlanır, `.env` içinde
+`BROWSER_ENGINE=firefox` yazılır, `doctor.ps1` ve ardından `MANUAL_ACCEPTANCE.md` S0–S25 uygulanır.
+
+## Önceki durum (2026-11-13) — 0.2.1
 
 **Geçerli aday paket:** `dist/agentask-company-test-0.2.1-20261113.zip`, sürüm **0.2.1**.
 - SHA-256 `5cf379642d5dc296c953481afe1024b73755b79ce7c8a033d66259cd16455d95`, 41 dosya.

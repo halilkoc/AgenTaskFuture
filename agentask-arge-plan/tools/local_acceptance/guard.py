@@ -24,6 +24,8 @@ from tools.local_acceptance.safety import redact, settings_violations
 OUTPUT = Path(os.environ.get("AGENTASK_ACCEPTANCE_DIR", "."))
 TEMP_ROOT = Path(os.environ.get("AGENTASK_ACCEPTANCE_BASETEMP", "."))
 MAIN_THREAD = threading.get_ident()
+ENGINE = os.environ.get("AGENTASK_TEST_BROWSER_ENGINE", "chromium")
+_launches: dict[str, dict[str, int]] = {"arayuz": {}, "hedef": {}}
 _browsers: list[Any] = []
 _servers: list[Any] = []
 
@@ -70,10 +72,21 @@ _real_launch = BrowserType.launch
 
 
 async def _tracked_launch(self: Any, *args: Any, **kwargs: Any) -> Any:
+    # Test arayüzü ana iş parçacığında, uygulamanın hedef tarayıcısı sunucu iş parçacığında başlatılır.
+    ui = threading.get_ident() == MAIN_THREAD
+    counts = _launches["arayuz" if ui else "hedef"]
+    counts[self.name] = counts.get(self.name, 0) + 1
+    if self.name != ENGINE:
+        raise IsolationViolationError(f"seçili motor {ENGINE} iken {self.name} başlatılmak istendi")
     browser = await _real_launch(self, *args, **kwargs)
-    if threading.get_ident() == MAIN_THREAD:  # yalnız test arayüzü; uygulamanın sayfaları sunucudan alınır
+    if ui:  # yalnız test arayüzü; uygulamanın sayfaları sunucudan alınır
         _browsers.append(browser)
     return browser
+
+
+def pytest_sessionfinish(session: pytest.Session) -> None:
+    text = json.dumps(_launches, ensure_ascii=False, indent=2)
+    (OUTPUT / "browser-launches.json").write_text(text, encoding="utf-8")
 
 
 BrowserType.launch = _tracked_launch  # type: ignore[method-assign]

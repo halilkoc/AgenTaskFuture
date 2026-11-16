@@ -12,6 +12,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -43,7 +44,7 @@ async def test_approve_publish_and_review(app_server: AppServer, lab: LabServer)
     from tests.e2e import test_designer_ui as flow
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await flow.author_ready_draft(ui, app_server.port)
         await ui.get_by_role("button", name="Yayımla").click()

@@ -74,7 +74,9 @@ def test_session_limit_maps_to_429(api_settings) -> None:  # type: ignore[no-unt
 
 def test_session_api_returns_503_when_browser_cannot_start(make_env_file: EnvFileFactory) -> None:
     settings = load_settings(
-        make_env_file(BROWSER_HEADLESS="true", BROWSER_EXECUTABLE_PATH="/nonexistent/chrome")
+        make_env_file(
+            BROWSER_ENGINE="chromium", BROWSER_HEADLESS="true", BROWSER_EXECUTABLE_PATH="/nonexistent/chrome"
+        )
     )
     with TestClient(create_app(settings), client=LOCAL) as c:
         response = c.post("/api/sessions", headers={"X-Dev-User": "ayse", "X-Dev-Roles": "operator"})

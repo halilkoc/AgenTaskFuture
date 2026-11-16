@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 import time
@@ -9,7 +10,7 @@ from pathlib import Path
 
 import pytest
 from tools.local_acceptance import coverage
-from tools.local_acceptance.__main__ import decide_exit, judge, parse_cases
+from tools.local_acceptance.__main__ import decide_exit, engine_usage, judge, parse_cases
 from tools.local_acceptance.package_check import FAILED, PASSED, UNVERIFIED, PackageResult, forbidden_entries
 from tools.local_acceptance.process import TIMEOUT, run_limited
 from tools.local_acceptance.safety import env_violations, is_loopback_url, redact, settings_violations
@@ -98,6 +99,7 @@ def test_exit_codes() -> None:
     assert decide_exit(True, 0, {FAILED}) == 1
     assert decide_exit(True, TIMEOUT, {UNVERIFIED}) == 5
     assert decide_exit(False, 0, {PASSED}) == 4
+    assert decide_exit(True, 0, {PASSED}, engine_ok=False) == 1  # başka motor açıldıysa geçmiş sayılmaz
 
 
 def test_timeout_kills_own_process_group(tmp_path: Path) -> None:
@@ -151,3 +153,35 @@ def test_coverage_lists_28_items_with_existing_tests() -> None:
 
 def test_forbidden_package_entries() -> None:
     assert forbidden_entries(["a/.env", "a/var/x", "a/app/x.whl"]) == ["a/.env", "a/var/x"]
+
+
+def test_engine_usage_requires_both_sides_on_the_selected_engine_only(tmp_path: Path) -> None:
+    assert engine_usage(tmp_path, "firefox") == (False, "tarayıcı başlatma kaydı yok")
+    record = tmp_path / "browser-launches.json"
+    record.write_text(json.dumps({"arayuz": {"firefox": 3}, "hedef": {"firefox": 2}}), encoding="utf-8")
+    ok, text = engine_usage(tmp_path, "firefox")
+    assert ok and "test arayüzü: firefox 3 kez, başka motor 0 kez" in text
+    record.write_text(json.dumps({"arayuz": {"firefox": 3, "chromium": 1}, "hedef": {"firefox": 2}}))
+    assert engine_usage(tmp_path, "firefox")[0] is False  # test yardımcısı gizlice Chromium açtı
+    record.write_text(json.dumps({"arayuz": {"firefox": 3}, "hedef": {}}))
+    assert engine_usage(tmp_path, "firefox")[0] is False  # uygulamanın hedef tarayıcısı hiç açılmadı
+
+
+@pytest.mark.parametrize("engine", ["webkit", "edge"])
+def test_cli_refuses_unsupported_engine_before_running(tmp_path: Path, engine: str) -> None:
+    env = {
+        "PATH": "/usr/bin:/bin",
+        "AGENTASK_ACCEPTANCE_AWAKE": "1",
+        "AGENTASK_ACCEPTANCE_REPORTS": str(tmp_path),
+        "BROWSER_ENGINE": engine,
+    }
+    done = subprocess.run(
+        [sys.executable, "-m", "tools.local_acceptance"],
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert done.returncode == 3 and "BROWSER_ENGINE" in done.stderr
+    assert not list(tmp_path.glob("*/junit.xml"))

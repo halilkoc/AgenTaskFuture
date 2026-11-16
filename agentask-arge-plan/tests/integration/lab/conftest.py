@@ -5,6 +5,7 @@ from collections.abc import AsyncIterator
 import pytest
 from playwright.async_api import Browser, Page, async_playwright
 
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 
@@ -16,7 +17,7 @@ def _reset_lab(lab: LabServer) -> None:
 @pytest.fixture
 async def browser() -> AsyncIterator[Browser]:
     async with async_playwright() as playwright:
-        instance = await playwright.chromium.launch(headless=True)
+        instance = await ui_engine(playwright).launch(headless=True)
         yield instance
         await instance.close()
 

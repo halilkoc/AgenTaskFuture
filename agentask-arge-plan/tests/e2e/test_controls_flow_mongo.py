@@ -13,6 +13,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow, changed_fields, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = [pytest.mark.browser, pytest.mark.mongo]
@@ -46,7 +47,7 @@ async def test_checkbox_radio_autocomplete_from_design_to_assistant(
     app_server: AppServer, lab: LabServer
 ) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Kontrolleri doldur", PAGE)
 
         editor = await flow.pick("İşaretle / kaldır", "Başvuru bölümündeki Onaylıyorum alanını seç")

@@ -53,12 +53,13 @@ Varsayılanları .env.example'dan Settings'e iki ayrı yerde kopyalamak yerine z
 
 ## Uygulanan değer kümeleri (P0)
 APP_ENV: development | test | production · AUTH_MODE: dev | unconfigured · DRAFT_BACKEND: local_file ·
-RUNNER_MODE: local · BROWSER_ENGINE: chromium | firefox | webkit · LLM_AUTH_MODE: none | basic | bearer ·
+RUNNER_MODE: local · BROWSER_ENGINE: chromium (varsayılan; verilmezse) | firefox — webkit doğrulamada gerekçesiyle reddedilir (ADR 0025) · LLM_AUTH_MODE: none | basic | bearer ·
 AUTH_MODE: dev | unconfigured | local_admin (ADR 0023; ADMIN_USERNAME, ADMIN_PASSWORD_HASH, ADMIN_SESSION_TTL_SECONDS, ADMIN_LOGIN_MAX_ATTEMPTS, ADMIN_LOGIN_LOCKOUT_SECONDS, ADMIN_COOKIE_SECURE). APPROVED_ACTION_SET: none | lab | file (APPROVED_ACTIONS_FILE). FRESH_TEST_LOGIN_TIMEOUT_SECONDS: elle giriş bekleme sınırı. Yeni ayarlar varsayılanlıdır; mevcut .env değişmeden çalışır.
 
 LOG_LEVEL: DEBUG..CRITICAL · LOG_FORMAT: json | text (stdout; alanlar ve maskeleme aynı, ADR 0022). SESSION_SIGNING_KEY en az 32 karakter.
 TARGET_BASE_URL origin'i TARGET_ALLOWED_ORIGINS içinde olmalı. Ayrıntı ve gerekçe: docs/adr/0001-p0-iskelet-ve-settings.md.
 
+BROWSER_EXECUTABLE_PATH yalnız BROWSER_ENGINE=chromium ile geçerlidir; firefox ile verilirse doğrulama reddeder. Seçilen motor dışında bir motor başlatılmaz (ADR 0025).
 PLAYWRIGHT_BROWSERS_PATH Settings'ten okunur ve Playwright sürücüsü başlatılmadan önce `config/runtime_env.py` ile process env'e aktarılır (sürücü bu değeri yalnızca env'den okur).
 
 ## Yerel MongoDB otomatik başlatma (sökülebilir geliştirme aracı)

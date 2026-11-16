@@ -195,6 +195,42 @@ async def test_find_record_by_business_key(env: Env) -> None:
     assert missing.status is RunStatus.FAILED and missing.steps[0].result["outcome"] == "not_found_at_end"
 
 
+async def test_table_larger_than_its_scroll_area_is_not_reported_as_covered(env: Env) -> None:
+    """Kaydırma alanından büyük tablonun merkezi alanın dışında kalabilir; o noktadaki komşu öğe tabloyu
+    kapatan bir katman değildir (Firefox satır ölçüleriyle ortaya çıktı; test geometriyi kendi kurar)."""
+    await env.goto("/pages/table-scroll")
+    rows = env.page.get_by_role("table", name="Hareketler").locator("tbody tr")
+    await rows.nth(14).wait_for()
+    await env.page.evaluate("const r = document.querySelector('.scroll'); r.scrollTop = r.scrollHeight")
+    await rows.nth(29).wait_for()
+    above = await env.page.evaluate(
+        """() => {
+          const region = document.querySelector('.scroll'), table = region.querySelector('table');
+          const block = document.createElement('div');
+          block.id = 'komsu'; block.style.height = '200px'; block.textContent = 'Komşu içerik';
+          region.before(block);
+          region.scrollTop = Math.floor(table.offsetHeight / 2 + 60);
+          const t = table.getBoundingClientRect(), g = region.getBoundingClientRect();
+          const hit = document.elementFromPoint(t.left + t.width / 2, t.top + t.height / 2);
+          return { clipped: t.top + t.height / 2 < g.top, hit: hit ? hit.id : null,
+                   atEnd: region.scrollTop + region.clientHeight >= region.scrollHeight - 20 };
+        }"""
+    )
+    assert above == {"clipped": True, "hit": "komsu", "atEnd": False}  # kurulum: merkez alanın üstünde
+    run = await env.run(
+        [
+            {
+                "op": "find_record",
+                "table": {"kind": "table", "labels": ["Hareketler"]},
+                "key": "B-1037",
+                "navigation": "scroll",
+                "end_text": "Tüm kayıtlar yüklendi",
+            }
+        ]
+    )
+    assert run.status is RunStatus.COMPLETED and run.steps[0].result["outcome"] == "found"
+
+
 async def test_ambiguous_target_is_not_dispatched(env: Env) -> None:
     await env.goto("/pages/duplicates")
     run = await env.run([{"op": "ensure_value", "target": {**T, "labels": ["Müşteri No"]}, "value": "1"}])

@@ -12,6 +12,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import OWNER, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.unit.test_component_publishing import component_draft, make_ready
 
@@ -29,7 +30,7 @@ def commits(lab: LabServer) -> list[str]:
 
 async def test_read_value_is_action_parameter(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Okunan notu kaydet", "/pages/note-form")
         editor = await flow.pick("Alan doldur", "Not alanını seç")
         await editor.get_by_label("Sabit değer").check()
@@ -80,7 +81,7 @@ async def test_read_value_is_component_input(app_server: AppServer, lab: LabServ
         return str(await flow.in_server(read()))
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Vakayı bileşene aktar", path)
         await flow.pick("Bilgi oku", "Vaka bölümündeki Vaka No alanını seç")
         editor = await flow.add("Akış çağır")

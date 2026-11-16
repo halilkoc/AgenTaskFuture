@@ -11,6 +11,7 @@ from playwright.async_api import async_playwright, expect
 from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow, mongo_app, open_flow
 from tests.e2e.support import AppServer
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = [pytest.mark.browser, pytest.mark.mongo]
@@ -36,7 +37,7 @@ async def detail_note(flow: Flow) -> str:
 
 async def test_find_open_row_and_verify_record(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         flow = await open_flow(browser, app_server, lab, "Kaydı bul ve aç", LIST)
         editor = await flow.pick("Kayıt bul", "Kayıtlar tablosunu seç")
         await editor.get_by_label("Her çalıştırmada sor").check()

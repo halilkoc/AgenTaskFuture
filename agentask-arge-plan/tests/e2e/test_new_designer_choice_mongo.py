@@ -16,6 +16,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e.layout_probe import probe
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -75,7 +76,7 @@ async def test_choice_component_end_to_end(app_server: AppServer, lab: LabServer
 
     base = f"http://127.0.0.1:{app_server.port}"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         # Dar masaüstü penceresi: bütün akış bu genişlikte tamamlanır.
         ui = await browser.new_page(viewport={"width": 1100, "height": 900})
         await ui.goto(f"{base}/prototype/designer")

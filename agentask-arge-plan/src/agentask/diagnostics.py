@@ -69,35 +69,53 @@ def _actions(settings: Settings) -> Check:
     return Check(OK, "Onaylı işlemler", "kurum dosyası doğrulandı")
 
 
-async def _browser(settings: Settings) -> Check:
+async def _browser(settings: Settings) -> list[Check]:
+    """Seçili motor, tarayıcı dosyasının varlığı ve başlatma sonucu. İndirme yapmaz, başka motora geçmez."""
     from playwright.async_api import Error as PlaywrightError
     from playwright.async_api import async_playwright
 
     from agentask.config.runtime_env import apply_playwright_environment
 
     apply_playwright_environment(settings)
-    executable = settings.browser_executable_path
-    if executable is not None and not executable.is_file():
-        return Check(FAIL, "Tarayıcı", "BROWSER_EXECUTABLE_PATH dosyası yok")
+    name = settings.browser_engine.value
+    custom = settings.browser_executable_path
+    source = "BROWSER_EXECUTABLE_PATH" if custom is not None else "Playwright tarayıcı dosyaları"
+    checks = [Check(OK, "Tarayıcı motoru", f"BROWSER_ENGINE={name}; kaynak: {source}")]
+    install = (
+        f"Kurum aynasından veya çevrimdışı klasörden `playwright install {name}` ile sağlayın "
+        "(INSTALL.md bölüm 3)"
+    )
+    if name == "chromium":
+        install += " veya BROWSER_EXECUTABLE_PATH ile kurulu Edge/Chrome gösterin"
     try:
         async with async_playwright() as playwright:
-            engine = getattr(playwright, settings.browser_engine.value)
+            engine = getattr(playwright, name)
+            binary = custom if custom is not None else Path(engine.executable_path)
+            if not binary.is_file():
+                missing = (
+                    "BROWSER_EXECUTABLE_PATH dosyası yok"
+                    if custom is not None
+                    else f"{name} dosyaları bu makinede yok. {install}."
+                )
+                checks.append(Check(FAIL, "Tarayıcı dosyası", missing))
+                checks.append(Check(FAIL, "Tarayıcı başlatma", "denenmedi (tarayıcı dosyası yok)"))
+                return checks
+            checks.append(Check(OK, "Tarayıcı dosyası", "mevcut"))
             browser = await engine.launch(
                 headless=True,
-                executable_path=str(executable) if executable else None,
+                executable_path=str(custom) if custom else None,
                 timeout=settings.browser_launch_timeout_ms,
             )
             version = browser.version
             await browser.close()
     except PlaywrightError as exc:
-        return Check(
-            FAIL,
-            "Tarayıcı",
-            f"başlatılamadı ({type(exc).__name__}). Kurum aynasından `playwright install chromium` "
-            "çalıştırın veya BROWSER_EXECUTABLE_PATH ile kurulu Edge/Chrome gösterin.",
+        checks.append(
+            Check(FAIL, "Tarayıcı başlatma", f"{name} başlatılamadı ({type(exc).__name__}). {install}.")
         )
+        return checks
     note = "" if not settings.browser_headless else "; BROWSER_HEADLESS=true iken elle giriş yapılamaz"
-    return Check(WARN if note else OK, "Tarayıcı", f"açıldı ({version}){note}")
+    checks.append(Check(WARN if note else OK, "Tarayıcı başlatma", f"{name} açıldı ({version}){note}"))
+    return checks
 
 
 async def _reachable(name: str, url: str, ca_bundle: Path | None, timeout_s: float) -> Check:
@@ -149,7 +167,7 @@ async def _run_checks(settings: Settings) -> list[Check]:
     from agentask.bootstrap import object_store_for
 
     checks = [_python(), _identity(settings), _actions(settings), *_directories(settings)]
-    checks.append(await _browser(settings))
+    checks.extend(await _browser(settings))
     timeout = settings.navigation_timeout_ms / 1000
     checks.append(await _reachable("Hedef uygulama", str(settings.target_base_url), None, timeout))
     checks.append(await _mongo(settings))

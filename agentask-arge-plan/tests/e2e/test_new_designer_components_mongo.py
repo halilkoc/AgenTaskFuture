@@ -15,6 +15,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 from tests.unit.test_component_publishing import component_draft, make_ready
@@ -75,7 +76,7 @@ async def test_call_published_component_bind_output_and_upgrade(
 
     base = f"http://127.0.0.1:{app_server.port}"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
         await ui.goto(f"{base}/prototype/designer")
         await ui.locator("#pd-home").get_by_role("button", name="Yeni akış").click()

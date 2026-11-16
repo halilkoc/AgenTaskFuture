@@ -38,6 +38,7 @@ from agentask.domain.observation import (
     Snapshot,
 )
 from agentask.domain.origins import origin_of
+from agentask.infrastructure.browser.blocked_frames import frame_unusable
 from agentask.infrastructure.browser.inventory_js import DETAIL_SCAN, FINGERPRINT_AT, INDEX_OF, LIGHT_SCAN
 from agentask.infrastructure.browser.picker_js import (
     CLEAR_HIGHLIGHT,
@@ -282,8 +283,7 @@ class PageObserver:
         async def scan(plan: _FrameScan) -> None:
             if plan.reason is not None:
                 return
-            url = plan.frame.url
-            if url.startswith("chrome-error://") or plan.frame.is_detached():
+            if frame_unusable(plan.frame):
                 plan.status, plan.reason = ScanStatus.INACCESSIBLE, "error_page_or_blocked"
                 return
             async with semaphore:
@@ -447,7 +447,7 @@ class PageObserver:
         return self._picker_token is not None
 
     async def _install(self, frame: Frame, token: str) -> None:
-        if frame.is_detached() or frame.url.startswith("chrome-error://"):
+        if frame_unusable(frame):
             return
         with contextlib.suppress(PlaywrightError):
             await frame.evaluate(PICKER_INSTALL, token)

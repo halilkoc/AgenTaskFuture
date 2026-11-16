@@ -10,6 +10,7 @@ from playwright.async_api import Error as PlaywrightError
 from agentask.application.errors import NavigationNotAllowed, SessionBusy
 from agentask.application.services.browser_sessions import BrowserSessionService, SessionLimits
 from agentask.infrastructure.browser.playwright_factory import PlaywrightContextFactory
+from tests.support_browser import engine_name
 from tests.support_lab import HitCounterServer, LabServer
 
 pytestmark = pytest.mark.browser
@@ -60,7 +61,9 @@ async def test_navigation_outside_allowed_origins_is_blocked(
     # İzinli origin'e yönlendirme çalışmaya devam eder (cookie korunur).
     await page.goto(f"{lab.primary}/lab-api/redirect-out?to={lab.primary}/pages/duplicates")
     assert page.url == f"{lab.primary}/pages/duplicates"
-    with pytest.raises(PlaywrightError, match="ERR_BLOCKED_BY_CLIENT"):
+    # Engellenen gezinmenin hata metni motora özgüdür; asıl ölçüt aşağıdaki `outsider.hits == []` satırıdır.
+    blocked_text = {"chromium": "ERR_BLOCKED_BY_CLIENT", "firefox": "NS_ERROR_FAILURE"}[engine_name()]
+    with pytest.raises(PlaywrightError, match=blocked_text):
         await page.goto(f"{lab.primary}/lab-api/redirect-out?to={outsider.origin}/redirect")
     await asyncio.sleep(0.5)
     with pytest.raises(Exception):  # noqa: B017
@@ -156,7 +159,9 @@ async def test_browser_launch_failure_is_dependency_unavailable(
     from agentask.config import load_settings
 
     settings = load_settings(
-        make_env_file(BROWSER_HEADLESS="true", BROWSER_EXECUTABLE_PATH="/nonexistent/chrome")  # type: ignore[operator]
+        make_env_file(
+            BROWSER_ENGINE="chromium", BROWSER_HEADLESS="true", BROWSER_EXECUTABLE_PATH="/nonexistent/chrome"
+        )  # type: ignore[operator]
     )
     broken = PlaywrightContextFactory(settings)
     try:

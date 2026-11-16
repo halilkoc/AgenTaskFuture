@@ -22,6 +22,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e import test_designer_ui as flow
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -61,7 +62,7 @@ async def select_existing(ui) -> None:  # type: ignore[no-untyped-def]
 async def test_one_session_shared_across_pages(app_server: AppServer, lab: LabServer) -> None:
     base = f"http://127.0.0.1:{app_server.port}"
     async with async_playwright() as p, httpx.AsyncClient(base_url=base, timeout=30) as api:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         # 1–2: Designer'da oturum, hazırlık ve yeni oturum testi (geçici doğrulama oturumu), onay ve yayın
         await flow.author_ready_draft(ui, app_server.port)

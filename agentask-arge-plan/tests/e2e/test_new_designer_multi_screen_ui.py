@@ -22,6 +22,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = pytest.mark.browser
@@ -46,7 +47,7 @@ async def test_read_bind_transition_and_reopen(app_server: AppServer, lab: LabSe
         return await loop.run_in_executor(None, app_server.run, coro)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui: Page = await browser.new_page(viewport={"width": 1440, "height": 1000})
         await ui.goto(f"http://127.0.0.1:{app_server.port}/prototype/designer")
         await ui.locator("#pd-home").get_by_role("button", name="Yeni akış").click()

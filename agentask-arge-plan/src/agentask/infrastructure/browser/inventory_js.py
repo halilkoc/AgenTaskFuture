@@ -160,6 +160,15 @@ function overlayCovers(el) {
   const hit = document.elementsFromPoint(cx, cy).find(e => !e.closest('[data-agentask-ui]'));
   if (!hit || hit === el || el.contains(hit) || hit.contains(el)) return false;
   if (el.labels && Array.from(el.labels).some(l => l.contains(hit))) return false;
+  // Merkez, hedefi kırpan bir kaydırma alanının dışındaysa (alandan büyük tablo gibi) o noktadaki öğe hedefi
+  // kapatan katman değildir; görünüm alanı dışındaki hedef gibi burada denetlenmez.
+  for (let a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+    const s = getComputedStyle(a);
+    if (/(auto|scroll|hidden|clip)/.test(s.overflowX + ' ' + s.overflowY)) {
+      const c = a.getBoundingClientRect();
+      if (cx < c.left || cx >= c.right || cy < c.top || cy >= c.bottom) return false;
+    }
+  }
   return true;
 }
 function interactionOf(el) {

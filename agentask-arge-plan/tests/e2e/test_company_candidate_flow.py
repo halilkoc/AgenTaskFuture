@@ -21,6 +21,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import changed_fields, page_fields
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -80,7 +81,7 @@ async def test_company_candidate_flow(app_server: AppServer, lab: LabServer, jso
 
     base = f"http://127.0.0.1:{app_server.port}"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
 
         # 1) AgenTask girişi; hatalı parola genel mesaj verir, dev kimliğine düşülmez.

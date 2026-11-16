@@ -13,6 +13,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = pytest.mark.browser
@@ -35,7 +36,7 @@ async def test_target_lab_screen_end_to_end(app_server: AppServer, lab: LabServe
         return await loop.run_in_executor(None, app_server.run, coro)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await ui.goto(f"http://127.0.0.1:{app_server.port}/designer/targets")
         await ui.get_by_role("button", name="Oturum aç").click()

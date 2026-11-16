@@ -1,7 +1,12 @@
 """Tek komut: `.venv/bin/python -m tools.local_acceptance` (bkz. docs/18). Otomatik tekrar yoktur.
 
-Çıkış kodu: 0 hepsi GEÇTİ · 1 başarısız madde/test · 2 otomatik doğrulanamayan madde · 3 ön koşul eksik veya
-yerel olmayan adres · 4 kalıcı veride değişiklik (yalıtım ihlali) · 5 süre sınırı aşıldı (koşu kesildi).
+Tarayıcı motoru: `--browser-engine chromium|firefox` (verilmezse kabuktaki BROWSER_ENGINE, o da yoksa
+chromium). Hem testin arayüz tarayıcısı hem uygulamanın hedef tarayıcısı yalnız bu motorla açılır; başka motor
+başlatılırsa koşu başarısız sayılır.
+
+Çıkış kodu: 0 hepsi GEÇTİ · 1 başarısız madde/test veya motor ihlali · 2 otomatik doğrulanamayan madde ·
+3 ön koşul eksik veya yerel olmayan adres · 4 kalıcı veride değişiklik (yalıtım ihlali) ·
+5 süre sınırı aşıldı (koşu kesildi).
 pytest'in kendi çıkış kodu raporda ve `pytest-exit-code.txt` dosyasında ayrıca saklanır.
 """
 
@@ -32,6 +37,8 @@ ROOT = Path(__file__).resolve().parents[2]
 KEEP_ENV = ("PATH", "HOME", "USER", "LOGNAME", "LANG", "LC_ALL", "TMPDIR", "SHELL")
 DEFAULT_TIMEOUT_S = 3600
 PER_TEST_STACK_DUMP_S = 600
+ENGINES = ("chromium", "firefox")  # webkit uygulama ayarında reddedilir (ADR 0025)
+ENGINE_ENV = "AGENTASK_TEST_BROWSER_ENGINE"
 
 
 def _port_open(port: int) -> bool:
@@ -40,7 +47,7 @@ def _port_open(port: int) -> bool:
         return s.connect_ex(("127.0.0.1", port)) == 0
 
 
-def preflight(environ: Mapping[str, str], work: Path) -> tuple[list[str], dict[str, str]]:
+def preflight(environ: Mapping[str, str], work: Path, engine: str) -> tuple[list[str], dict[str, str]]:
     violating = env_violations(environ)
     if violating:  # yerel olmayan hedef verilmişse diğer denetimlere geçilmez
         return ["Kabukta yerel olmayan adres tanımlı; koşu reddedildi: " + ", ".join(violating)], {}
@@ -53,18 +60,42 @@ def preflight(environ: Mapping[str, str], work: Path) -> tuple[list[str], dict[s
     info["gecici_port"] = "bağlanabilir"
     for port in (8000, 8100, 8101, 27017):
         info[f"port_{port}"] = "dolu (kullanılmaz, dokunulmaz)" if _port_open(port) else "boş (kullanılmaz)"
+    # Yalnız seçili motor denenir; bulunamazsa başka motora geçilmez ve indirme yapılmaz.
     probe = (
         "import asyncio\nfrom playwright.async_api import async_playwright\n"
+        "from tests.support_browser import isolate_browser_home, remove_browser_home, ui_engine\n"
         "async def m():\n  async with async_playwright() as p:\n"
-        "    b = await p.chromium.launch(); print(b.version); await b.close()\nasyncio.run(m())\n"
+        "    b = await ui_engine(p).launch(); print(b.version); await b.close()\n"
+        "home = isolate_browser_home()\ntry:\n  asyncio.run(m())\nfinally:\n  remove_browser_home(home)\n"
     )
-    log = work / "chromium-probe.log"
-    code = run_limited([sys.executable, "-c", probe], ROOT, None, log, 120)
+    log = work / "browser-probe.log"
+    probe_env = {**{k: environ[k] for k in KEEP_ENV if k in environ}, ENGINE_ENV: engine}
+    code = run_limited([sys.executable, "-c", probe], ROOT, probe_env, log, 120)
+    info["tarayici_motoru"] = engine
     if code == 0:
-        info["chromium"] = log.read_text(encoding="utf-8").strip()
+        info[engine] = log.read_text(encoding="utf-8").strip().splitlines()[-1]
     else:
-        problems.append("Chromium başlatılamadı (playwright install chromium).")
+        problems.append(
+            f"Seçili tarayıcı motoru başlatılamadı: {engine} (playwright install {engine}). "
+            "Başka motorla devam edilmez."
+        )
     return problems, info
+
+
+def engine_usage(output: Path, engine: str) -> tuple[bool, str]:
+    """guard eklentisinin kaydı: arayüz ve hedef tarayıcı ayrı ayrı yalnız seçili motorla açılmış olmalı."""
+    path = output / "browser-launches.json"
+    if not path.is_file():
+        return False, "tarayıcı başlatma kaydı yok"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    parts = []
+    ok = True
+    for side, label in (("arayuz", "test arayüzü"), ("hedef", "uygulamanın hedef tarayıcısı")):
+        counts: dict[str, int] = data.get(side, {})
+        other = sum(v for k, v in counts.items() if k != engine)
+        parts.append(f"{label}: {engine} {counts.get(engine, 0)} kez, başka motor {other} kez")
+        ok = ok and counts.get(engine, 0) > 0 and other == 0
+    return ok, "; ".join(parts)
 
 
 def _tree_digest(root: Path) -> str:
@@ -108,13 +139,16 @@ def selected_tests() -> list[str]:
     return list(dict.fromkeys(t for item in ITEMS for t in item.tests if t != PACKAGE))
 
 
-def run_pytest(output: Path, base: Path, environ: Mapping[str, str], timeout_s: float) -> int | str:
+def run_pytest(
+    output: Path, base: Path, environ: Mapping[str, str], timeout_s: float, engine: str = "chromium"
+) -> int | str:
     env = {k: environ[k] for k in KEEP_ENV if k in environ}
     env.update(
         AGENTASK_ACCEPTANCE_DIR=str(output),
         AGENTASK_ACCEPTANCE_BASETEMP=str(base),
         PYTHONPATH=str(ROOT),
         PYTHONDONTWRITEBYTECODE="1",
+        **{ENGINE_ENV: engine},
     )
     command = [
         sys.executable, "-m", "pytest", "-q", "-rfEs", "--tb=short", "-p", "no:cacheprovider",
@@ -166,12 +200,14 @@ def judge(item: Item, cases: Mapping[str, str], package: PackageResult | None) -
     return PASSED, len(states), ""
 
 
-def decide_exit(isolation_ok: bool, pytest_code: int | str, statuses: set[str]) -> int:
+def decide_exit(
+    isolation_ok: bool, pytest_code: int | str, statuses: set[str], engine_ok: bool = True
+) -> int:
     if not isolation_ok:
         return 4
     if pytest_code == TIMEOUT:
         return 5
-    if pytest_code != 0 or FAILED in statuses:
+    if pytest_code != 0 or FAILED in statuses or not engine_ok:
         return 1
     return 2 if UNVERIFIED in statuses else 0
 
@@ -190,6 +226,8 @@ def write_report(output: Path, data: dict[str, Any]) -> None:
         f"- Kod özeti (src, tools, tests): `{data['tree']}`",
         f"- pytest çıkış kodu: **{data['pytest_exit']}**; koşunun çıkış kodu: **{data['exit']}**",
         f"- Yalıtım: {data['isolation']}",
+        f"- Tarayıcı motoru: **{data['engine']}** — {data['engine_usage']}"
+        + ("" if data["engine_ok"] else " — **MOTOR İHLALİ: koşu başarısız**"),
         f"- Paket: `{data['package'].get('name')}` SHA-256 `{data['package'].get('sha256')}`", "",
         "| # | Madde | Sonuç | Test | Kanıt | Doğrulanan sonuç / not |", "|---|---|---|---|---|---|",
     ]  # fmt: skip
@@ -225,15 +263,23 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--timeout-s", type=float, default=DEFAULT_TIMEOUT_S, help="pytest toplam süre sınırı"
     )
+    parser.add_argument(
+        "--browser-engine", choices=ENGINES, default=None, help="Verilmezse BROWSER_ENGINE, yoksa chromium"
+    )
     args = parser.parse_args(argv)
     environ = dict(os.environ)
+    engine = args.browser_engine or environ.get("BROWSER_ENGINE") or "chromium"
+    if engine not in ENGINES:
+        print(f"BROWSER_ENGINE geçersiz; beklenen: {', '.join(ENGINES)}", file=sys.stderr)
+        return 3
     if (
         platform.system() == "Darwin"
         and not environ.get("AGENTASK_ACCEPTANCE_AWAKE")
         and shutil.which("caffeinate")
     ):
         environ["AGENTASK_ACCEPTANCE_AWAKE"] = "1"  # uzun koşu uykuda bozulmasın
-        command = ["caffeinate", "-i", sys.executable, "-m", "tools.local_acceptance", *sys.argv[1:]]
+        extra = sys.argv[1:] if argv is None else argv
+        command = ["caffeinate", "-i", sys.executable, "-m", "tools.local_acceptance", *extra]
         os.execvpe("caffeinate", command, environ)  # noqa: S606, S607 - sabit komut, kabuk yok
     reports = Path(environ.get("AGENTASK_ACCEPTANCE_REPORTS", ROOT / "acceptance-reports"))
     reports.mkdir(parents=True, exist_ok=True)
@@ -247,7 +293,7 @@ def main(argv: list[str] | None = None) -> int:
     output.mkdir()
     work = Path(tempfile.mkdtemp(prefix="agentask-acceptance-"))
     try:
-        problems, info = preflight(environ, work)
+        problems, info = preflight(environ, work, engine)
         if problems:
             (output / "preflight-failed.txt").write_text("\n".join(problems) + "\n", encoding="utf-8")
             (output / "exit-code.txt").write_text("3", encoding="utf-8")
@@ -256,7 +302,7 @@ def main(argv: list[str] | None = None) -> int:
         before = snapshot()
         started = datetime.now().isoformat(timespec="seconds")
         print(f"Kabul koşusu başladı; rapor: {output}", flush=True)
-        pytest_code = run_pytest(output, work / "pytest", environ, args.timeout_s)
+        pytest_code = run_pytest(output, work / "pytest", environ, args.timeout_s, engine)
         package = None if args.skip_package or pytest_code == TIMEOUT else check_package(output, work)
         after = snapshot()
         cases = parse_cases(output / "junit.xml")
@@ -266,7 +312,8 @@ def main(argv: list[str] | None = None) -> int:
             items.append(
                 {**asdict(item), "status": status, "cases": count, "note": note, "evidence": _evidence(item)}
             )
-        code = decide_exit(before == after, pytest_code, {i["status"] for i in items})
+        engine_ok, usage = engine_usage(output, engine)
+        code = decide_exit(before == after, pytest_code, {i["status"] for i in items}, engine_ok)
         tree = hashlib.sha256()
         for folder in ("src", "tools", "tests"):
             for path in sorted((ROOT / folder).rglob("*")):
@@ -282,12 +329,14 @@ def main(argv: list[str] | None = None) -> int:
             {
                 "started": started, "finished": datetime.now().isoformat(timespec="seconds"),
                 "tree": tree.hexdigest(), "pytest_exit": pytest_code, "exit": code, "isolation": isolation,
-                "package": package_data, "preflight": info, "items": items, "failures": failures,
+                "package": package_data, "preflight": info,
+                "engine": engine, "engine_ok": engine_ok, "engine_usage": usage,
+                "items": items, "failures": failures,
             },
         )  # fmt: skip
         (output / "exit-code.txt").write_text(str(code), encoding="utf-8")
         passed = sum(i["status"] == PASSED for i in items)
-        print(f"Sonuç: {passed}/{len(items)} GEÇTİ · çıkış {code} · {output / 'report.md'}")
+        print(f"Sonuç ({engine}): {passed}/{len(items)} GEÇTİ · çıkış {code} · {output / 'report.md'}")
         return code
     finally:
         shutil.rmtree(work, ignore_errors=True)

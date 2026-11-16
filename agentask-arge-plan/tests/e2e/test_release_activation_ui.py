@@ -13,6 +13,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 from tests.unit.test_component_publishing import component_draft, publish
@@ -54,7 +55,7 @@ async def test_rollback_from_catalog_screen(app_server: AppServer) -> None:
         )
         assert denied.status_code == 403
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await ui.goto(f"{base}/catalogs")
         await expect(ui.locator(".ct-list")).to_contain_text(f"etkin: {second}")

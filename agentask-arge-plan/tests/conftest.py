@@ -8,11 +8,22 @@ from typing import Any
 import pytest
 
 from agentask.config import Settings, load_settings
+from tests.support_browser import engine_name, isolate_browser_home, remove_browser_home
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ENV_EXAMPLE = REPO_ROOT / ".env.example"
 TEST_SIGNING_KEY = "test-signing-key-0123456789abcdef-XYZ"
 SETTING_KEYS = sorted(name.upper() for name in Settings.model_fields)
+_browser_home: str | None = None
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    global _browser_home
+    _browser_home = isolate_browser_home()
+
+
+def pytest_unconfigure(config: pytest.Config) -> None:
+    remove_browser_home(_browser_home)
 
 
 def parse_env_example() -> dict[str, str]:
@@ -58,6 +69,7 @@ def make_env_file(tmp_path: Path) -> EnvFileFactory:
     def _make(name: str = "test.env", **overrides: str | None) -> Path:
         values = parse_env_example()
         values["SESSION_SIGNING_KEY"] = TEST_SIGNING_KEY
+        values["BROWSER_ENGINE"] = engine_name()
         for key, value in overrides.items():
             if value is None:
                 values.pop(key, None)

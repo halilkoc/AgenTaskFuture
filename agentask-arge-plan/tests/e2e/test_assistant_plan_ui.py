@@ -17,6 +17,7 @@ from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
 from tests.integration.browser.test_assistant import APPLICANT, ScriptedLLM
 from tests.screens import PARTIES_SCREEN
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 from tests.unit.test_component_publishing import make_ready
@@ -86,7 +87,7 @@ async def test_model_plan_proposal_to_run(app_server: AppServer, lab: LabServer)
     container.assistant._llm = llm
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1280, "height": 1000})
         await ui.goto(f"http://127.0.0.1:{app_server.port}/assistant")
         await expect(ui.locator(".as-llm")).to_contain_text("model: kullanılabilir")

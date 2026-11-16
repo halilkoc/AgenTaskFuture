@@ -187,7 +187,8 @@ class Settings(BaseSettings):
     s3_addressing_style: S3Addressing = S3Addressing.PATH
     s3_timeout_ms: PositiveInt = 10_000
     runner_mode: RunnerMode
-    browser_engine: BrowserEngine
+    # Verilmezse chromium (eski .env dosyaları); seçilen motor dışında bir motora geçilmez.
+    browser_engine: BrowserEngine = BrowserEngine.CHROMIUM
     browser_headless: bool
     browser_executable_path: Path | None = None
     playwright_browsers_path: Path | None = None
@@ -457,6 +458,24 @@ class Settings(BaseSettings):
         # Gözlem bütçesi
         if self.observe_timeout_ms < self.frame_scan_timeout_ms:
             problems.append("OBSERVE_TIMEOUT_MS, FRAME_SCAN_TIMEOUT_MS değerinden küçük olamaz")
+
+        # Tarayıcı motoru: kurulu tarayıcı ikilisi yalnız Chromium tabanlı (Edge/Chrome) olabilir.
+        if self.browser_executable_path is not None and self.browser_engine is not BrowserEngine.CHROMIUM:
+            problems.append(
+                f"BROWSER_EXECUTABLE_PATH yalnız BROWSER_ENGINE=chromium ile desteklenir; "
+                f"BROWSER_ENGINE={self.browser_engine.value} için boş bırakın ve Playwright'ın kendi "
+                "tarayıcı dosyalarını kullanın (PLAYWRIGHT_BROWSERS_PATH)"
+            )
+
+        # WebKit, yönlendirme (3xx) yanıtının denetlenip tarayıcıya iletilmesini desteklemez (Playwright:
+        # "Cannot fulfill with redirect status"). Hedef adres sınırı bu adıma dayandığı için motor reddedilir;
+        # sınırı gevşeterek çalıştırılmaz (ADR 0025).
+        if self.browser_engine is BrowserEngine.WEBKIT:
+            problems.append(
+                "BROWSER_ENGINE=webkit bu sürümde kullanılamaz: WebKit yönlendirme yanıtlarının denetlenerek "
+                "iletilmesini desteklemediği için hedef adres sınırı (TARGET_ALLOWED_ORIGINS) korunamıyor; "
+                "chromium veya firefox seçin"
+            )
 
         # Browser oturumları
         if self.browser_max_sessions_per_user > self.browser_max_sessions:

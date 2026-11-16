@@ -16,6 +16,7 @@ from tests.conftest import EnvFileFactory
 from tests.e2e.flow_helpers import Flow
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 from tests.support_mongo import ephemeral_mongod
 
@@ -78,7 +79,7 @@ async def test_changed_action_blocks_old_release_until_retested(stack: Any, lab:
     server = start()
     base = f"http://127.0.0.1:{server.port}"
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
         await ui.goto(f"{base}/prototype/designer")
         await ui.locator("#pd-home").get_by_role("button", name="Yeni akış").click()
@@ -176,7 +177,7 @@ async def test_changed_action_blocks_old_release_until_retested(stack: Any, lab:
 
         # Taslak yeniden açılıp kaydedilince yeni davranışa bağlanır; yeniden test edilmeden hazır sayılmaz.
         async with async_playwright() as p:
-            browser = await p.chromium.launch()
+            browser = await ui_engine(p).launch()
             ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
             await ui.goto(f"{base}/prototype/designer")
             await ui.get_by_role("button", name="Kayıtlı taslakları göster").click()
@@ -207,7 +208,7 @@ async def test_changed_action_blocks_old_release_until_retested(stack: Any, lab:
 
         before = len(notes())
         async with async_playwright() as p:
-            browser = await p.chromium.launch()
+            browser = await ui_engine(p).launch()
             ui = await browser.new_page(viewport={"width": 1440, "height": 1000})
             await ui.goto(f"{base}/prototype/designer")
             await ui.get_by_role("button", name="Kayıtlı taslakları göster").click()

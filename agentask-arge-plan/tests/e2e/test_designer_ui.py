@@ -12,6 +12,7 @@ from agentask.presentation.app import create_app
 from tests.conftest import EnvFileFactory
 from tests.e2e.support import AppServer
 from tests.integration.browser.helpers import lab_settings
+from tests.support_browser import ui_engine
 from tests.support_lab import LabServer
 
 pytestmark = pytest.mark.browser
@@ -34,7 +35,7 @@ def app_server(make_env_file: EnvFileFactory, lab: LabServer, tmp_path: Path) ->
 
 async def test_designer_screen_guided_authoring(app_server: AppServer, lab: LabServer) -> None:
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await author_ready_draft(ui, app_server.port)
         await browser.close()
@@ -133,7 +134,7 @@ async def define_parties_screen(ui: Page) -> None:
 async def test_form_validation_explains_field_and_reason(app_server: AppServer, lab: LabServer) -> None:
     """U2: hatalı parametre formunda hangi alanın neden hatalı olduğu Türkçe gösterilir."""
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await ui_engine(p).launch()
         ui = await browser.new_page()
         await ui.goto(f"http://127.0.0.1:{app_server.port}/designer")
         create = ui.locator(".dz-create")
